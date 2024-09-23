@@ -1,0 +1,39 @@
+@import url('https://fonts.googleapis.com/css2?family=Poetsen+One&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+
+section {
+    min-height: 100vh;
+}
+
+label.label {
+    padding-bottom: .2rem !important;
+}
+
+button {
+    min-height: auto !important;
+}
+
+input,
+select,
+textarea {
+    height: auto;
+    min-height: 0 !important;
+}
+
+
+/* footer styling */
+footer h5 {
+    font-size: 1.3rem;
+    font-weight: 500;
+    padding: .7rem 0;
+}
+
+/* footer ul */
+footer ul {
+    list-style-type: disc;
+    list-style-position: inside;
+    gap: .2rem;
+}
+
+footer ul li {
+    margin-top: .2rem;
+}
