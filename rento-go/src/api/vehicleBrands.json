@@ -1,0 +1,38 @@
+[
+    {
+        "type": "car",
+        "brand": "toyota"
+    },
+    {
+        "type": "car",
+        "brand": "suziku"
+    },
+    {
+        "type": "car",
+        "brand": "hyundai"
+    },
+    {
+        "type": "car",
+        "brand": "honda"
+    },
+    {
+        "type": "car",
+        "brand": "tata"
+    },
+    {
+        "type": "car",
+        "brand": "mahindra"
+    },
+    {
+        "type": "bike",
+        "brand": "bajaj"
+    },
+    {
+        "type": "bike",
+        "brand": "mahindra"
+    },
+    {
+        "type": "bike",
+        "brand": "hero"
+    }
+]

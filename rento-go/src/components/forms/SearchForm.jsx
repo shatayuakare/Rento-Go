@@ -1,23 +1,17 @@
 import React from 'react'
+import cities from "../../api/availableCities.json"
 
 const SearchForm = () => {
 
-    const citys = [
-        "Nagpur",
-        "Amravatti",
-        "Mumbai",
-        "Pune",
-        "Nashik",
-    ]
 
     return (
-        <form className='flex gap-4 text-gray-800 w-full' action="">
+        <form className='flex gap-4 text-gray-800 w-full' action="" >
             <div className='flex-1'>
                 <label htmlFor="location" className="label">Location</label>
                 <select name="location" id="location" className='select w-full select-bordered bg-zinc-100 h-auto rounded-md  min-h-0 py-2'
                     defaultValue={'Nagpur'}>
                     {
-                        citys.map((elem, index) => <option key={index}>{elem}</option>)
+                        cities.map((elem, index) => <option key={index}>{elem}</option>)
                     }
                 </select>
             </div>
@@ -26,7 +20,7 @@ const SearchForm = () => {
                 <select name="pickup" id="pickup" className='select select-bordered bg-zinc-100 h-auto min-h-0 rounded-md w-full py-2'
                     defaultValue={'Nagpur'}>
                     {
-                        citys.map((elem, index) => <option key={index}>{elem}</option>)
+                        cities.map((elem, index) => <option key={index}>{elem}</option>)
                     }
                 </select>
             </div>
@@ -40,7 +34,7 @@ const SearchForm = () => {
                     Search Now
                 </button>
             </div>
-        </form>
+        </form >
     )
 }
 

@@ -1,6 +1,9 @@
 import mongoose from "mongoose"
 
 const userSchama = new mongoose.Schema({
+    img: {
+        type: String,
+    },
     name: {
         type: String,
         required: true
@@ -9,9 +12,18 @@ const userSchama = new mongoose.Schema({
         type: String,
         required: true
     },
+    order: [
+        {
+            type: String,
+        }
+    ],
+    coupons: [
+        {
+            type: String,
+        }
+    ],
     phone: {
-        type: String,
-        required: true
+        type: String
     },
     admin: {
         type: Boolean,

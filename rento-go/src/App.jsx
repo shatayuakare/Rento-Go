@@ -1,12 +1,15 @@
 import React from 'react'
 import "./App.css"
-import { BrowserRouter, Routes, Route } from "react-router-dom"
+import "react-toastify/dist/ReactToastify.css";
+import { ToastContainer } from 'react-toastify'
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom"
 
 // components 
 import Header from './pages/Header'
 import Footer from './pages/Footer'
 
 // Authorization pages
+import { useAuth } from './context/AuthProvider';
 import Register from './pages/auth/Register'
 import Login from './pages/auth/Login'
 
@@ -26,15 +29,31 @@ import Profile from './pages/dashboard/Profile'
 import Orders from './pages/dashboard/Orders'
 import InnerCart from './components/InnerCart'
 import ShareVehicle from './pages/ShareVehicle'
+import Admin from './pages/Admin';
+import Vehicles from './pages/admin/vehicles/Vehicles';
+import ViewsVehicles from './pages/admin/vehicles/ViewsVehicles';
+
+
 
 const App = () => {
+  const [authUser, setAuthUser] = useAuth()
+  setAuthUser(authUser)
+
   return (
     <BrowserRouter>
+
       <Header />
       <main className='bg-zinc-50 text-zinc-800'>
         <Routes>
           <Route path='/*' element={<Error />} />
           <Route index element={<Home />} />
+          <Route path='/admin' element={authUser ? <Admin /> : <Navigate to={'/login'} />} >
+            <Route path='/admin/vehicles' element={authUser ? <Vehicles /> : <Navigate to={'/login'} />} >
+              <Route path='/admin/vehicles' element={authUser ? <ViewsVehicles /> : <Navigate to={'/login'} />} />
+              {/* <Route path='/admin/vehicles/' element={<ViewsVehicles />} /> */}
+              {/* </Route> */}
+            </Route>
+          </Route>
 
           <Route path='/cars' element={<Cars />} />
           <Route path='/cars/:id' element={<InnerCart />} />
@@ -45,18 +64,29 @@ const App = () => {
           <Route path='/about' element={<About />} />
           <Route path='/location' element={<Location />} />
           <Route path='/contact' element={<Contact />} />
-          <Route path='/login' element={<Login />} />
-          <Route path='/register' element={<Register />} />
+          <Route path='/login' element={!authUser ? <Login /> : <Navigate to={"/"} />} />
+          <Route path='/register' element={!authUser ? <Register /> : <Navigate to={"/"} />} />
 
-          <Route path='/dashboard' element={<Dashboard />} >
-            <Route path="/dashboard/" element={<Dash />} />
-            <Route path='/dashboard/myprofile' element={<Profile />} />
-            <Route path='/dashboard/myorder' element={<Orders />} />
-            {/* <Route path='/dashboard/myorder' element={<Orders />} /> */}
+          <Route path='/dashboard' element={authUser ? <Dashboard /> : <Navigate to={"/"} />} >
+            <Route index element={authUser ? <Dash /> : <Navigate to={"/login"} />} />
+            <Route path="/dashboard/*" element={<Error />} />
+            <Route path='/dashboard/myprofile' element={authUser ? <Profile /> : <Navigate to={"/login"} />} />
+            <Route path='/dashboard/myorder' element={authUser ? <Orders /> : <Navigate to={"/login"} />} />
           </Route>
         </Routes>
       </main>
       <Footer />
+      <ToastContainer position='top-center'
+        autoClose={3000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="light"
+        transition:Bounce />
     </BrowserRouter>
   )
 }

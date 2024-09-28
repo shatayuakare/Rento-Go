@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 
 const Hero = ({ imageLeft = false, vehicle }) => {
 
@@ -38,9 +39,9 @@ const Hero = ({ imageLeft = false, vehicle }) => {
                                 Lorem ipsum dolor sit amet consectetur adipisicing elit. Quod non vel totam perspiciatis eveniet, possimus molestiae natus qui reprehenderit consequuntur.
                             </p>
 
-                            <button className='btn h-10 rounded-md mt-10 text-white capitalize'>
+                            <Link to={`/${vehicle}`} className='btn h-10 rounded-md mt-10 text-white capitalize'>
                                 Rent {vehicle}
-                            </button>
+                            </Link>
                         </div>
                 }
             </div>
@@ -69,9 +70,9 @@ const Hero = ({ imageLeft = false, vehicle }) => {
                                 Booking a self-driving car with us is simple and easy. You can browse our our selection of vehicles online, choose the car that best fits your needs, and book it for the duration of you choice. Our user-friendly platform allows you to manage your bookings and view your trip history with ease.
                             </p>
 
-                            <button className='btn h-10 rounded-md mt-10 text-white capitalize'>
+                            <Link to={`/${vehicle}`} className='btn h-10 rounded-md mt-10 text-white capitalize'>
                                 Rent {vehicle}
-                            </button>
+                            </Link>
                         </div>
                         : <img className='w-full h-full' src={loadImg(vehicle)} alt="image" />
                 }

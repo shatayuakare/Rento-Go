@@ -1,8 +1,7 @@
 import mongoose from "mongoose";
 
-
 const vehicleSchema = mongoose.Schema({
-    name: {
+    model: {
         type: String,
         required: true
     },
@@ -42,7 +41,8 @@ const vehicleSchema = mongoose.Schema({
         type: String
     },
     drive: {
-        type: Number
+        type: String,
+        default: 'fwd'
     },
     gearbox: {
         type: Number,
@@ -50,12 +50,16 @@ const vehicleSchema = mongoose.Schema({
     stock: {
         type: Number,
     },
-    milleage: {
+    mileage: {
         type: Number,
     },
     price: {
         type: Number,
         required: true
+    },
+    status: {
+        type: String,
+        default: "ready"
     },
 })
 

@@ -5,14 +5,17 @@ import { Link } from 'react-router-dom'
 const HomeIndex = () => {
     return (
         <section className="bg-[#0B0808]">
-            <div className='sm:bg-[url("https://purepng.com/public/uploads/large/purepng.com-jaguar-xkr-s-blue-carcarvehicletransportautocars-561521125346a9gaa.png")] sm:bg-[center_bottom_-3rem] sm:bg-no-repeat lg:bg-none absolute min-h-[100vh] lg:h-auto sm:h-[100vh] content-center'>
+
+            {/* https://purepng.com/public/uploads/large/purepng.com-jaguar-xkr-s-blue-carcarvehicletransportautocars-561521125346a9gaa.png */}
+            <div className='sm:bg-[url("https://cdn.pixabay.com/photo/2015/10/01/19/05/car-967470_640.png")] sm:bg-[center_bottom_-3rem] sm:bg-no-repeat lg:bg-none absolute min-h-[100vh] lg:h-auto sm:h-[100vh] content-center'>
 
                 <div className='sm:px-4 md:px-12 lg:mx-24 xl:mx-28 lg:pt-0 sm:py-8'>
 
                     <div className='lg:w-[100%] xl:w-[65%] text-white z-10 relative'>
                         <h4 className='sm:text-[3.5rem] lg:text-[3.5rem] xl:text-[4rem] font-semibold lg:py-5 sm:pb-1 lg:pb-3 capitalize font-["poetsen_one"] sm:leading-none lg:leading-normal md:leading-tight'>
-                            Open the door to endless possibilities with <br /> <span className='text-[#50D1FA] uppercase shadow-xl  drop-shadow-[0_0_5px_#094393] cssanimation leMagnify random'>Rento GO</span>
+                            Open the door to endless possibilities with <br /> <span className='text-red-500 uppercase shadow-xl  drop-shadow-[0_0_5px_#094393] cssanimation leMagnify random'>Rento GO</span>
                         </h4>
+                        {/* text-[#50D1FA] */}
                         <p className='py-3 text-xl text-zinc-500 md:w-2/5 xl:w-2/3'>
                             To contribute to position change and achieve our sustainability goals with many extraordinary
                         </p>
@@ -27,8 +30,8 @@ const HomeIndex = () => {
                     </div>
 
                     <div className='hidden flex-shrink-0 lg:flex'>
-                        <img className='absolute z-0 lg:-bottom-10 xl:bottom-5 lg:right-0 xl:right-0 lg:w-[52rem] xl:w-[55rem]'
-                            src="https://purepng.com/public/uploads/large/purepng.com-jaguar-xkr-s-blue-carcarvehicletransportautocars-561521125346a9gaa.png" data-aos="zoom-in" data-aos-duration="1000" alt="" />
+                        <img className='absolute z-0 lg:-bottom-16 xl:bottom-16 lg:right-0 xl:right-0 lg:w-[58rem] xl:w-[60rem] drop-shadow-[-5px_2px_8px_red]'
+                            src="https://cdn.pixabay.com/photo/2015/10/01/19/05/car-967470_640.png" data-aos="zoom-in" data-aos-duration="1000" alt="" loading='fast' />
                     </div>
                 </div>
             </div>

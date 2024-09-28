@@ -2,7 +2,11 @@ import React from 'react'
 
 const Error = () => {
     return (
-        <div>Error</div>
+        <section className='h-full w-full content-center'>
+            <div className="">
+                Error
+            </div>
+        </section>
     )
 }
 

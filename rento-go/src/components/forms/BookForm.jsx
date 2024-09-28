@@ -1,6 +1,41 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
+import { useAuth } from '../../context/AuthProvider'
+import { toast } from 'react-toastify'
+import axios from 'axios'
 
-const BookForm = () => {
+const BookForm = ({ data }) => {
+
+    const [authUser, setAuthUser] = useAuth()
+    setAuthUser(authUser)
+    const [duration, setDuration] = useState(0)
+    const [location, setLocation] = useState("nagpur")
+    const [pickDate, setPickDate] = useState(new Date().getTime() / 1000)
+    const [returnDate, setReturnDate] = useState("")
+
+    const [error, setError] = useState(null)
+
+    const calculateTimeDiff = (pickDateTime, returnDateTime) => {
+        const pickDate = new Date(pickDateTime);
+        const returnDate = new Date(returnDateTime);
+        const diffMs = returnDate.getTime() - pickDate.getTime();
+        const diffSec = Math.floor(diffMs / 1000);
+        const diffMin = Math.floor(diffSec / 60);
+        const diffHour = Math.floor(diffMin / 60);
+        const diffDay = Math.floor(diffHour / 24);
+        const diffWeek = Math.floor(diffDay / 7);
+
+        if (diffHour < 24) {
+            return `${diffHour} hours`;
+        } else if (diffDay < 7) {
+            return `${diffDay} days`;
+        } else {
+            return `${diffWeek} weeks ${diffDay % 7} days`;
+        }
+    }
+
+    useEffect(() => {
+        setDuration(calculateTimeDiff(pickDate, returnDate))
+    }, [pickDate, returnDate]);
 
     const citys = [
         "Nagpur",
@@ -12,23 +47,60 @@ const BookForm = () => {
 
     const fav = false
 
-    return (
-        <form className='flex flex-col gap-6 text-zinc-700 relative pt-6' action="">
 
-            <button className='btn btn-ghost bg-zinc-100 btn-circle text-3xl p-2 border-2 border-zinc-200 ms-auto absolute top-0 right-0'>
-                {
-                    fav ?
-                        <i className='bx bxs-heart'></i>
-                        :
-                        <i className='bx bx-heart'></i>
-                }
-            </button>
+    const makeOrder = async (event) => {
+        event.preventDefault();
+
+        // if (!authUser) return toast("Please Log In")
+
+        if (!location) return setError("Please enter location")
+        if (!pickDate) return setError("Please enter pickup Date")
+        if (!returnDate) return setError("Please enter Return Date")
+
+        const order = {
+            vehicleName: `${data.brand} ${data.name}`,
+            pickUpLocation: location,
+            pickDate,
+            returnDate,
+            UID: authUser._id,
+            VID: data._id,
+            status: "pending",
+        }
+
+        await axios.post("http://localhost:8080/orders/new", order).then((res) => {
+            toast.success(res.data.message)
+        }).catch((err) => toast.error(err.response.data.message))
+
+
+        setPickDate(null)
+        setReturnDate(null)
+        setLocation("none")
+    }
+
+
+    return (
+        <form className='text-zinc-700 relative grid gap-6' action="" onSubmit={makeOrder}>
+
+            <div className="flex justify-between items-center">
+                <div className='font-bold text-2xl'>
+                    {data.brand} {data.name}
+                </div>
+                <button type='button' className='btn btn-ghost bg-black btn-circle text-3xl p-2 border-2 text-red-500 border-red-500'>
+                    {
+                        !fav ?
+                            <i className='bx bxs-heart'></i>
+                            :
+                            <i className='bx bx-heart'></i>
+                    }
+                </button>
+            </div>
             <div>
                 <label htmlFor="location" className="label">
                     Location
                 </label>
                 <select name="location" id="location" className='select w-full select-bordered bg-zinc-100 h-auto rounded-md  min-h-0 py-2'
-                    defaultValue={'Nagpur'}>
+                    defaultValue={location}
+                    onChange={(event) => setLocation(event.currentTarget.value)}>
                     {
                         citys.map((elem, index) => <option key={index}>{elem}</option>)
                     }
@@ -39,30 +111,36 @@ const BookForm = () => {
                 <label className='label' htmlFor="pickup-date">
                     Pick-Up
                 </label>
-                <input className='input w-full bg-zinc-100 h-10' type="datetime-local" name="pickup-date" id='pickup-date' />
+                <input className='input w-full bg-zinc-100 h-10' type="date" name="pickup-date" id='pickup-date'
+                    value={pickDate}
+                    onChange={(event) => setPickDate(event.target.value)} />
             </div>
 
             <div>
                 <label className='label' htmlFor="drop-off">
-                    Drop-Off
+                    Expected Drop-Off
                 </label>
-                <input className='input w-full bg-zinc-100 h-10' type="datetime-local" name="drop-off" id='drop-off' />
+                <input className='input w-full bg-zinc-100 h-10' type="date" name="drop-off" id='drop-off'
+                    value={returnDate}
+                    onChange={(event) => setReturnDate(event.target.value)} />
+                {
+                    error && <div className='text-red-500'>{error}</div>
+                }
             </div>
             <div className='flex justify-between'>
                 <div>
                     <div className="text-lg font-semibold">Duration</div>
                     <div className='text-zinc-500'>
-                        7.57 Hours
+                        {duration}
                     </div>
                 </div>
-                <div className="p-2 h-12 text-2xl px-4 rounded-md bg-zinc-100 font-bold">
-                    $36.00
+                <div className="p-3 text-3xl px-4 rounded-full bg-white  font-bold">
+                    ₹{data.price}/<sub className='font-normal text-sm'>day</sub>
                 </div>
-
             </div>
 
 
-            <button className="btn w-full text-white">
+            <button type='submit' className="btn w-full text-white">
                 Book Now
             </button>
         </form>

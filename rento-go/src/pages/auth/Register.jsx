@@ -1,5 +1,8 @@
 import React, { useState } from 'react'
+import axios from "axios"
 import { Link } from 'react-router-dom'
+import { toast } from 'react-toastify'
+import { Cookies } from 'react-cookie'
 
 const Register = () => {
 
@@ -8,12 +11,33 @@ const Register = () => {
     const [password, setPassword] = useState("")
     const [terms, setTerms] = useState(false)
 
+    const cookie = new Cookies();
+
     const registerHandler = async (event) => {
         event.preventDefault()
         const data = { name, email, password }
 
-        console.log(data)
+        if (!terms) return alert("Please accept Term and Condition")
 
+        await axios.post("http://localhost:8080/auth/register", data).then((res) => {
+            if (remember) {
+                cookie.set("token", res.data.token, { expires: new Date(Date.now() + 31536000000) })
+            } else {
+                cookie.set("token", res.data.token, {
+                    expires: new Date(Date.now() + 30 * 60 * 1000),
+                    path: '/',
+                    secure: true,
+                    httponly: true,
+                });
+            }
+            toast.success(res.data.message)
+            window.location.reload()
+        }).catch((err) => toast.error(err.response.data.message))
+
+        setName("")
+        setEmail("")
+        setPassword("")
+        setTerms(false)
     }
 
 
@@ -30,6 +54,7 @@ const Register = () => {
                             <div className="text-lg">
                                 the best global car sharing marketplace
                             </div>
+
                             <p className="text-sm py-2">
                                 Have a car? Earn Monay as host. Rent your dream car as a guest
                             </p>
@@ -67,20 +92,24 @@ const Register = () => {
                         <div>
                             <label htmlFor="name" className="label">Name</label>
                             <input className='input rounded-sm w-full bg-zinc-100 p-2' type="text" name="name" id="name" placeholder='Enter Name...'
+                                value={name}
                                 onChange={(e) => setName(e.target.value)} />
                         </div>
                         <div>
                             <label htmlFor="email" className="label">Email address</label>
                             <input className='input rounded-sm w-full bg-zinc-100 p-2' type="email" name="email" id="email" placeholder='Enter Email address...'
+                                value={email}
                                 onChange={(e) => setEmail(e.target.value)} />
                         </div>
                         <div>
                             <label htmlFor="password" className="label">Password</label>
                             <input className='input rounded-sm w-full bg-zinc-100 p-2' type="password" name="password" id="password" placeholder='Enter Password...'
+                                value={password}
                                 onChange={(e) => setPassword(e.target.value)} />
                         </div>
                         <div className='my-2 flex items-center text-sm text-black'>
-                            <input className='checkbox border-2 border-zinc-400 rounded-sm checkbox-xs me-2' id='policy' type="checkbox" />
+                            <input className='checkbox border-2 border-zinc-400 rounded-sm checkbox-xs me-2' id='policy' type="checkbox" checked={terms}
+                                onChange={() => setTerms(!terms)} />
                             <label htmlFor="policy"> I agree to the Terms and Privacy Policy</label>
                         </div>
 

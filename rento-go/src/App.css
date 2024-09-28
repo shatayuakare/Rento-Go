@@ -19,9 +19,14 @@ textarea {
     min-height: 0 !important;
 }
 
+#admin label.label {
+    font-size: .9rem !important;
+}
+
 
 /* footer styling */
 footer h5 {
+    color: gray !important;
     font-size: 1.3rem;
     font-weight: 500;
     padding: .7rem 0;
@@ -35,5 +40,24 @@ footer ul {
 }
 
 footer ul li {
+    color: whitesmoke !important;
     margin-top: .2rem;
+}
+
+
+
+marquee {
+    animation: marquee-scroll 10s linear infinite !important;
+    white-space: nowrap !important;
+    /* Remove gap between end and start */
+}
+
+@keyframes marquee-scroll {
+    from {
+        transform: translateX(0) !important;
+    }
+
+    to {
+        transform: translateX(-100%) !important;
+    }
 }

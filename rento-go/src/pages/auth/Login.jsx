@@ -1,13 +1,17 @@
 import React, { useState } from 'react'
+import axios from 'axios'
+import { Cookies } from "react-cookie"
 import { Link } from 'react-router-dom'
+import { toast } from 'react-toastify'
+
 
 const Login = () => {
-
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
     const [remember, setRemember] = useState(false)
     const [error, setError] = useState(null)
 
+    const cookie = new Cookies()
 
     const loginHandler = async (event) => {
         event.preventDefault()
@@ -16,9 +20,26 @@ const Login = () => {
         if (!password) return setError("Password is rquired")
 
         const data = { email, password }
-        console.log(data)
-    }
+        await axios.post("http://localhost:8080/auth/login", data).then((res) => {
+            if (remember) {
+                cookie.set("token", res.data.token, { expires: new Date(Date.now() + 31536000000) })
+            } else {
+                cookie.set("token", res.data.token, {
+                    expires: new Date(Date.now() + 30 * 60 * 1000),
+                    path: '/',
+                    secure: true,
+                    httponly: true,
+                });
+            }
 
+            toast.success(res.data.message)
+            window.location.reload()
+        }).catch((err) => toast.error(err.response.data.message),)
+
+        setEmail("")
+        setPassword("")
+        setRemember(false)
+    }
 
     return (
         <section className="content-center">
@@ -70,16 +91,19 @@ const Login = () => {
                         <div>
                             <label htmlFor="email" className="label">Email address</label>
                             <input className='input rounded-sm w-full bg-zinc-100 p-2' type="email" name="email" id="email" placeholder='Enter Email address...'
+                                value={email}
                                 onChange={(e) => setEmail(e.target.value)} />
                         </div>
                         <div>
                             <label htmlFor="password" className="label">Password</label>
                             <input className='input rounded-sm w-full bg-zinc-100 p-2' type="password" name="password" id="password" placeholder='Enter Password...'
+                                value={password}
                                 onChange={(e) => setPassword(e.target.value)} />
                         </div>
                         <div className='my-2 flex items-center text-sm text-black'>
                             <input className='checkbox border-2 border-zinc-400 rounded-sm checkbox-xs me-2' id='policy' type="checkbox"
-                                onChange={(e) => setRemember(e.target.value)} />
+                                checked={remember}
+                                onChange={() => setRemember(!remember)} />
                             <label htmlFor="policy"> Remember me</label>
                         </div>
                         {

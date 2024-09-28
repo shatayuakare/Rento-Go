@@ -1,16 +1,16 @@
 import express from "express";
 import { createBike, createCar, deleteVehicle, getVehicle, getVehicles, updateBike, updateCar } from "../controller/vehicles.controller.js";
 
-const vehicleRoute = express()
+const vehicleRoute = express.Router()
 
-vehicleRoute.use("/", getVehicles)
-vehicleRoute.use("/:id", getVehicle)
-vehicleRoute.use("/newCar", createCar)
-vehicleRoute.use("/newBike", createBike
+vehicleRoute.get("/", getVehicles)
+vehicleRoute.get("/:id", getVehicle)
+vehicleRoute.post("/newCar", createCar)
+vehicleRoute.post("/newBike", createBike
 )
-vehicleRoute.use("/delete/:id", deleteVehicle)
-vehicleRoute.use("/updateCar/:id", updateCar)
-vehicleRoute.use("/updateBike/:id", updateBike)
+vehicleRoute.delete("/delete/:id", deleteVehicle)
+vehicleRoute.put("/updateCar/:id", updateCar)
+vehicleRoute.put("/updateBike/:id", updateBike)
 
 
 export default vehicleRoute

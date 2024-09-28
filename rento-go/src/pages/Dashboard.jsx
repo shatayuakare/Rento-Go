@@ -1,7 +1,10 @@
 import React from 'react'
 import { Link, Outlet } from 'react-router-dom'
+import { useAuth } from "../context/AuthProvider"
 
 const Dashboard = () => {
+
+    const [authUser, setAuthUser] = useAuth()
     return (
         <section className="content-center">
             <div className="sm:mx-2 md:mx-20 lg:mx-24  xl:mx-28 flex sm:pt-16 sm:flex-col lg:flex-row sm:gap-3 lg:gap-6 lg:h-[80vh]">
@@ -10,11 +13,11 @@ const Dashboard = () => {
                     <div className='text-center pt-5'>
                         <div className="avatar">
                             <div className="ring-primary ring-offset-base-100 w-24 rounded-full ring ring-offset-2">
-                                <img src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp" />
+                                <img src={authUser.img ? authUser.img : "https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp"} />
                             </div>
                         </div>
-                        <h5 className="text-2xl font-semibold text-zinc-800">Shatayu Akare</h5>
-                        <div className="text-zinc-500 underline">shatyauakare@gmail.com</div>
+                        <h5 className="text-2xl font-semibold text-zinc-800">{authUser.name}</h5>
+                        <div className="text-zinc-500 underline">{authUser.email}</div>
                     </div>
 
                     <ul className="menu w-full text-zinc-800 font-semibold mb-8 mt-4">
