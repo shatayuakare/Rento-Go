@@ -58,13 +58,13 @@ const FAQ = () => {
 
 
     return (
-        <section className="h-auto min-h-auto content-center text-zinc-700 bg-zinc-200">
+        <section className="h-auto min-h-auto content-center text-zinc-700 bg-zinc-100">
             <div className=" text-center mx-auto sm:px-4 md:w-2/3">
-                <h4 className='capitalize sm:text-3xl md:text-5xl font-bold py-5'>Have any question</h4>
-                <div className="text-start gap-4 grid grid-cols-2 mt-3 pb-8">
+                <h4 className='capitalize sm:text-3xl md:text-5xl font-bold pb-5 pt-10'>Have any question</h4>
+                <div className="text-start gap-4 sm:grid-cols-1 lg:grid grid-cols-2 mt-3 pb-8">
                     {
                         faq.map((elem, index) => (
-                            <div className="collapse collapse-plus border-2 border-zinc-300 shadow-sm bg-zinc-100 p-1 rounded-lg" key={index}>
+                            <div className="collapse collapse-plus border-2 border-zinc-300 shadow-sm bg-zinc-100 sm:mb-3 md:mb-0 p-1 rounded-lg" key={index}>
                                 <input type="radio" name="my-accordion-3" />
                                 <div className="collapse-title text-xl font-medium">{elem.question}</div>
                                 <div className="collapse-content">

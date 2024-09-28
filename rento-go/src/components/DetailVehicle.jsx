@@ -1,14 +1,8 @@
 import React from 'react'
+import cities from "../api/availableCities.json"
 
 const DetailVehicle = () => {
 
-    const citys = [
-        "Nagpur",
-        "Amravatti",
-        "Mumbai",
-        "Pune",
-        "Nashik",
-    ]
     return (
         <section>
             <div className='flex'>
@@ -25,7 +19,7 @@ const DetailVehicle = () => {
                             <select name="location" id="location" className='select select-bordered bg-zinc-100 h-auto min-h-0 rounded-md w-full py-2'
                                 defaultValue={'Nagpur'}>
                                 {
-                                    citys.map((elem, index) => <option key={index}>{elem}</option>)
+                                    cities.map((elem, index) => <option key={index}>{elem.city}</option>)
                                 }
                             </select>
                         </div>
@@ -36,7 +30,7 @@ const DetailVehicle = () => {
                             <select name="pickup" id="pickup" className='select select-bordered bg-zinc-100 h-auto min-h-0 rounded-md w-full py-2'
                                 defaultValue={'Nagpur'}>
                                 {
-                                    citys.map((elem, index) => <option key={index}>{elem}</option>)
+                                    cities.map((elem, index) => <option key={index}>{elem.city}</option>)
                                 }
                             </select>
                         </div>

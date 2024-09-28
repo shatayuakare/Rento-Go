@@ -75,8 +75,8 @@ const BrandMarquee = () => {
     ]
 
     return (
-        <div className="overflow-hideen px-12 py-8">
-            <marquee className={""} behavior="" direction="left" scrollAmount="25">
+        <div className="overflow-hideen px-12 py-10 bg-zinc-100">
+            <marquee className={""} behavior="" direction="left" scrollamount={20}>
                 <div className="flex gap-32">
                     {
                         brands.map((elem, index) => (

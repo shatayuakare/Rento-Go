@@ -24,6 +24,16 @@ textarea {
 }
 
 
+
+.customer-review .flex .flex-1:hover .overlay {
+    display: inline-block;
+}
+
+
+
+
+
+
 /* footer styling */
 footer h5 {
     color: gray !important;

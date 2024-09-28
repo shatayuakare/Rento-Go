@@ -32,6 +32,7 @@ import ShareVehicle from './pages/ShareVehicle'
 import Admin from './pages/Admin';
 import Vehicles from './pages/admin/vehicles/Vehicles';
 import ViewsVehicles from './pages/admin/vehicles/ViewsVehicles';
+import RentVehicles from './pages/RentVehicles';
 
 
 
@@ -43,7 +44,7 @@ const App = () => {
     <BrowserRouter>
 
       <Header />
-      <main className='bg-zinc-50 text-zinc-800'>
+      <main className='bg-zinc-50 text-zinc-800 capitalize  '>
         <Routes>
           <Route path='/*' element={<Error />} />
           <Route index element={<Home />} />
@@ -59,9 +60,10 @@ const App = () => {
           <Route path='/cars/:id' element={<InnerCart />} />
           <Route path='/bikes' element={<Bike />} />
           <Route path='/bikes/:id' element={<InnerCart />} />
-          <Route path='/share' element={<ShareVehicle />} />
+          <Route path='/refer' element={<ShareVehicle />} />
 
           <Route path='/about' element={<About />} />
+          <Route path='/share' element={<RentVehicles />} />
           <Route path='/location' element={<Location />} />
           <Route path='/contact' element={<Contact />} />
           <Route path='/login' element={!authUser ? <Login /> : <Navigate to={"/"} />} />

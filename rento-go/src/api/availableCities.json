@@ -1,7 +1,22 @@
 [
-    "Nagpur",
-    "Amravatti",
-    "Mumbai",
-    "Pune",
-    "Nashik"
+    {
+        "city": "Nagpur, Maharashtra",
+        "famous": "https://dynamic.tourtravelworld.com/blog_images/10-incredible-places-to-visit-in-nagpur-20170615033637.jpg"
+    },
+    {
+        "city": "Amravatti, Maharashtra",
+        "famous": "https://www.holidify.com/images/bgImages/AMARAVATHI.jpg"
+    },
+    {
+        "city": "Mumbai, Maharashtra",
+        "famous": "https://www.fabhotels.com/blog/wp-content/uploads/2018/07/1000x650-126.jpg"
+    },
+    {
+        "city": "Pune, Maharashtra",
+        "famous": "https://s3.india.com/travel/wp-content/uploads/2018/02/Pune-photo-4.jpg"
+    },
+    {
+        "city": "Nashik, Maharashtra",
+        "famous": "https://i0.wp.com/www.tusktravel.com/blog/wp-content/uploads/2023/06/Bhaktidham-Temple-Nashik-Maharashtra.jpg?fit=1024%2C681&ssl=1"
+    }
 ]

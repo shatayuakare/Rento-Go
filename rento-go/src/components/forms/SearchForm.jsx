@@ -11,7 +11,7 @@ const SearchForm = () => {
                 <select name="location" id="location" className='select w-full select-bordered bg-zinc-100 h-auto rounded-md  min-h-0 py-2'
                     defaultValue={'Nagpur'}>
                     {
-                        cities.map((elem, index) => <option key={index}>{elem}</option>)
+                        cities.map((elem, index) => <option key={index}>{elem.city}</option>)
                     }
                 </select>
             </div>
@@ -20,7 +20,7 @@ const SearchForm = () => {
                 <select name="pickup" id="pickup" className='select select-bordered bg-zinc-100 h-auto min-h-0 rounded-md w-full py-2'
                     defaultValue={'Nagpur'}>
                     {
-                        cities.map((elem, index) => <option key={index}>{elem}</option>)
+                        cities.map((elem, index) => <option key={index}>{elem.city}</option>)
                     }
                 </select>
             </div>
