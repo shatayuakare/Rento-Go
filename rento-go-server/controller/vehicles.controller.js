@@ -3,10 +3,10 @@ import Vehicles from "../model/vehicles.schema.js"
 
 export const createCar = async (req, res) => {
     try {
-        const { name, brand, luggage, images, seats, stock, doors, fuel, horsepower, engine, drive, cartype, gearbox, mileage, price } = req.body;
+        const { name, brand, vehicletype, luggage, images, seats, stock, doors, fuel, horsepower, engine, drive, cartype, gearbox, mileage, price } = req.body;
 
         const createCar = new Vehicles({
-            name, brand, luggage, images, seats, doors, fuel, stock, horsepower, engine, drive, cartype, gearbox, mileage, price
+            name, brand, luggage, images, vehicletype, seats, doors, fuel, stock, horsepower, engine, drive, cartype, gearbox, mileage, price
         })
         await createCar.save()
         res.status(201).json({ message: "New Car Added", createCar })
@@ -17,7 +17,7 @@ export const createCar = async (req, res) => {
 
 export const createBike = async (req, res) => {
     try {
-        const { name, brand, images, seats, fuel, horsepower, engine, stock, gearbox, milleage, price } = req.body;
+        const { name, brand, images, seats, fuel, vehicletype, horsepower, engine, stock, gearbox, milleage, price } = req.body;
 
         const createCar = new Vehicles({
             name, brand, images, seats, fuel, horsepower, engine, stock, gearbox, milleage, price
@@ -60,9 +60,9 @@ export const deleteVehicle = async (req, res) => {
 
 export const updateCar = async (req, res) => {
     try {
-        const { name, brand, luggage, images, seats, stock, doors, fuel, horsepower, engine, drive, cartype, gearbox, mileage, price } = req.body;
+        const { name, brand, luggage, images, vehicletype, seats, stock, doors, fuel, horsepower, engine, drive, cartype, gearbox, mileage, price } = req.body;
 
-        const car = await Vehicles.findOneAndUpdate({ _id: req.params.id }, { name, brand, luggage, images, seats, stock, doors, fuel, horsepower, engine, drive, cartype, gearbox, mileage, price })
+        const car = await Vehicles.findOneAndUpdate({ _id: req.params.id }, { name, brand, luggage, images, seats, stock, vehicletype, doors, fuel, horsepower, engine, drive, cartype, gearbox, mileage, price })
 
         res.status(200).json({ message: "Car changes save", car })
     } catch (error) {
@@ -72,8 +72,8 @@ export const updateCar = async (req, res) => {
 
 export const updateBike = async (req, res) => {
     try {
-        const { name, brand, images, seats, fuel, horsepower, engine, stock, gearbox, mileage, price } = req.bdoy;
-        const car = await Vehicles.findOneAndUpdate({ _id: req.params.id }, { name, brand, images, seats, fuel, horsepower, engine, stock, gearbox, mileage, price })
+        const { name, brand, images, seats, fuel, vehicletype, horsepower, engine, stock, gearbox, mileage, price } = req.bdoy;
+        const car = await Vehicles.findOneAndUpdate({ _id: req.params.id }, { name, brand, images, seats, fuel, horsepower, vehicletype, engine, stock, gearbox, mileage, price })
 
         res.status(200).json({ message: "Car changes save", car })
     } catch (error) {

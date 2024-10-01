@@ -15,24 +15,24 @@ import Login from './pages/auth/Login'
 
 // content pages
 import Error from './pages/Error'
-import Home from './pages/Home'
+import Home from './pages/home/Home'
 import About from "./pages/About"
 import Contact from "./pages/Contact"
-import Cars from './pages/Cars'
-import Bike from './pages/Bike'
-import Location from './pages/Location'
+import Cars from './pages/vehicles/Cars'
+import Bike from './pages/vehicles/Bike'
+// import Location from './pages/Location'
 
 // Dashboard sub-pages
-import Dashboard from './pages/Dashboard'
+import Dashboard from './pages/dashboard/Dashboard'
 import Dash from './pages/dashboard/Dash'
 import Profile from './pages/dashboard/Profile'
 import Orders from './pages/dashboard/Orders'
 import InnerCart from './components/InnerCart'
-import ShareVehicle from './pages/ShareVehicle'
-import Admin from './pages/Admin';
+import Admin from './pages/admin/vehicles/Admin';
 import Vehicles from './pages/admin/vehicles/Vehicles';
 import ViewsVehicles from './pages/admin/vehicles/ViewsVehicles';
-import RentVehicles from './pages/RentVehicles';
+import ShareVehicles from './pages/ShareVehicles';
+import Referal from './pages/Referal';
 
 
 
@@ -44,7 +44,7 @@ const App = () => {
     <BrowserRouter>
 
       <Header />
-      <main className='bg-zinc-50 text-zinc-800 capitalize  '>
+      <main className='bg-zinc-50 text-zinc-800 capitalize'>
         <Routes>
           <Route path='/*' element={<Error />} />
           <Route index element={<Home />} />
@@ -60,10 +60,10 @@ const App = () => {
           <Route path='/cars/:id' element={<InnerCart />} />
           <Route path='/bikes' element={<Bike />} />
           <Route path='/bikes/:id' element={<InnerCart />} />
-          <Route path='/refer' element={<ShareVehicle />} />
+          <Route path='/refer' element={<Referal />} />
 
           <Route path='/about' element={<About />} />
-          <Route path='/share' element={<RentVehicles />} />
+          <Route path='/share/:vehicle' element={<ShareVehicles />} />
           <Route path='/location' element={<Location />} />
           <Route path='/contact' element={<Contact />} />
           <Route path='/login' element={!authUser ? <Login /> : <Navigate to={"/"} />} />

@@ -7,18 +7,32 @@ dotenv.config()
 
 const key = process.env.KEY
 
-export const login = async (req, res) => {
+
+export const userInfo = async (req, res) => {
     try {
-        const { email, password } = req.body;
+        const user = await Users.findOne({ _id: req.params.id })
+        if (!user) return res.status(404).json({ message: "User not found" })
+
+        const data = user.toObject();
+        delete data.password
+
+        res.status(200).json(data)
+    } catch (error) {
+        res.status(400).json({ message: error.message })
+    }
+}
+
+export const login = async (req, res) => {
+    const { email, password } = req.body;
+    try {
         const user = await Users.findOne({ email })
-        const isValid = bcrypt.compare(password, user.password)
+        const isValid = await bcrypt.compare(password, user.password)
 
-        if (!user || !isValid) return res.status(401).json({ message: "Email or password incorrect" })
+        if (!user || !isValid) return res.status(400).json({ message: "Email or password incorrect" })
         const userObject = user.toObject();
-
         delete userObject.password;
 
-        req.session.token = jwt.sign({ user: userObject }, key)
+        req.session.token = jwt.sign({ userObject }, key)
         res.status(200).json({ message: "Account Loged In", token: req.session.token })
     } catch (error) {
         res.status(400).json({ message: error.message })
@@ -29,13 +43,12 @@ export const isLoggedIn = async (req, res, next) => {
         const token = req.cookie.token;
         if (!token) return res.status(403).json({ message: "You have no permission, Please Login" });
 
-
         // console.log(token)
         const decode = jwt.verify(token, "secret")
         console.log(token)
         const user = await Users.findOne({ email: decode.user.email }).select("-password")
 
-        if (!user) return res.status(404).json({ message: "Unauthroised Access" })
+        if (!user) return res.status(401).json({ message: "Unauthroised Access" })
 
         req.user = user
         next()
@@ -47,37 +60,51 @@ export const isLoggedIn = async (req, res, next) => {
 
 export const register = async (req, res) => {
     try {
-        const { name, email, password, admin } = req.body;
+        const { name, email, password } = req.body;
 
         const user = await Users.findOne({ email })
         if (user) return res.status(200).json({ message: "Already Registered" })
 
         const hash = await bcrypt.hash(password, 10)
 
-        let createUser;
-
-        if (admin) {
-            createUser = new Users({
-                name, email, admin, password: hash
-            })
-        } else {
-            createUser = new Users({
-                name, email, password: hash
-            })
-        }
-
+        const createUser = new Users({
+            name, email, password: hash
+        })
 
         await createUser.save()
-        const userObject = user.toObject();
-
+        const userObject = createUser.toObject();
         delete userObject.password;
 
-        req.session.token = jwt.sign({ user: userObject }, key)
+        req.session.token = jwt.sign({ userObject }, key)
         res.status(201).json({
-            message: "Accound Registered",
+            message: "Account Register",
             token: req.session.token
         })
     } catch (error) {
+        res.status(400).json({ message: error.message })
+    }
+}
+
+export const adminLogin = async (req, res) => {
+    try {
+        const { name, email, password } = req.body
+        const user = await Users.findOne({ email })
+
+        if (user) return res.status(200).json({ message: `${user.name} already exist` })
+
+        const createAdmin = new Users({
+            name, email, password, admin: true
+        })
+
+        await createAdmin.save()
+        const adminObj = createAdmin.toObject()
+        delete adminObj.password
+
+        res.status(201).json({
+            message: "Admin register"
+        })
+    } catch (error) {
+        res.status(400).json({ message: error.message })
     }
 }
 

@@ -24,15 +24,17 @@ const CustomerReview = () => {
     ]
 
     return (
-        <section className="h-auto min-h-auto content-center text-zinc-700 bg-zinc-100 customer-review" >
+        <section className="h-auto min-h-auto content-center text-zinc-700 bg-white customer-review" >
             <div className="sm:w-4/5 md:w-4/5  text-center mx-auto">
-                <h4 className='text-center sm:text-3xl md:text-5xl font-bold pb-5'>What our customer saying...</h4>
+                <h4 className='text-center sm:text-3xl md:text-5xl font-bold pb-5'>
+                    What our customer saying...
+                </h4>
 
                 <div className="flex gap-8 mt-6 sm:flex-col flex-wrap lg:flex-row">
 
                     {
                         reviews.map((elem, index) => (
-                            <div className={`flex-1 shadow-xl bg-[url('${elem.img}')] bg-cover border rounded-2xl bg-center h-[60vh] content-end overflow-hidden`} key={index}>
+                            <div className={`flex-1 shadow-xl bg-[url(${elem.img})] bg-cover border rounded-2xl bg-center h-[60vh] content-end overflow-hidden`} key={index}>
                                 <div className="bg-black hidden overlay bg-opacity-35 w-full text-left  p-4 text-zinc-100">
                                     <h5 className='text-lg font-bold'>{elem.title}</h5>
                                     <p className="text-xs py-2">

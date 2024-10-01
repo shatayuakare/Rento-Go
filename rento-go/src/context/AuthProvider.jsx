@@ -9,9 +9,9 @@ export default function AuthProvider({ children }) {
     const cookie = new Cookies()
     const token = cookie.get("token");
     const initialauthUser = decodeToken(token)
-
+    // console.log(initialauthUser.userObject)
     const [authUser, setAuthUser] = useState(
-        initialauthUser ? (initialauthUser.user) : undefined
+        initialauthUser ? initialauthUser.userObject : undefined
     )
 
     return (

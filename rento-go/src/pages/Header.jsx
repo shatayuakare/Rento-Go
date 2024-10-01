@@ -32,7 +32,8 @@ const Header = () => {
     return (
 
         <>
-            {((location.pathname !== "/admin") || (location.pathname !== "/admin" || "/admin/vehicles" || "/admin/*")) &&
+            {
+                ((location.pathname !== "/admin") || (location.pathname !== "/admin" || "/admin/vehicles" || "/admin/*")) &&
                 <header className={`navbar sm:px-2 md:px-10 lg:px-20 xl:px-28 sm:py-1 md:py-2 lg:py-5 text-zinc-500 left-0 w-full z-[999] ${sticky ? "fixed bg-[#0B0808] lg:py-3 xl:py-3" : "absolute"}`}>
                     <div className="navbar-start">
                         <div className="dropdown">

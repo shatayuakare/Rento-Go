@@ -1,8 +1,8 @@
 import React from 'react'
 import Refer from "../components/Refer"
-import ShareForm from '../components/forms/ShareForm'
+// import ShareForm from '../components/forms/ReferForm'
 
-const ShareVehicle = () => {
+const Referal = () => {
     return (
 
         <>
@@ -10,7 +10,7 @@ const ShareVehicle = () => {
 
                 <div className="sm:mx-4 md:mx-12 lg:mx-20 xl:mx-28 grid sm:grid-cols-1 lg:grid-cols-2">
                     <div className="">
-                        <ShareForm />
+                        {/* <ShareForm /> */}
                     </div>
                     <div className="">
 
@@ -23,4 +23,4 @@ const ShareVehicle = () => {
     )
 }
 
-export default ShareVehicle
+export default Referal

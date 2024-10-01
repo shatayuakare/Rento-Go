@@ -1,4 +1,7 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
+import { useAuth } from '../../context/AuthProvider'
+import axios from 'axios'
+import { toast } from 'react-toastify'
 
 const history = [
     {
@@ -19,10 +22,26 @@ const history = [
 ]
 const Dash = () => {
 
+    const [authUser, setAuthUser] = useAuth()
+    setAuthUser(authUser)
+
+    const [recentOrder, setRecentOrders] = useState([])
+
+    useEffect(() => {
+        const getUserDetail = async () => {
+
+            const id = authUser._id
+            await axios.get(`http://localhost:8080/auth/${id}`).then(res => {
+                // console.log("success", res.data)
+                setRecentOrders(res.data.order)
+            }).catch(err => toast.error(err.response.data.message))
+        }
+
+        getUserDetail()
+    }, [])
     return (
         <>
             <div className='grid sm:grid-cols-1 lg:grid-cols-3 sm:gap-3 lg:gap-6 h-1/3'>
-
                 {
                     history.map((elem, index) => (
                         <div className="p-6 rounded-sm text-zinc-700 bg-white border-2 border-zinc-300 relative" key={index}>
@@ -35,7 +54,6 @@ const Dash = () => {
                         </div>
                     ))
                 }
-
             </div>
             <div className='border-2 p-5 bg-white border-zinc-300 min-h-2/3 h-2/3'>
                 <h5 className="text-2xl text-zinc-800 font-semibold">My Recent Order</h5>
@@ -53,15 +71,32 @@ const Dash = () => {
                         </tr>
                     </thead>
                     <tbody>
-                        <tr className='text-zinc-700 text-sm'>
-                            <td><span className='bg-zinc-200 p1 px-2 rounded-xl font-semibold'>#9486t</span></td>
-                            <td>Jeep</td>
-                            <td>Nagpur</td>
-                            <td>22/36/59</td>
-                            <td>22/36/59</td>
-                            <td>$9238</td>
-                            <td><span className='bg-green-500 p-1 text-white font-semibold px-3 rounded-xl'>Complete</span></td>
-                        </tr>
+                        {
+                            recentOrder ?
+                                recentOrder.map((elem, index) => (
+                                    <tr className='text-zinc-700 text-sm' key={index}>
+                                        <td><span className='bg-zinc-200 p1 px-2 rounded-xl font-semibold'>#{elem._id}</span></td>
+                                        <td>Jeep</td>
+                                        <td>Nagpur</td>
+                                        <td>22/36/59</td>
+                                        <td>22/36/59</td>
+                                        <td>$9238</td>
+                                        <td><span className='bg-green-500 p-1 text-white font-semibold px-3 rounded-xl'>Complete</span></td>
+                                    </tr>
+                                ))
+
+                                :
+
+                                <tr className='text-zinc-700 text-sm'>
+                                    <td><span className='bg-zinc-200 p1 px-2 rounded-xl font-semibold'>#9486t</span></td>
+                                    <td>Jeep</td>
+                                    <td>Nagpur</td>
+                                    <td>22/36/59</td>
+                                    <td>22/36/59</td>
+                                    <td>$9238</td>
+                                    <td><span className='bg-orange-500 p-1 text-white font-semibold px-3 rounded-xl'>Pending</span></td>
+                                </tr>
+                        }
                     </tbody>
                 </table>
             </div>

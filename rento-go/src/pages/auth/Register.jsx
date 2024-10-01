@@ -17,7 +17,7 @@ const Register = () => {
         event.preventDefault()
         const data = { name, email, password }
 
-        if (!terms) return alert("Please accept Term and Condition")
+        if (!terms) return toast("Please accept Term and Condition")
 
         await axios.post("http://localhost:8080/auth/register", data).then((res) => {
             if (remember) {

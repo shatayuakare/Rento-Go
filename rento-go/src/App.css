@@ -8,6 +8,11 @@ label.label {
     padding-bottom: .2rem !important;
 }
 
+label.required::after {
+    content: ' *' !important;
+    color: red !important;
+}
+
 button {
     min-height: auto !important;
 }

@@ -1,10 +1,13 @@
 import React from 'react'
 import { Link, Outlet } from 'react-router-dom'
-import { useAuth } from "../context/AuthProvider"
+import { useAuth } from "../../context/AuthProvider"
 
 const Dashboard = () => {
 
-    const [authUser, setAuthUser] = useAuth()
+    const [authUser, setAuthUser] = useAuth();
+    setAuthUser(authUser)
+
+
     return (
         <section className="content-center">
             <div className="sm:mx-2 md:mx-20 lg:mx-24  xl:mx-28 flex sm:pt-16 sm:flex-col lg:flex-row sm:gap-3 lg:gap-6 lg:h-[80vh]">
