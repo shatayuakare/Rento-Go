@@ -34,7 +34,7 @@ const Header = () => {
         <>
             {
                 ((location.pathname !== "/admin") || (location.pathname !== "/admin" || "/admin/vehicles" || "/admin/*")) &&
-                <header className={`navbar sm:px-2 md:px-10 lg:px-20 xl:px-28 sm:py-1 md:py-2 lg:py-5 text-zinc-500 left-0 w-full z-[999] ${sticky ? "fixed bg-[#0B0808] lg:py-3 xl:py-3" : "absolute"}`}>
+                <header className={`navbar  sm:px-2 md:px-10 lg:px-20 xl:px-28 sm:py-1 md:py-2 lg:py-5 text-zinc-500 left-0 w-full z-[999] ${sticky ? "fixed bg-[#0B0808] lg:py-3 xl:py-3" : "absolute"}`}>
                     <div className="navbar-start">
                         <div className="dropdown">
                             <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden px-1 p-0">
@@ -61,12 +61,7 @@ const Header = () => {
                                     <Link to={'/contact'}>Contact</Link>
                                 </li>
                                 <li>
-                                    <details>
-                                        <summary>About</summary>
-                                        <ul className="p-2">
-                                            <li><Link to={'/about'}>Who I am?</Link></li>
-                                        </ul>
-                                    </details>
+                                    <Link to={'/about'}>About</Link>
                                 </li>
                             </ul>
                         </div>
@@ -83,14 +78,7 @@ const Header = () => {
                                 <Link to={'/contact'}>Contact</Link>
                             </li>
                             <li>
-                                <div className="dropdown dropdown-bottom dropdown-hover">
-                                    <div tabIndex={0} role="button">About</div>
-                                    <ul tabIndex={0} className="dropdown-content menu z-[1] p-2 shadow">
-                                        <li>
-                                            <Link className='w-fit text-nowrap' to={'/about'}>Who I am?</Link>
-                                        </li>
-                                    </ul>
-                                </div>
+                                <Link to={'/about'}>About</Link>
                             </li>
                         </ul>
                     </div>
@@ -98,11 +86,12 @@ const Header = () => {
                         {
                             authUser ?
                                 <div className="dropdown dropdown-hover dropdown-bottom dropdown-end">
-                                    <div tabIndex={0} role="button">
-                                        <div className="avatar ">
-                                            <div className="mask mask-squircle w-11">
+                                    <div className='bg-white p-1 ps-2 pe-4 rounded-sm text-black' tabIndex={0} role="button">
+                                        <div className="avatar flex gap-2 items-center">
+                                            <div className="mask mask-squircle w-8">
                                                 <img src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp" />
                                             </div>
+                                            {authUser.name.split(' ', [1])}
                                         </div>
                                     </div>
                                     <ul tabIndex={0} className="dropdown-content menu invert rounded-box z-[1] p-2 shadow">

@@ -1,14 +1,18 @@
 import React from 'react'
 
-const VehicleHeading = () => {
-    return (
-        <div className="h-[45vh] content-center bg-zinc-900 bg-cover text-center text-white bg-center bg-scroll relative">
-            <h4 className='capitalize font-bold text-5xl'>
-                Rent a car rent our freedom
-            </h4>
 
-            <img className='absolute left-0 [transform:rotateY(180deg)] bottom-0 h-[55%]' src="https://www.pngfind.com/pngs/b/387-3879100_bmw-7-series-2018-bmw-5-series-black.png" alt="" />
-            <img className='absolute right-0 bottom-0 h-[55%]' src="https://www.pngfind.com/pngs/b/387-3879100_bmw-7-series-2018-bmw-5-series-black.png" alt="" />
+
+const VehicleHeading = ({ vehicle }) => {
+
+    return (
+
+        <div className={`h-[50vh] bg-cover text-center bg-center bg-scroll  ${vehicle === 'car' ? "bg-[url('https://wallpapercave.com/wp/wp3720759.jpg')]" : "bg-[url('https://cdn.wallpapersafari.com/16/9/6ONnED.jpg')]"}
+        `}>
+            <div className="bg-black content-center h-full bg-opacity-55">
+                <h4 className='capitalize font-bold text-5xl text-zinc-100'>
+                    Rent a {vehicle} rent our freedom
+                </h4>
+            </div>
         </div>
     )
 }

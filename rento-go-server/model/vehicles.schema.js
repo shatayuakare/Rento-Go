@@ -9,10 +9,6 @@ const vehicleSchema = mongoose.Schema({
         type: String,
         required: true
     },
-    vehicletype: {
-        type: String,
-        required: true
-    },
     images: [
         {
             type: String,

@@ -7,7 +7,7 @@ const HomeIndex = () => {
         <section className="bg-[#0B0808]">
 
             {/* https://purepng.com/public/uploads/large/purepng.com-jaguar-xkr-s-blue-carcarvehicletransportautocars-561521125346a9gaa.png */}
-            <div className='sm:bg-[url("https://cdn.pixabay.com/photo/2015/10/01/19/05/car-967470_640.png")] sm:bg-[center_bottom_-3rem] sm:bg-no-repeat lg:bg-none absolute min-h-[100vh] lg:h-auto sm:h-[100vh] content-center'>
+            <div className='sm:bg-[url("https://cdn.pixabay.com/photo/2015/10/01/19/05/car-967470_640.png")] sm:bg-[center_bottom_-3rem] sm:bg-no-repeat lg:bg-none absolute min-h-[100vh] lg:h-auto sm:h-[100vh] content-center overflow-hidden'>
 
                 <div className='sm:px-4 md:px-12 lg:mx-24 xl:mx-28 lg:pt-0 sm:py-8'>
 
@@ -29,9 +29,9 @@ const HomeIndex = () => {
                         </div>
                     </div>
 
-                    <div className='hidden flex-shrink-0 lg:flex'>
-                        <img className='absolute z-0 lg:-bottom-16 xl:bottom-16 lg:right-0 xl:right-0 lg:w-[58rem] xl:w-[60rem] drop-shadow-[-5px_2px_8px_red]'
-                            src="https://cdn.pixabay.com/photo/2015/10/01/19/05/car-967470_640.png" data-aos="zoom-in" data-aos-duration="1000" alt="" loading='fast' />
+                    <div className='hidden flex-shrink-0 lg:flex overflow-hidden'>
+                        <img className='absolute z-0 lg:-bottom-16 xl:bottom-16 lg:-right-10 lg:w-[58rem] xl:w-[59rem] drop-shadow-[-5px_2px_8px_red]'
+                            src="https://cdn.pixabay.com/photo/2015/10/01/19/05/car-967470_640.png" alt="" loading='fast' />
                     </div>
                 </div>
             </div>

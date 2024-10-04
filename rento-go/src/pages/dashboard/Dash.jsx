@@ -3,42 +3,49 @@ import { useAuth } from '../../context/AuthProvider'
 import axios from 'axios'
 import { toast } from 'react-toastify'
 
-const history = [
-    {
-        title: "Total Order",
-        count: 3,
-        icon: "bx bxs-book-bookmark"
-    },
-    {
-        title: "Coupons",
-        count: 11,
-        icon: "bx bxs-purchase-tag"
-    },
-    {
-        title: "Cancel Order",
-        count: 9,
-        icon: "bx bx-task-x"
-    },
-]
+
 const Dash = () => {
 
     const [authUser, setAuthUser] = useAuth()
     setAuthUser(authUser)
 
-    const [recentOrder, setRecentOrders] = useState([])
+    const [orders, setOrders] = useState([])
 
     useEffect(() => {
         const getUserDetail = async () => {
 
             const id = authUser._id
-            await axios.get(`http://localhost:8080/auth/${id}`).then(res => {
-                // console.log("success", res.data)
+            await axios.get(`https://rento-go.onrender.com/auth/${id}`).then(res => {
                 setRecentOrders(res.data.order)
             }).catch(err => toast.error(err.response.data.message))
         }
 
+        const getOrders = async () => {
+            await axios.get("https://rento-go.onrender.com/orders").then(res => setOrders(res.data)).catch(err => toast.error(err.response.data.message))
+        }
+
         getUserDetail()
+        getOrders()
     }, [])
+
+    const history = [
+        {
+            title: "Total Order",
+            count: orders.length,
+            icon: "bx bxs-book-bookmark"
+        },
+        {
+            title: "Coupons",
+            count: authUser.coupons,
+            icon: "bx bxs-purchase-tag"
+        },
+        {
+            title: "Cancel Order",
+            count: 2,
+            icon: "bx bx-task-x"
+        },
+    ]
+
     return (
         <>
             <div className='grid sm:grid-cols-1 lg:grid-cols-3 sm:gap-3 lg:gap-6 h-1/3'>
@@ -72,30 +79,17 @@ const Dash = () => {
                     </thead>
                     <tbody>
                         {
-                            recentOrder ?
-                                recentOrder.map((elem, index) => (
-                                    <tr className='text-zinc-700 text-sm' key={index}>
-                                        <td><span className='bg-zinc-200 p1 px-2 rounded-xl font-semibold'>#{elem._id}</span></td>
-                                        <td>Jeep</td>
-                                        <td>Nagpur</td>
-                                        <td>22/36/59</td>
-                                        <td>22/36/59</td>
-                                        <td>$9238</td>
-                                        <td><span className='bg-green-500 p-1 text-white font-semibold px-3 rounded-xl'>Complete</span></td>
-                                    </tr>
-                                ))
-
-                                :
-
-                                <tr className='text-zinc-700 text-sm'>
-                                    <td><span className='bg-zinc-200 p1 px-2 rounded-xl font-semibold'>#9486t</span></td>
-                                    <td>Jeep</td>
-                                    <td>Nagpur</td>
-                                    <td>22/36/59</td>
-                                    <td>22/36/59</td>
-                                    <td>$9238</td>
-                                    <td><span className='bg-orange-500 p-1 text-white font-semibold px-3 rounded-xl'>Pending</span></td>
+                            orders.map((elem, index) => (
+                                <tr className='text-zinc-700 text-sm' key={index}>
+                                    <td><span className='bg-zinc-200 p1 px-2 rounded-xl font-semibold'>#{elem._id.substr(elem_id.length - 5)}</span></td>
+                                    <td>{elem.vehicle}</td>
+                                    <td>{elem.location}</td>
+                                    <td>{elem.pickDate}</td>
+                                    <td>{elem.returnDate}</td>
+                                    <td>₹{elem.payment}/-</td>
+                                    <td><span className='bg-green-500 p-1 text-white font-semibold px-3 rounded-xl'>{elem.status}</span></td>
                                 </tr>
+                            ))
                         }
                     </tbody>
                 </table>

@@ -35,7 +35,6 @@ import ShareVehicles from './pages/ShareVehicles';
 import Referal from './pages/Referal';
 
 
-
 const App = () => {
   const [authUser, setAuthUser] = useAuth()
   setAuthUser(authUser)

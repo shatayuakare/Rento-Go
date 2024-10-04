@@ -1,48 +1,30 @@
-import axios from 'axios'
-import React, { useEffect, useState } from 'react'
-import { toast } from 'react-toastify'
+import React, { useState } from 'react'
 
-const Filter = ({ vehicle }) => {
+const Filter = ({ vehicle, brands }) => {
 
-    const [list, setList] = useState([])
-    const [brands, setBrands] = useState([])
+    const [brand, setBrand] = useState('none')
 
-    useEffect(() => {
-        const getData = async () => {
-            await axios.get(`http://localhost:8080/vehicles`).then((res) => {
-                const data = res.data;
-
-                // setBrands(data.filter((elem) => elem.brand))
-                setList(data.filter((elem) => elem.vehicletype === vehicle))
-            }).catch(err => toast.error(err.response.data.message))
-        }
-
-        const brandSetter = () => {
-
-        }
-        getData()
-        brandSetter()
-    }, [])
-
-    console.log(list)
     return (
         <div className="navbar py-0 min-h-10">
             <div className="navbar-start">
-                Filter
+                Filter {vehicle}
             </div>
-            <div className="navbar-end">
-                <select className='select bg-white capitalize h-9 border-2 shadow' name="brand" id="brand" defaultValue={'none'}>
-                    <option value="none">All</option>
+            <div className="navbar-end gap-6">
+                <select className='select rounded-sm bg-white capitalize h-10 border-2 shadow' name="brand" id="brand" defaultValue={{ brand }}
+                    onChange={(event) => setBrand(event.currentTarget.value)}>
+                    <option>All</option>
                     {
                         brands.map((elem, index) => (
                             <option value={elem} key={index}>{elem}</option>
                         ))
                     }
                 </select>
-                <select className='select bg-white capitalize h-9 border-2 shadow' name="sort" id="sort" defaultValue={''}>
-                    <option value="">Sort</option>
-                    <option value="a-z">A-to-Z</option>
-                    <option value="z-a">Z-to-A</option>
+                <select className='select rounded-sm bg-white capitalize h-10 border-2 shadow' name="sort" id="sort" defaultValue={''}>
+                    <option>Sort</option>
+                    <option value="0-500">0-to-500</option>
+                    <option value="500-1000">500-to-1000</option>
+                    <option value="1000-2500">1000-to-2500</option>
+                    <option value="2500-5000">2500-to-5000</option>
                 </select>
             </div>
         </div >

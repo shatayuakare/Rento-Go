@@ -3,8 +3,9 @@ import { Cookies } from "react-cookie";
 import { decodeToken } from "react-jwt"
 export const AuthContext = createContext();
 
-
 export default function AuthProvider({ children }) {
+
+    // https://rento-go.onrender.com/
 
     const cookie = new Cookies()
     const token = cookie.get("token");

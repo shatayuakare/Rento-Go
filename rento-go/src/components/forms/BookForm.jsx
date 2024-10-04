@@ -1,15 +1,18 @@
 import React, { useEffect, useState } from 'react'
 import { useAuth } from '../../context/AuthProvider'
 import { toast } from 'react-toastify'
+import cities from "../../api/availableCities.json"
 import axios from 'axios'
 
 const BookForm = ({ data }) => {
 
     const [authUser, setAuthUser] = useAuth()
     setAuthUser(authUser)
+
+    const [price, setPrice] = useState(0)
     const [duration, setDuration] = useState(0)
     const [location, setLocation] = useState("nagpur")
-    const [pickDate, setPickDate] = useState(new Date().getTime() / 1000)
+    const [pickDate, setPickDate] = useState("")
     const [returnDate, setReturnDate] = useState("")
 
     const [error, setError] = useState(null)
@@ -24,6 +27,7 @@ const BookForm = ({ data }) => {
         const diffDay = Math.floor(diffHour / 24);
         const diffWeek = Math.floor(diffDay / 7);
 
+        setPrice((data.price / 24) * diffHour)
         if (diffHour < 24) {
             return `${diffHour} hours`;
         } else if (diffDay < 7) {
@@ -37,13 +41,6 @@ const BookForm = ({ data }) => {
         setDuration(calculateTimeDiff(pickDate, returnDate))
     }, [pickDate, returnDate]);
 
-    const citys = [
-        "Nagpur",
-        "Amravatti",
-        "Mumbai",
-        "Pune",
-        "Nashik",
-    ]
 
     const fav = false
 
@@ -83,7 +80,7 @@ const BookForm = ({ data }) => {
 
             <div className="flex justify-between items-center">
                 <div className='font-bold text-2xl'>
-                    {data.brand} {data.name}
+                    {data.brand} {data.name} {data.model}
                 </div>
                 <button type='button' className='btn btn-ghost bg-black btn-circle text-3xl p-2 border-2 text-red-500 border-red-500'>
                     {
@@ -102,7 +99,7 @@ const BookForm = ({ data }) => {
                     defaultValue={location}
                     onChange={(event) => setLocation(event.currentTarget.value)}>
                     {
-                        citys.map((elem, index) => <option key={index}>{elem}</option>)
+                        cities.map((elem, index) => <option key={index}>{elem.city}</option>)
                     }
                 </select>
             </div>
@@ -134,8 +131,8 @@ const BookForm = ({ data }) => {
                         {duration}
                     </div>
                 </div>
-                <div className="p-3 text-3xl px-4 rounded-full bg-white  font-bold">
-                    ₹{data.price}/<sub className='font-normal text-sm'>day</sub>
+                <div className="p-3 text-3xl px-4 rounded-full bg-white  font-bold text-blue-500">
+                    <span className="text-[1.5rem] font-normal">₹</span>{price}/-
                 </div>
             </div>
 

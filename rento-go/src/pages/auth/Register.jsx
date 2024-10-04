@@ -19,7 +19,7 @@ const Register = () => {
 
         if (!terms) return toast("Please accept Term and Condition")
 
-        await axios.post("http://localhost:8080/auth/register", data).then((res) => {
+        await axios.post("https://rento-go.onrender.com/auth/register", data).then((res) => {
             if (remember) {
                 cookie.set("token", res.data.token, { expires: new Date(Date.now() + 31536000000) })
             } else {

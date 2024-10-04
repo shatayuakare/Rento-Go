@@ -20,7 +20,7 @@ const Login = () => {
         if (!password) return setError("Password is rquired")
 
         const data = { email, password }
-        await axios.post("http://localhost:8080/auth/login", data).then((res) => {
+        await axios.post("https://rento-go.onrender.com/auth/login", data).then((res) => {
             if (remember) {
                 cookie.set("token", res.data.token, { expires: new Date(Date.now() + 31536000000) })
             } else {

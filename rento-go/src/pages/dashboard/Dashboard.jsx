@@ -16,7 +16,7 @@ const Dashboard = () => {
                     <div className='text-center pt-5'>
                         <div className="avatar">
                             <div className="ring-primary ring-offset-base-100 w-24 rounded-full ring ring-offset-2">
-                                <img src={authUser.img ? authUser.img : "https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp"} />
+                                <img src={authUser.img ? authUser.img : "https://cdn.vectorstock.com/i/1000v/11/41/male-profile-picture-vector-2051141.jpg"} />
                             </div>
                         </div>
                         <h5 className="text-2xl font-semibold text-zinc-800">{authUser.name}</h5>

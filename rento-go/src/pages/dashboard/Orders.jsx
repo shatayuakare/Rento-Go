@@ -1,6 +1,36 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
+import { useAuth } from '../../context/AuthProvider'
+import axios from 'axios'
 
 const Orders = () => {
+
+    const [authUser, setAuthUser] = useAuth()
+    setAuthUser(authUser)
+
+    const [bookOrder, setBookOrder] = useState([])
+    const [completeOrder, setCompleteOrder] = useState([])
+    const [cancelOrder, setCancelOrder] = useState([])
+
+    useEffect(() => {
+        const getUserDetail = async () => {
+            await axios.get(`https://rento-go.onrender.com/auth/${authUser._id}`).then(res => {
+                const order = res.data.order
+                const book = order.filter(elem => elem.status === 'booked')
+                const complete = order.filter(elem => elem.status === 'success')
+                const cancel = order.filter(elem => elem.status === 'cancel')
+
+                setBookOrder(book)
+                setCompleteOrder(complete)
+                setCancelOrder(cancel)
+
+            }).catch(err => toast.error(err.response.data.message))
+        }
+
+        getUserDetail()
+    }, [])
+
+
+
     return (
         <>
             <div className="border-2 border-zinc-300 p-5 bg-white h-1/3">
@@ -18,15 +48,19 @@ const Orders = () => {
                         </tr>
                     </thead>
                     <tbody>
-                        <tr className='text-zinc-700 text-sm'>
-                            <td><span className='bg-zinc-200 p1 px-2 rounded-xl font-semibold'>#9486t</span></td>
-                            <td>Jeep</td>
-                            <td>Nagpur</td>
-                            <td>22/36/59</td>
-                            <td>22/36/59</td>
-                            <td>$9238</td>
-                            <td><span className='bg-orange-500 p-1 text-white font-semibold px-3 rounded-xl'>Booking</span></td>
-                        </tr>
+                        {
+                            bookOrder.map((elem) => (
+                                <tr className='text-zinc-700 text-sm' key={elem._id}>
+                                    <td><span className='bg-zinc-200 p1 px-2 rounded-xl font-semibold'>#{elem._id.substr(elem_id.length - 5)}</span></td>
+                                    <td>{elem.vehicle}</td>
+                                    <td>{elem.location}</td>
+                                    <td>{elem.pickDate}</td>
+                                    <td>{elem.returnDate}</td>
+                                    <td>${elem.price}/-</td>
+                                    <td><span className='bg-orange-500 p-1 text-white font-semibold px-3 rounded-xl'>Booking</span></td>
+                                </tr>
+                            ))
+                        }
                     </tbody>
                 </table>
             </div>
@@ -46,15 +80,20 @@ const Orders = () => {
                         </tr>
                     </thead>
                     <tbody>
-                        <tr className='text-zinc-700 text-sm'>
-                            <td><span className='bg-zinc-200 p1 px-2 rounded-xl font-semibold'>#9486t</span></td>
-                            <td>Jeep</td>
-                            <td>Nagpur</td>
-                            <td>22/36/59</td>
-                            <td>22/36/59</td>
-                            <td>$9238</td>
-                            <td><span className='bg-green-500 p-1 text-white font-semibold px-3 rounded-xl'>Complete</span></td>
-                        </tr>
+                        {
+                            completeOrder.map((elem) => (
+                                <tr className='text-zinc-700 text-sm' key={elem._id}>
+                                    <td><span className='bg-zinc-200 p1 px-2 rounded-xl font-semibold'>#{elem._id.substr(elem_id.length - 5)}</span></td>
+                                    <td>{elem.vehicle}</td>
+                                    <td>{elem.location}</td>
+                                    <td>{elem.pickDate}</td>
+                                    <td>{elem.returnDate}</td>
+                                    <td>${elem.price}/-</td>
+                                    <td><span className='bg-green-500 p-1 text-white font-semibold px-3 rounded-xl'>Complete</span></td>
+                                </tr>
+                            ))
+                        }
+
                     </tbody>
                 </table>
             </div>
@@ -74,14 +113,21 @@ const Orders = () => {
                         </tr>
                     </thead>
                     <tbody>
+
                         <tr className='text-zinc-700 text-sm'>
-                            <td><span className='bg-zinc-200 p1 px-2 rounded-xl font-semibold'>#9486t</span></td>
-                            <td>Jeep</td>
-                            <td>Nagpur</td>
-                            <td>22/36/59</td>
-                            <td>22/36/59</td>
-                            <td>$9238</td>
-                            <td><span className='bg-red-500 p-1 text-white font-semibold px-3 rounded-xl'>Cancelled</span></td>
+                            {
+                                cancelOrder.map((elem) => (
+                                    <tr className='text-zinc-700 text-sm' key={elem._id}>
+                                        <td><span className='bg-zinc-200 p1 px-2 rounded-xl font-semibold'>#{elem._id.substr(elem_id.length - 5)}</span></td>
+                                        <td>{elem.vehicle}</td>
+                                        <td>{elem.location}</td>
+                                        <td>{elem.pickDate}</td>
+                                        <td>{elem.returnDate}</td>
+                                        <td>${elem.price}/-</td>
+                                        <td><span className='bg-red-500 p-1 text-white font-semibold px-3 rounded-xl'>Cancelled</span></td>
+                                    </tr>
+                                ))
+                            }
                         </tr>
                     </tbody>
                 </table>

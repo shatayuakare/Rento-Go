@@ -6,8 +6,6 @@ import bodyParser from "body-parser"
 import session from "express-session"
 import cookieParser from "cookie-parser"
 
-import { isLoggedIn } from "./controller/user.controller.js"
-
 import vehicleRoute from "./routes/vehicles.route.js"
 import userRoute from "./routes/user.route.js"
 import orderRoute from "./routes/order.route.js"
@@ -17,7 +15,7 @@ dotenv.config()
 server.use(express.json())
 server.use(cors())
 server.use(cookieParser())
-// server.use(bodyParser.json())
+server.use(bodyParser.json())
 
 
 const port = process.env.PORT
@@ -45,4 +43,4 @@ server.get("/", (req, res) => {
 
 server.use("/auth", userRoute)
 server.use("/vehicles", vehicleRoute)
-server.use("/orders", isLoggedIn, orderRoute)
+server.use("/orders", orderRoute)

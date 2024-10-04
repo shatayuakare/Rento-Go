@@ -14,7 +14,7 @@ const ShareHero = () => {
                         We'll uyse your car's location to calculate your onboard bonus. Each ZIP Code will belong to One of five zones. Zones are based on guest demanf for cars. More Guest demand means a higher zone, And bigger bonouses for cars. Zone 1 gets the highest bouns. while zones 4 and 5 aren't eligible for the onboard bonus.
                     </p>
 
-                    <Link to={'/share'} className="btn rounded-sm text-white">
+                    <Link to={'/share/cars'} className="btn rounded-sm text-white">
                         Learn More
                         <i className='bx bx-up-arrow-alt text-2xl rotate-45' ></i>
                     </Link>

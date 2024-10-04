@@ -2,14 +2,12 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 
 const CarCard = ({ car }) => {
-    // console.log(car)
-
 
     return (
         <div className='p-3 rounded-md shadow hover:shadow-lg bg-white text-zinc-800'>
             <img className='h-[10rem] hover:scale-105 mx-auto overflow-hidden' src={car.images[0]} alt="" />
             <h4 className='text-xl my-1 text-zinc-800 font-bold'>
-                {car.brand} {car.name}
+                {car.brand} {car.name} {car.model}
             </h4>
             <div className='flex justify-between text-xs capitalize py-3'>
                 <ul className='grid gap-1'>
