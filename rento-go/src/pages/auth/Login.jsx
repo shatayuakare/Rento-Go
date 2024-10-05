@@ -4,22 +4,22 @@ import { Cookies } from "react-cookie"
 import { Link } from 'react-router-dom'
 import { toast } from 'react-toastify'
 
-
 const Login = () => {
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
     const [remember, setRemember] = useState(false)
     const [error, setError] = useState(null)
+    const [loader, setLoader] = useState(false)
 
     const cookie = new Cookies()
 
     const loginHandler = async (event) => {
         event.preventDefault()
-
         if (!email) return setError("Email is rquired")
         if (!password) return setError("Password is rquired")
 
         const data = { email, password }
+        setLoader(true)
         await axios.post("https://rento-go.onrender.com/auth/login", data).then((res) => {
             if (remember) {
                 cookie.set("token", res.data.token, { expires: new Date(Date.now() + 31536000000) })
@@ -33,12 +33,14 @@ const Login = () => {
             }
 
             toast.success(res.data.message)
+            setLoader(false)
             window.location.reload()
         }).catch((err) => toast.error(err.response.data.message),)
 
         setEmail("")
         setPassword("")
         setRemember(false)
+        setLoader(false)
     }
 
     return (
@@ -112,7 +114,14 @@ const Login = () => {
                             </div>
                         }
 
-                        <button className="w-full mt-1 btn rounded-sm text-white py-4" type='submit'>Login</button>
+                        <button className="w-full mt-1 btn rounded-sm text-white py-4" type='submit'>
+                            {
+                                loader ?
+                                    <span className="loading loading-bars loading-md"></span>
+                                    :
+                                    <span>Login</span>
+                            }
+                        </button>
 
                         <div className='text-center text-sm mt-2'>
                             New Registration?

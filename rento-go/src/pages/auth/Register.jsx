@@ -10,30 +10,31 @@ const Register = () => {
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
     const [terms, setTerms] = useState(false)
+    const [error, setError] = useState(null)
+
+    const [loader, setLoader] = useState(false)
 
     const cookie = new Cookies();
 
     const registerHandler = async (event) => {
         event.preventDefault()
-        const data = { name, email, password }
+        const registerData = { name, email, password }
+        if (!name) return setError("Name is required")
+        if (!email) return setError("Email is required")
+        if (!password) return setError("Password is required")
+        if (!terms) return toast.warning("Please accept Term and Condition")
 
-        if (!terms) return toast("Please accept Term and Condition")
+        setLoader(true)
+        await axios.post("https://rento-go.onrender.com/auth/register", registerData).then((res) => {
+            cookie.set("token", res.data.token, { expires: new Date(Date.now() + 31536000000) })
 
-        await axios.post("https://rento-go.onrender.com/auth/register", data).then((res) => {
-            if (remember) {
-                cookie.set("token", res.data.token, { expires: new Date(Date.now() + 31536000000) })
-            } else {
-                cookie.set("token", res.data.token, {
-                    expires: new Date(Date.now() + 30 * 60 * 1000),
-                    path: '/',
-                    secure: true,
-                    httponly: true,
-                });
-            }
             toast.success(res.data.message)
+            setLoader(false)
             window.location.reload()
         }).catch((err) => toast.error(err.response.data.message))
 
+        setError(null)
+        setLoader(false)
         setName("")
         setEmail("")
         setPassword("")
@@ -113,7 +114,17 @@ const Register = () => {
                             <label htmlFor="policy"> I agree to the Terms and Privacy Policy</label>
                         </div>
 
-                        <button className="w-full btn rounded-sm text-white py-4 mt-1" type='submit'>Register</button>
+                        {
+                            error && <div className="text-red-500">{error}</div>
+                        }
+                        <button className="w-full btn rounded-sm text-white  mt-1" type='submit'>
+                            {
+                                loader ?
+                                    <span className="loading loading-bars loading-md"></span>
+                                    :
+                                    <span>Register</span>
+                            }
+                        </button>
 
                         <div className='text-center text-sm mt-2'>
                             Already have an Account?

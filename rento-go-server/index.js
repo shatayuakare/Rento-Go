@@ -9,6 +9,7 @@ import cookieParser from "cookie-parser"
 import vehicleRoute from "./routes/vehicles.route.js"
 import userRoute from "./routes/user.route.js"
 import orderRoute from "./routes/order.route.js"
+import contactRoute from "./routes/contact.route.js"
 
 const server = express()
 dotenv.config()
@@ -38,9 +39,10 @@ server.listen(port, () => {
 })
 
 server.get("/", (req, res) => {
-    res.status(200).send("It work")
+    res.status(200).send(`Server working on ${port}`)
 })
 
 server.use("/auth", userRoute)
 server.use("/vehicles", vehicleRoute)
+server.use("/contacts", contactRoute)
 server.use("/orders", orderRoute)

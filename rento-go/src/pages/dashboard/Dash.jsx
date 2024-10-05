@@ -41,7 +41,7 @@ const Dash = () => {
         },
         {
             title: "Cancel Order",
-            count: 2,
+            count: orders.filter(elem => elem.status === "cancel"),
             icon: "bx bx-task-x"
         },
     ]
@@ -87,7 +87,17 @@ const Dash = () => {
                                     <td>{elem.pickDate}</td>
                                     <td>{elem.returnDate}</td>
                                     <td>₹{elem.payment}/-</td>
-                                    <td><span className='bg-green-500 p-1 text-white font-semibold px-3 rounded-xl'>{elem.status}</span></td>
+                                    <td>
+                                        {
+                                            elem.status === 'book' ? <span className='bg-green-500 p-1 text-white font-semibold px-3 rounded-xl'>{elem.status}</span>
+                                                :
+                                                elem.status === 'cancel' ?
+                                                    <span className='bg-red-500 p-1 text-white font-semibold px-3 rounded-xl'>{elem.status}</span>
+                                                    :
+                                                    <span className='bg-orange-500 p-1 text-white font-semibold px-3 rounded-xl'>{elem.status}</span>
+
+                                        }
+                                    </td>
                                 </tr>
                             ))
                         }

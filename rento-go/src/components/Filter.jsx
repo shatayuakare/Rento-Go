@@ -4,6 +4,8 @@ const Filter = ({ vehicle, brands }) => {
 
     const [brand, setBrand] = useState('none')
 
+
+
     return (
         <div className="navbar py-0 min-h-10">
             <div className="navbar-start">
