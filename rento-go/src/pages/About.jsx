@@ -1,13 +1,19 @@
 import React from 'react'
 import Rent from './home/Rent'
 import LocationCarousel from './home/LocationCarousel'
+import PageHeading from '../components/heading/PageHeading'
 
 const About = () => {
     return (
-        <section className="content-center">
+        <>
+            <div className="pt-20">
+                <PageHeading>
+                    <h4 className='text-[3rem] font-bold text-white'>About Us</h4>
+                </PageHeading>
+            </div>
             <Rent />
             <LocationCarousel />
-        </section>
+        </>
     )
 }
 

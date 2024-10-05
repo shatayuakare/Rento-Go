@@ -80,6 +80,9 @@ const Header = () => {
                             <li>
                                 <Link to={'/about'}>About</Link>
                             </li>
+                            <li>
+                                <Link to={'/share/car'}>Share</Link>
+                            </li>
                         </ul>
                     </div>
                     <div className="navbar-end ">
