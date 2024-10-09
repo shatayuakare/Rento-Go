@@ -5,8 +5,8 @@ const orderRoute = express.Router()
 
 orderRoute.get("/", getOrders)
 orderRoute.get("/:id", getOrder)
-orderRoute.post("/new", makeOrder)
 orderRoute.get("/cancel/:id", cancelOrder)
+orderRoute.post("/new", makeOrder)
 orderRoute.post("/update/:id", updateOrder)
 
 export default orderRoute

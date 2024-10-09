@@ -2,13 +2,17 @@ import React, { useEffect, useState } from 'react'
 import { useAuth } from '../../context/AuthProvider'
 import cities from "../../api/availableCities.json"
 import OrderPayment from './OrderPayment'
+import axios from 'axios'
+import { toast } from 'react-toastify'
 
 const BookForm = ({ data }) => {
 
     const [authUser, setAuthUser] = useAuth()
     setAuthUser(authUser)
 
-    const [price, setPrice] = useState("0")
+    const [loader, setLoader] = useState(false)
+
+    const [price, setPrice] = useState(0)
     const [duration, setDuration] = useState("0")
     const [location, setLocation] = useState("nagpur")
     const [pickDate, setPickDate] = useState("")
@@ -20,7 +24,8 @@ const BookForm = ({ data }) => {
         returnDate: "",
         UID: "",
         VID: "",
-        status: "pending"
+        payment: "",
+        status: ""
     })
 
 
@@ -54,29 +59,33 @@ const BookForm = ({ data }) => {
     const fav = false
 
 
-    const makeOrder = (event) => {
+    const makeOrder = async (event) => {
         event.preventDefault();
 
         if (!location) return setError("Please enter location")
         if (!pickDate) return setError("Please enter pickup Date")
         if (!returnDate) return setError("Please enter Return Date")
 
+        setLoader(true)
         const order = {
             vehicleName: `${data.brand} ${data.model}`,
             pickUpLocation: location,
-            pickDate,
-            returnDate,
+            pickDate: pickDate,
+            returnDate: returnDate,
             UID: authUser._id,
             VID: data._id,
+            payment: price,
             status: "pending"
         }
         setOrder(order);
-        document.getElementById('my_modal_3').showModal()
 
+        await axios.post("https://rento-go.onrender.com/orders/new", order).then(res => {
+            // console.log(res.data)
+            toast.success(res.data.message)
+        }).catch(err => toast.error(err.response.data.message));
 
-        // setPickDate("")
-        // setReturnDate("")
-        // setLocation("none")
+        setLoader(false)
+        document.getElementById('payment').showModal()
     }
 
 
@@ -143,9 +152,14 @@ const BookForm = ({ data }) => {
 
 
             <button type='button' className="btn w-full text-white" onClick={makeOrder}>
-                Book Now
+                {
+                    loader ?
+                        <span className="loading loading-bars loading-md"></span>
+                        :
+                        <span>Book Now</span>
+                }
             </button>
-            <OrderPayment payment={price} order={order} />
+            <OrderPayment order={order} />
         </form>
     )
 }

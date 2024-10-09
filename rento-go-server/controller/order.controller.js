@@ -1,15 +1,15 @@
 import Orders from "../model/order.Schema.js"
 
-
 export const makeOrder = async (req, res) => {
     try {
-        const { vehicleName, images, pickUpLocation, placeDate, } = req.body;
+        const { vehicleName, pickUpLocation, pickDate, returnDate, payment, status, VID, UID
+        } = req.body;
 
         const createOrder = new Orders({
-            vehicleName, images, pickUpLocation, placeDate,
+            vehicleName, pickUpLocation, pickDate, returnDate, payment, status, VID, UID
         })
         await createOrder.save()
-        res.status(201).json({ message: "Order Conform", createOrder })
+        res.status(201).json({ message: "Order Successfully", createOrder })
     } catch (error) {
         res.status(400).json({ message: error.message })
     }
@@ -26,7 +26,15 @@ export const cancelOrder = async (req, res) => {
 
 export const updateOrder = async (req, res) => {
     try {
+        const { vehicleName, pickUpLocation, pickDate, returnDate, payment, status, VID, UID
+        } = req.body;
 
+        const order = await Orders.findOneAndUpdate({ _id: req.params.id }, {
+            vehicleName, pickUpLocation, pickDate, returnDate, payment, status, VID, UID
+        })
+
+
+        res.status(201).json({ message: "Update Successfully", order })
     } catch (error) {
         res.status(400).json({ message: error.message })
     }
