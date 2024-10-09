@@ -22,7 +22,7 @@ const Login = () => {
         setLoader(true)
         await axios.post("https://rento-go.onrender.com/auth/login", data).then((res) => {
             if (remember) {
-                cookie.set("token", res.data.token, { expires: new Date(Date.now() + 31536000000) })
+                cookie.set("token", res.data.token, { expires: new Date(Date.now()) })
             } else {
                 cookie.set("token", res.data.token, {
                     expires: new Date(Date.now() + 30 * 60 * 1000),

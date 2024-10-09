@@ -1,19 +1,28 @@
 import React, { useEffect, useState } from 'react'
 import { useAuth } from '../../context/AuthProvider'
-import { toast } from 'react-toastify'
 import cities from "../../api/availableCities.json"
-import axios from 'axios'
+import OrderPayment from './OrderPayment'
 
 const BookForm = ({ data }) => {
 
     const [authUser, setAuthUser] = useAuth()
     setAuthUser(authUser)
 
-    const [price, setPrice] = useState(0)
-    const [duration, setDuration] = useState(0)
+    const [price, setPrice] = useState("0")
+    const [duration, setDuration] = useState("0")
     const [location, setLocation] = useState("nagpur")
     const [pickDate, setPickDate] = useState("")
     const [returnDate, setReturnDate] = useState("")
+    const [order, setOrder] = useState({
+        vehicleName: "",
+        pickUpLocation: "",
+        pickDate: "",
+        returnDate: "",
+        UID: "",
+        VID: "",
+        status: "pending"
+    })
+
 
     const [error, setError] = useState(null)
 
@@ -45,33 +54,29 @@ const BookForm = ({ data }) => {
     const fav = false
 
 
-    const makeOrder = async (event) => {
+    const makeOrder = (event) => {
         event.preventDefault();
-
-        // if (!authUser) return toast("Please Log In")
 
         if (!location) return setError("Please enter location")
         if (!pickDate) return setError("Please enter pickup Date")
         if (!returnDate) return setError("Please enter Return Date")
 
         const order = {
-            vehicleName: `${data.brand} ${data.name}`,
+            vehicleName: `${data.brand} ${data.model}`,
             pickUpLocation: location,
             pickDate,
             returnDate,
             UID: authUser._id,
             VID: data._id,
-            status: "pending",
+            status: "pending"
         }
-
-        await axios.post("http://localhost:8080/orders/new", order).then((res) => {
-            toast.success(res.data.message)
-        }).catch((err) => toast.error(err.response.data.message))
+        setOrder(order);
+        document.getElementById('my_modal_3').showModal()
 
 
-        setPickDate(null)
-        setReturnDate(null)
-        setLocation("none")
+        // setPickDate("")
+        // setReturnDate("")
+        // setLocation("none")
     }
 
 
@@ -99,7 +104,7 @@ const BookForm = ({ data }) => {
                     defaultValue={location}
                     onChange={(event) => setLocation(event.currentTarget.value)}>
                     {
-                        cities.map((elem, index) => <option key={index}>{elem.city}</option>)
+                        cities.map((elem, index) => <option key={index} value={elem.city}>{elem.city}</option>)
                     }
                 </select>
             </div>
@@ -137,9 +142,10 @@ const BookForm = ({ data }) => {
             </div>
 
 
-            <button type='submit' className="btn w-full text-white">
+            <button type='button' className="btn w-full text-white" onClick={makeOrder}>
                 Book Now
             </button>
+            <OrderPayment payment={price} order={order} />
         </form>
     )
 }
