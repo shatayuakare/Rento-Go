@@ -24,11 +24,11 @@ const orderSchema = mongoose.Schema({
         type: String,
         required: true
     },
-    VID: {
+    VID: { // vehicle id
         type: mongoose.Schema.Types.ObjectId,
         ref: "vehicles"
     },
-    UID: {
+    UID: { // user id
         type: mongoose.Schema.Types.ObjectId,
         ref: "users"
     }

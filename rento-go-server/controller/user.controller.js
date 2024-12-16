@@ -8,6 +8,18 @@ dotenv.config()
 const key = process.env.KEY
 
 
+export const getUsers = async (req, res) => {
+    try {
+        const users = await Users.find();
+        if (!users) return res.status(404).json({ message: "Data not founnd" });
+
+        res.status(200).json(users)
+    } catch (error) {
+        res.status(400).json(({ message: error.message }))
+    }
+}
+
+
 export const userInfo = async (req, res) => {
     try {
         const user = await Users.findOne({ _id: req.params.id })
@@ -126,3 +138,82 @@ export const deleteUser = async (req, res) => {
         res.status(400).json({ message: error.message })
     }
 }
+
+export const updateData = async (req, res) => {
+    try {
+        const id = req.params.id
+        const { name, phone } = req.body;
+
+        const user = await Users.findOneAndUpdate({ _id: id }, {
+            name, phone
+        })
+
+        if (!user) return res.status(404).json({ message: "user not found" });
+
+        res.status(200).json({ message: "Data changing accept" })
+    } catch (error) {
+        res.status(400).json({ message: error.message })
+    }
+}
+
+
+export const updateImage = async (req, res) => {
+    try {
+        const id = req.params.id;
+        const { img } = req.body;
+
+        const user = await Users.findOneAndUpdate(
+            { _id: id },
+            { $set: { img } },
+            { new: true, upsert: true, runValidators: true }
+        );
+        if (!user) return res.status(404).json({ message: "User not found" })
+
+        res.status(200).json({ message: "Profile Picture update Successfully" })
+
+    } catch (error) {
+        res.status(400).json({ message: error.message })
+    }
+}
+
+export const updatePassword = async (req, res) => {
+    try {
+        const id = req.params.id;
+        const { oldPassword, newPassword } = req.body;
+
+        const user = await Users.findOne({ _id: id })
+
+        const ismatch = await bcrypt.compare(oldPassword, user.password)
+
+        if (!ismatch) return res.status(401).json({ message: "Password not match" })
+
+        const hash = await bcrypt.hash(newPassword, 10)
+        user.password = hash;
+        await user.save();
+
+        res.status(200).json({ message: "Password changed" })
+
+    } catch (error) {
+        res.status(400).json({ message: error.message })
+    }
+}
+
+export const forgotPassword = async (req, res) => {
+    try {
+        const { email, name } = req.body;
+
+        const user = await Users.findOne({ email });
+        if (!user) return res.status(404).json({ message: "User not found" })
+
+        const pass = "PASSWORD123";
+
+        const hash = await bcrypt.hash(pass, 10);
+        user.password = hash;
+        await user.save();
+
+        res.status(200).json({ message: `${name}'s your password is ${pass}` });
+    } catch (error) {
+        res.status(400).json({ message: error.message })
+    }
+}
+

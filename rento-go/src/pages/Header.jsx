@@ -71,16 +71,18 @@ const Header = () => {
                     </div>
                     <div className="navbar-center hidden md:flex">
                         <ul className="menu menu-horizontal px-1 font-semibold">
-                            <li>
+                            <li className={location.pathname === "/" ? 'active' : ''}>
                                 <Link to={'/'}>Home</Link>
                             </li>
-                            <li>
+                            <li className={location.pathname === "/contact" ? 'active' : ''}>
                                 <Link to={'/contact'}>Contact</Link>
                             </li>
-                            <li>
+                            <li className={location.pathname === "/about" ? 'active' : ''}>
                                 <Link to={'/about'}>About</Link>
                             </li>
-                            <li>
+                            <li className={
+                                location.pathname === '/share/car' ? 'active' :
+                                    location.pathname === '/share/bike' ? 'active' : ''}>
                                 <Link to={'/share/car'}>Share</Link>
                             </li>
                         </ul>
@@ -89,10 +91,10 @@ const Header = () => {
                         {
                             authUser ?
                                 <div className="dropdown dropdown-hover dropdown-bottom dropdown-end">
-                                    <div className='bg-white p-1 ps-2 pe-4 rounded-sm text-black' tabIndex={0} role="button">
+                                    <div className='bg-white p-1 ps-2 pe-4 rounded-md text-black' tabIndex={0} role="button">
                                         <div className="avatar flex gap-2 items-center">
                                             <div className="mask mask-squircle w-8">
-                                                <img src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp" />
+                                                <img src={authUser.img ? authUser.img : "https://cdn.vectorstock.com/i/1000v/11/41/male-profile-picture-vector-2051141.jpg"} />
                                             </div>
                                             {authUser.name.split(' ', [1])}
                                         </div>
@@ -128,7 +130,7 @@ const Header = () => {
 
 
                     </div>
-                </header>
+                </header >
             }
         </>
     )

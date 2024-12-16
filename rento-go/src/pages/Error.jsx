@@ -4,7 +4,7 @@ const Error = () => {
     return (
         <section className='h-full w-full content-center'>
             <div className="">
-                Error
+                Not found
             </div>
         </section>
     )

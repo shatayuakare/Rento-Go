@@ -27,17 +27,21 @@ import Dashboard from './pages/dashboard/Dashboard'
 import Dash from './pages/dashboard/Dash'
 import Profile from './pages/dashboard/Profile'
 import Orders from './pages/dashboard/Orders'
-import InnerCart from './components/InnerCart'
+import MyVehicles from './pages/dashboard/MyVehicles'
+
+
 import Admin from './pages/admin/vehicles/Admin';
 import Vehicles from './pages/admin/vehicles/Vehicles';
+import InnerCart from './components/InnerCart'
 import ViewsVehicles from './pages/admin/vehicles/ViewsVehicles';
 import ShareVehicles from './pages/ShareVehicles';
 import Referal from './pages/Referal';
-
+import Policy from './pages/dashboard/Policy';
 
 const App = () => {
   const [authUser, setAuthUser] = useAuth()
   setAuthUser(authUser)
+
 
   return (
     <BrowserRouter>
@@ -72,13 +76,15 @@ const App = () => {
             <Route index element={authUser ? <Dash /> : <Navigate to={"/login"} />} />
             <Route path="/dashboard/*" element={<Error />} />
             <Route path='/dashboard/myprofile' element={authUser ? <Profile /> : <Navigate to={"/login"} />} />
+            <Route path='/dashboard/myvehicles' element={authUser ? <MyVehicles /> : <Navigate to={"/login"} />} />
             <Route path='/dashboard/myorder' element={authUser ? <Orders /> : <Navigate to={"/login"} />} />
+            <Route path='/dashboard/policy' element={authUser ? <Policy /> : <Navigate to={"/login"} />} />
           </Route>
         </Routes>
       </main>
       <Footer />
       <ToastContainer position='top-center'
-        autoClose={3000}
+        autoClose={1000}
         hideProgressBar={false}
         newestOnTop={false}
         closeOnClick

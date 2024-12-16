@@ -13,7 +13,7 @@ const RentVehicleHeading = ({ vehicle }) => {
                     <p className="text-lg py-5 text-zinc-300">
                         When list your {vehicle}, you're earning money while helping others navigate your city. It's a win-win, and your next big opportunity.
                     </p>
-                    <Link to={vehicle === 'car' ? '/share/bike' : '/share/car'} scroll={true} className="btn btn-ghost rounded-sm bg-zinc-100 text-black hover:bg-white text-md font-bold mt-3">
+                    <Link to={vehicle === 'car' ? '/share/bike' : '/share/car'} className="btn btn-ghost rounded-sm bg-zinc-100 text-black hover:bg-white text-md font-bold mt-3">
                         Share your {vehicle === 'car' ? 'Bike' : 'car'}
                         <i className='bx bx-arrow-from-left text-3xl hover:ms-3' ></i>
                     </Link>

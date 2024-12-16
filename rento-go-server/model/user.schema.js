@@ -12,14 +12,21 @@ const userSchama = new mongoose.Schema({
         type: String,
         required: true
     },
-    order: [
+    OID: [ // order id
         {
-            type: String,
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'orders'
         }
     ],
-    coupons: [
+    // CID: [ // Coupone Id
+    //     {
+    //         type: String,
+    //     }
+    // ],
+    VID: [ // Vehicle id 
         {
-            type: String,
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'vehicles'
         }
     ],
     phone: {
@@ -35,5 +42,6 @@ const userSchama = new mongoose.Schema({
     }
 })
 
-const Users = mongoose.model("users", userSchama)
+const Users = mongoose.model("users", userSchama);
+
 export default Users

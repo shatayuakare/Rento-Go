@@ -67,7 +67,7 @@ const Register = () => {
                         </div>
                     </div>
                 </div>
-                <div className="bg-white text-zinc-800 xl:px-12 md:px-8 content-center sm:p-6 lg:py-6">
+                <div className="bg-white text-zinc-800 xl:px-12 md:px-8 flex flex-col justify-around border-2 sm:p-6 lg:py-6">
                     <div>
                         <h5 className='text-2xl font-bold py-1'>Create an Account</h5>
                         <p className="text-sm">
@@ -76,14 +76,14 @@ const Register = () => {
                     </div>
 
                     <div className='pb-6 pt-4 grid sm:md:grid-cols-1  md:lg:grid-cols-2 gap-4'>
-                        <button className="btn btn-ghost h-10 whitespace-nowrap bg-zinc-200 hover:bg-zinc-300 rounded-2xl"
+                        <button className="btn btn-ghost h-10 whitespace-nowrap bg-blue-600 hover:bg-blue-700 rounded-2xl text-white"
                             onClick={() => alert("Service not Available")}>
                             <i className='bx bxl-facebook text-2xl font-bold' ></i>
-                            Continue with facebook
+                            Continue with Facebook
                         </button>
-                        <button className="btn btn-ghost h-10 whitespace-nowrap bg-zinc-200 hover:bg-zinc-300 rounded-2xl"
+                        <button className="btn btn-ghost h-10 whitespace-nowrap bg-red-600 hover:bg-red-700 rounded-2xl text-white"
                             onClick={() => alert("Service not Available")}>
-                            <i className='bx bxl-google font-bold text-2xl'  ></i>
+                            <i className='bx bxl-google-plus text-2xl'  ></i>
                             Continue with Google
                         </button>
                     </div>

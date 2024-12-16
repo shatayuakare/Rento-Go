@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import BookForm from './forms/BookForm'
+import BookForm from './forms/BookVehicleForm'
 import { useParams } from 'react-router-dom'
 import axios from 'axios';
 import { toast } from 'react-toastify';

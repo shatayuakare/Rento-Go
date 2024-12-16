@@ -7,9 +7,9 @@ import ShareHero from '../components/ShareHero'
 
 const ShareVehicles = () => {
 
-    const param = useParams()
+    const params = useParams()
 
-    const vehicle = param.vehicle
+    const vehicle = params.vehicle
 
     return (
         <section className='pt-20' id='shareform'>
@@ -22,6 +22,7 @@ const ShareVehicles = () => {
                 </h4>
                 <ShareHero />
             </section>
+
             <EasyBoarding vehicle={vehicle} />
             <Refer />
 

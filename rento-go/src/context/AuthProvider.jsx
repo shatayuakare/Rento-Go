@@ -5,12 +5,10 @@ export const AuthContext = createContext();
 
 export default function AuthProvider({ children }) {
 
-    // https://rento-go.onrender.com/
-
     const cookie = new Cookies()
     const token = cookie.get("token");
     const initialauthUser = decodeToken(token)
-    // console.log(initialauthUser.userObject)
+
     const [authUser, setAuthUser] = useState(
         initialauthUser ? initialauthUser.userObject : undefined
     )

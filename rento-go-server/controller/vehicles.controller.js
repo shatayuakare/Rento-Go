@@ -3,10 +3,13 @@ import Vehicles from "../model/vehicles.schema.js"
 
 export const createCar = async (req, res) => {
     try {
-        const { model, brand, luggage, images, seats, stock, doors, fuel, horsepower, engine, drive, cartype, gearbox, mileage, price } = req.body;
+        const { images, UID, brand, model, fuel, owner, number,
+            cartype, luggage, horsepower, engine, mileage, drive, stock, price, seats, gearbox } = req.body;
+
 
         const createCar = new Vehicles({
-            model, brand, luggage, images, seats, doors, fuel, stock, horsepower, engine, drive, cartype, gearbox, mileage, price
+            UID, images, brand, model, fuel, owner, number,
+            cartype, luggage, horsepower, engine, mileage, drive, stock, price, seats, gearbox
         })
         await createCar.save()
         res.status(201).json({ message: "New Car Added", createCar })
@@ -17,10 +20,12 @@ export const createCar = async (req, res) => {
 
 export const createBike = async (req, res) => {
     try {
-        const { model, brand, images, seats, fuel, horsepower, engine, stock, gearbox, mileage, price } = req.body;
+        const { images, UID, brand, model, fuel, owner, number,
+            engine, mileage, stock, price, gearbox } = req.body;
 
         const createCar = new Vehicles({
-            model, brand, images, seats, fuel, horsepower, engine, stock, gearbox, mileage, price
+            images, UID, brand, model, fuel, owner, number,
+            engine, mileage, stock, price, gearbox
         })
         await createCar.save()
         res.status(201).json({ message: "New Bike Added", createCar })
@@ -31,7 +36,7 @@ export const createBike = async (req, res) => {
 export const getVehicles = async (req, res) => {
     try {
         const vehicles = await Vehicles.find()
-
+        if (!vehicles) return res.status(404).json({ message: "Vehicles not found" })
         res.status(200).json(vehicles)
     } catch (error) {
         res.status(400).json({ message: error.message })
@@ -41,6 +46,7 @@ export const getVehicles = async (req, res) => {
 export const getVehicle = async (req, res) => {
     try {
         const vehicle = await Vehicles.findOne({ _id: req.params.id })
+        if (!vehicle) return res.status(404).json({ message: "Vehicles not found" })
 
         res.status(200).json(vehicle)
     } catch (error) {
@@ -60,11 +66,15 @@ export const deleteVehicle = async (req, res) => {
 
 export const updateCar = async (req, res) => {
     try {
-        const { name, brand, luggage, images, seats, stock, doors, fuel, horsepower, engine, drive, cartype, gearbox, mileage, price } = req.body;
+        const { images, brand, model, fuel, owner, number, cartype, luggage, horsepower, engine, mileage, drive, stock, price, seats, gearbox
+        } = req.body;
 
-        const car = await Vehicles.findOneAndUpdate({ _id: req.params.id }, { name, brand, luggage, images, seats, stock, doors, fuel, horsepower, engine, drive, cartype, gearbox, mileage, price })
+        const car = await Vehicles.findOneAndUpdate({ _id: req.params.id }, {
+            images, brand, model, fuel, owner, number, cartype, luggage, horsepower, engine, mileage, drive, stock, price, seats, gearbox
+        })
+        if (!car) return res.status(404).json({ message: "Vehicle not found" })
 
-        res.status(200).json({ message: "Car changes save", car })
+        res.status(200).json({ message: "Car Changes save", car })
     } catch (error) {
         res.status(400).json({ message: error.message })
     }
@@ -72,10 +82,14 @@ export const updateCar = async (req, res) => {
 
 export const updateBike = async (req, res) => {
     try {
-        const { name, brand, images, seats, fuel, horsepower, engine, stock, gearbox, mileage, price } = req.bdoy;
-        const car = await Vehicles.findOneAndUpdate({ _id: req.params.id }, { name, brand, images, seats, fuel, horsepower, engine, stock, gearbox, mileage, price })
+        const { images, brand, model, fuel, owner, number, engine, mileage, stock, price, gearbox } = req.bdoy;
+        const bike = await Vehicles.findOneAndUpdate({ _id: req.params.id }, {
+            images, brand, model, fuel, owner, number, engine, mileage, stock, price, gearbox
+        })
 
-        res.status(200).json({ message: "Car changes save", car })
+        if (!bike) return res.status(404).json({ message: "Vehicle not found" })
+
+        res.status(200).json({ message: "Bike changes save", bike })
     } catch (error) {
         res.status(400).json({ message: error.message })
     }

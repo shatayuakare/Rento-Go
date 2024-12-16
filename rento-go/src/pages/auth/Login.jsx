@@ -3,6 +3,7 @@ import axios from 'axios'
 import { Cookies } from "react-cookie"
 import { Link } from 'react-router-dom'
 import { toast } from 'react-toastify'
+import ForgotPassword from '../../components/forms/ForgotPassword'
 
 const Login = () => {
     const [email, setEmail] = useState("")
@@ -20,12 +21,18 @@ const Login = () => {
 
         const data = { email, password }
         setLoader(true)
+
         await axios.post("https://rento-go.onrender.com/auth/login", data).then((res) => {
+
             if (remember) {
-                cookie.set("token", res.data.token, { expires: new Date(Date.now()) })
+                cookie.set("token", res.data.token, {
+                    expires: new Date(Date.now() + 30 * 24 * 60 * 1000),
+                    path: '/',
+                    secure: true,
+                    httponly: true,
+                });
             } else {
                 cookie.set("token", res.data.token, {
-                    expires: new Date(Date.now() + 30 * 60 * 1000),
                     path: '/',
                     secure: true,
                     httponly: true,
@@ -37,7 +44,6 @@ const Login = () => {
             window.location.reload()
         }).catch((err) => toast.error(err.response.data.message),)
 
-        setEmail("")
         setPassword("")
         setRemember(false)
         setLoader(false)
@@ -67,7 +73,7 @@ const Login = () => {
                         </div>
                     </div>
                 </div>
-                <div className="bg-white text-zinc-800 xl:px-20 lg:px-16 md:px-10 content-center sm:p-6">
+                <div className="bg-white text-zinc-800 xl:px-12 md:px-8 flex flex-col justify-around border-2 sm:p-6 lg:py-6">
                     <div>
                         <h5 className='text-2xl font-bold py-1'>Login Account</h5>
                         <p className="text-sm">
@@ -76,20 +82,21 @@ const Login = () => {
                     </div>
 
                     <div className='pb-6 pt-4 grid sm:md:grid-cols-1  md:lg:grid-cols-2 gap-4'>
-                        <button className="btn btn-ghost h-10 whitespace-nowrap bg-zinc-200 hover:bg-zinc-300 rounded-2xl"
+                        <button className="btn btn-ghost h-10 whitespace-nowrap bg-blue-600 hover:bg-blue-700 rounded-2xl text-white"
                             onClick={() => alert("Service not Available")}>
                             <i className='bx bxl-facebook text-2xl font-bold' ></i>
-                            Continue with facebook
+                            Continue with Facebook
                         </button>
-                        <button className="btn btn-ghost h-10 whitespace-nowrap bg-zinc-200 hover:bg-zinc-300 rounded-2xl"
+                        <button className="btn btn-ghost h-10 whitespace-nowrap bg-red-600 hover:bg-red-700 rounded-2xl text-white"
                             onClick={() => alert("Service not Available")}>
-                            <i className='bx bxl-google font-bold text-2xl'  ></i>
+                            <i className='bx bxl-google-plus text-2xl'  ></i>
                             Continue with Google
                         </button>
                     </div>
 
                     <div className="divider my-1">OR</div>
-                    <form action="" onSubmit={loginHandler}>
+
+                    <form className='flex flex-col gap-2' action="" onSubmit={loginHandler}>
                         <div>
                             <label htmlFor="email" className="label">Email address</label>
                             <input className='input rounded-sm w-full bg-zinc-100 p-2' type="email" name="email" id="email" placeholder='Enter Email address...'
@@ -102,11 +109,19 @@ const Login = () => {
                                 value={password}
                                 onChange={(e) => setPassword(e.target.value)} />
                         </div>
-                        <div className='my-2 flex items-center text-sm text-black'>
-                            <input className='checkbox border-2 border-zinc-400 rounded-sm checkbox-xs me-2' id='policy' type="checkbox"
-                                checked={remember}
-                                onChange={() => setRemember(!remember)} />
-                            <label htmlFor="policy"> Remember me</label>
+                        <div className='flex justify-between px-2 pb-2'>
+                            <div className='my-2 flex items-center text-sm text-black'>
+                                <input className='checkbox border-2 border-zinc-400 rounded-sm checkbox-xs me-2' id='policy' type="checkbox"
+                                    checked={remember}
+                                    onChange={() => setRemember(!remember)} />
+                                <label htmlFor="policy"> Remember me</label>
+                            </div>
+
+                            <button type='button'
+                                className='btn-link no-underline'
+                                onClick={() => document.getElementById('forgotPassword').showModal()}>
+                                Forgot password?
+                            </button>
                         </div>
                         {
                             error && <div className="text-red-500 pb-1 ps-2">
@@ -114,7 +129,7 @@ const Login = () => {
                             </div>
                         }
 
-                        <button className="w-full mt-1 btn rounded-sm text-white py-4" type='submit'>
+                        <button className="w-full mt-1 btn rounded-sm text-white py-3" type='submit'>
                             {
                                 loader ?
                                     <span className="loading loading-bars loading-md"></span>
@@ -130,6 +145,7 @@ const Login = () => {
                     </form>
                 </div>
             </div>
+            <ForgotPassword email={email} />
         </section>
     )
 }

@@ -1,5 +1,35 @@
 @import url('https://fonts.googleapis.com/css2?family=Poetsen+One&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
 
+
+/* For WebKit browsers (Chrome, Safari) */
+::-webkit-scrollbar {
+    width: 2px;  /* Width of the scrollbar */
+    height: 2px; /* Height of the scrollbar */
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: red !important; /* Color of the scrollbar handle */
+    border-radius: 10px; /* Rounded corners for the scrollbar handle */
+}
+
+::-webkit-scrollbar-track {
+    background: lightgrey; /* Background of the scrollbar track */
+    border-radius: 10px; /* Rounded corners for the scrollbar track */
+}
+
+/* For Firefox */
+* {
+    scrollbar-width: thin; /* Make scrollbar thin */
+    scrollbar-color: red lightgrey ; /* Handle color and track color */
+}
+
+
+ul.vehicle-menu li button.btn{
+    border-radius: 0 ;
+    justify-content: end;
+    padding-right: .3rem;
+}
+
 section {
     min-height: 100vh;
 }
@@ -27,8 +57,16 @@ textarea {
 #admin label.label {
     font-size: .9rem !important;
 }
+ul li.active{
+    color: red !important;
+        background: transparent !important;
+}
+header ul li.active:focus{
+    color: blue !important;
 
-
+     background: transparent !important;
+    
+}
 
 .customer-review .flex .flex-1:hover .overlay {
     display: inline-block;

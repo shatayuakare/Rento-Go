@@ -33,7 +33,7 @@ const Orders = () => {
 
     return (
         <>
-            <div className="border-2 border-zinc-300 p-5 bg-white h-1/3">
+            <div className="border-2 border-zinc-300 p-5 bg-white h-1/3 overflow-y-scroll">
                 <h5 className="text-2xl text-zinc-800 font-semibold">Booking Order</h5>
                 <table className="table text-sm">
                     <thead>
@@ -45,6 +45,7 @@ const Orders = () => {
                             <th>Return Date</th>
                             <th>Payment</th>
                             <th>Status</th>
+                            <th>Edit</th>
                         </tr>
                     </thead>
                     <tbody>

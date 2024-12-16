@@ -7,7 +7,7 @@ const EasyBoarding = ({ vehicle }) => {
         <section className="py-[4rem] content-center bg-[url('https://st4.depositphotos.com/4337187/27124/i/450/depositphotos_271247768-stock-photo-white-background-of-old-paper.jpg')] bg-cover">
             <div className='grid grid-cols-2 w-4/5 mx-auto'>
                 <div className="p-4 bg-white rounded-lg border shadow-lg px-16 content-center">
-                    <ShareForm />
+                    <ShareForm vehicle={vehicle} />
                 </div>
 
 

@@ -3,6 +3,17 @@ import { useAuth } from '../../context/AuthProvider'
 import axios from 'axios'
 import { toast } from 'react-toastify'
 
+// this is mfor only rendering color before load the page 
+[
+    "text-green-300",
+    "text-red-300",
+    "text-orange-300",
+    "text-green-500",
+    "text-red-500",
+    "text-orange-500",
+]
+
+
 
 const Dash = () => {
 
@@ -10,20 +21,27 @@ const Dash = () => {
     setAuthUser(authUser)
 
     const [orders, setOrders] = useState([])
+    const [recentOrder, setRecentOrders] = useState([])
+
+    const getUserDetail = async () => {
+        await axios.get(`https://rento-go.onrender.com/auth/${authUser._id}`).then(res => {
+            setRecentOrders(res.data.order)
+        }).catch(err => {
+            toast.error(err.response.data.message)
+        })
+    }
+
+    const getOrders = async () => {
+        await axios.get("https://rento-go.onrender.com/orders").then(res => {
+
+            let data = res.data
+            setOrders(data.filter(elem => elem.UID === authUser._id))
+            // setOrders(data)
+
+        }).catch(err => toast.error(err.response.data.message))
+    }
 
     useEffect(() => {
-        const getUserDetail = async () => {
-
-            const id = authUser._id
-            await axios.get(`https://rento-go.onrender.com/auth/${id}`).then(res => {
-                setRecentOrders(res.data.order)
-            }).catch(err => toast.error(err.response.data.message))
-        }
-
-        const getOrders = async () => {
-            await axios.get("https://rento-go.onrender.com/orders").then(res => setOrders(res.data)).catch(err => toast.error(err.response.data.message))
-        }
-
         getUserDetail()
         getOrders()
     }, [])
@@ -32,19 +50,33 @@ const Dash = () => {
         {
             title: "Total Order",
             count: orders.length,
-            icon: "bx bxs-book-bookmark"
+            icon: "bx bxs-book-bookmark",
+            color: "green"
         },
         {
             title: "Coupons",
-            count: authUser.coupons,
-            icon: "bx bxs-purchase-tag"
+            count: authUser.coupons || 0,
+            icon: "bx bxs-purchase-tag",
+            color: "orange"
         },
         {
             title: "Cancel Order",
             count: orders.filter(elem => elem.status === "cancel"),
-            icon: "bx bx-task-x"
+            icon: "bx bx-task-x",
+            color: "red"
         },
     ]
+
+    const formatDate = (dateString) => {
+        const date = new Date(dateString);
+
+        const day = String(date.getUTCDate()).padStart(2, '0');
+        const month = String(date.getUTCMonth() + 1).padStart(2, '0');
+        const year = date.getUTCFullYear();
+
+        return `${day}-${month}-${year}`;
+    }
+
 
     return (
         <>
@@ -52,9 +84,9 @@ const Dash = () => {
                 {
                     history.map((elem, index) => (
                         <div className="p-6 rounded-sm text-zinc-700 bg-white border-2 border-zinc-300 relative" key={index}>
-                            <i className={`${elem.icon} text-zinc-300 text-[5.5rem] absolute bottom-3 right-3`}></i>
+                            <i className={`${elem.icon} text-${elem.color}-300 text-[5.5rem] absolute bottom-3 right-3`}></i>
 
-                            <h5 className='text-[3rem] font-extrabold pb-1'>
+                            <h5 className={`text-[3rem] font-extrabold pb-1 text-${elem.color}-500`}>
                                 {elem.count < 10 ? '0' + elem.count : elem.count}
                             </h5>
                             <div className='text-xl text-zinc-500 font-semibold'>{elem.title}</div>
@@ -65,7 +97,7 @@ const Dash = () => {
             <div className='border-2 p-5 bg-white border-zinc-300 min-h-2/3 h-2/3'>
                 <h5 className="text-2xl text-zinc-800 font-semibold">My Recent Order</h5>
 
-                <table className="table text-sm">
+                <table className="table text-sm overflow-y-scroll">
                     <thead>
                         <tr className='text-zinc-600'>
                             <th>Booking No</th>
@@ -81,12 +113,12 @@ const Dash = () => {
                         {
                             orders.map((elem, index) => (
                                 <tr className='text-zinc-700 text-sm' key={index}>
-                                    <td><span className='bg-zinc-200 p1 px-2 rounded-xl font-semibold'>#{elem._id.substr(elem_id.length - 5)}</span></td>
-                                    <td>{elem.vehicle}</td>
-                                    <td>{elem.location}</td>
-                                    <td>{elem.pickDate}</td>
-                                    <td>{elem.returnDate}</td>
-                                    <td>₹{elem.payment}/-</td>
+                                    <td><span className='bg-zinc-200 p1 px-2 rounded-xl font-semibold'>#{elem._id.substr(elem._id.length - 3)}</span></td>
+                                    <td>{elem.vehicleName}</td>
+                                    <td>{elem.pickUpLocation}</td>
+                                    <td>{formatDate(elem.pickDate)}</td>
+                                    <td>{formatDate(elem.returnDate)}</td>
+                                    <td className='font-bold'>₹{elem.payment}/-</td>
                                     <td>
                                         {
                                             elem.status === 'book' ? <span className='bg-green-500 p-1 text-white font-semibold px-3 rounded-xl'>{elem.status}</span>
