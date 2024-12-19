@@ -31,7 +31,7 @@ const HomeIndex = () => {
 
                     <div className='hidden flex-shrink-0 lg:flex overflow-hidden'>
                         <img className='absolute z-0 lg:-bottom-16 xl:bottom-16 lg:-right-10 lg:w-[58rem] xl:w-[59rem] drop-shadow-[-5px_2px_8px_red]'
-                            src="https://cdn.pixabay.com/photo/2015/10/01/19/05/car-967470_640.png" alt="" loading='fast' />
+                            src="https://cdn.pixabay.com/photo/2015/10/01/19/05/car-967470_640.png?format=webp&quality=auto" alt="" loading='fast' />
                     </div>
                 </div>
             </div>

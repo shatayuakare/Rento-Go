@@ -16,7 +16,7 @@ const Contact = () => {
             <section className='content-center'>
                 <div className="grid sm:grid-cols-1 md:grid-cols-2  md:mx-10 lg:mx-20 xl:mx-28 min-h-[80vh] sm:pt-16 md:pt-0 shadow-lg">
 
-                    <div className="capitalize bg-[url('https://www.classicgarage.ca/wp-content/uploads/2022/03/Classic-BMW-Web-Clean-JPEG-3000px-53-1024x683.jpg')]">
+                    <div className="capitalize bg-[url('https://www.classicgarage.ca/wp-content/uploads/2022/03/Classic-BMW-Web-Clean-JPEG-3000px-53-1024x683.jpg?format=webp&quality=auto')]">
                         <div className="bg-black text-zinc-300 bg-opacity-[60%] h-full w-full xl:px-20 lg:px-16 md:px-10 content-center sm:px-2 sm:py-12">
 
                             <div className="text-center">

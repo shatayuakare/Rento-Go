@@ -21,7 +21,7 @@ const ShareHero = () => {
                 </div>
             </div>
             <div className="xl:order-1 sm:order-2">
-                <img className='w-full h-full' src="https://img.freepik.com/free-photo/i-m-very-impressed-about-that-new-vehicle-female-customer-modern-stylish-bearded-businessman-automobile-saloon_146671-16065.jpg" alt="" />
+                <img className='w-full h-full' src="https://img.freepik.com/free-photo/i-m-very-impressed-about-that-new-vehicle-female-customer-modern-stylish-bearded-businessman-automobile-saloon_146671-16065.jpg?format=webp&quality=auto" alt="share image" />
             </div>
         </div>
     )

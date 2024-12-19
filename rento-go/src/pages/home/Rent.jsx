@@ -2,6 +2,8 @@ import React from 'react'
 import Hero from "../../components/Hero"
 import WhyChoose from './WhyChoose'
 import ShareHero from '../../components/ShareHero'
+
+
 const Rent = () => {
     return (
         <section className='min-h-auto sm:pt-0 md:pt-20 lg:pt-28 sm:pb-8 lg:pb-20'>
@@ -12,7 +14,6 @@ const Rent = () => {
                 <ShareHero />
                 <WhyChoose />
             </div>
-
         </section>
     )
 }

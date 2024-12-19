@@ -65,8 +65,8 @@ const FAQ = () => {
                     {
                         faq.map((elem, index) => (
                             <div className="collapse collapse-plus border-2 border-zinc-300 shadow-sm bg-zinc-100 sm:mb-3 md:mb-0 p-1 rounded-lg" key={index}>
-                                <input type="radio" name="my-accordion-3" />
-                                <div className="collapse-title text-xl font-medium">{elem.question}</div>
+                                <input type="radio" name="faq" id={index} />
+                                <label htmlFor={index} className="collapse-title text-xl font-medium">{elem.question}</label>
                                 <div className="collapse-content">
                                     {elem.answer}
                                 </div>

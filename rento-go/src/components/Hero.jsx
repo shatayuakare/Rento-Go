@@ -4,8 +4,8 @@ import { Link } from 'react-router-dom'
 const Hero = ({ imageLeft = false, vehicle }) => {
 
     const img = {
-        bike: "https://pandomoto.com/wp-content/uploads/2021/05/eDSCF0221.jpg",
-        car: "https://www.bajaautoinsurance.com/wp-content/uploads/2022/10/how-does-car-insurance-work-when-youre-driving-someone-elses-car.jpg",
+        bike: "https://pandomoto.com/wp-content/uploads/2021/05/eDSCF0221.jpg?format=webp&quality=auto",
+        car: "https://www.bajaautoinsurance.com/wp-content/uploads/2022/10/how-does-car-insurance-work-when-youre-driving-someone-elses-car.jpg?format=webp&quality=auto",
     }
     const loadImg = (vehicle) => {
         if (vehicle === "bike") return img.bike

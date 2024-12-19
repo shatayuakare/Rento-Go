@@ -35,8 +35,7 @@ const Dashboard = () => {
                     <div className='text-center pt-5'>
                         <div className="avatar relative">
                             <div className="ring-red-500 ring-offset-base-100 w-24 rounded-full ring ring-offset-2">
-                                {/* <img src={authUser.img ? authUser.img : "https://cdn.vectorstock.com/i/1000v/11/41/male-profile-picture-vector-2051141.jpg"} /> */}
-                                <img src={authUser.img ? authUser.img : "https://cdn.vectorstock.com/i/1000v/11/41/male-profile-picture-vector-2051141.jpg"} />
+                                <img src={authUser.img ? `${authUser.img}?format=webp&quality=auto&crop-circle` : "https://static.vecteezy.com/system/resources/thumbnails/001/840/612/small_2x/picture-profile-icon-male-icon-human-or-people-sign-and-symbol-free-vector.jpg?format=webp&crop=circle"} alt='profile pic' />
                             </div>
 
                             <button className='absolute bottom-0 right-0' type='button' onClick={updateProfilePicture}>
@@ -61,9 +60,9 @@ const Dashboard = () => {
                             </Link>
                         </li>
                         <li className={location.pathname === "/dashboard/myvehicles" ? 'active' : ''}>
-                            <Link to={"./myvehicles"}>
+                            <Link to={"./mygarage"}>
                                 <i className='bx bxs-car-garage text-2xl'></i>
-                                My Vehicles
+                                My Garage
                             </Link>
                         </li>
 

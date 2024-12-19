@@ -1,11 +1,9 @@
 import React from 'react'
-import { Link, Outlet } from 'react-router-dom'
+import { Link, Outlet, useLocation } from 'react-router-dom'
 import { useAuth } from '../../context/AuthProvider'
 
-// import NewVehicleForm from '../components/forms/NewVehicleForm'
-
 const Admin = () => {
-
+    const location = useLocation()
     const [authUser, setAuthUser] = useAuth()
     setAuthUser(authUser)
 
@@ -15,26 +13,31 @@ const Admin = () => {
                 <div className='text-center mt-20'>
                     <div className="avatar">
                         <div className="ring-red-500 ring-offset-red-200 w-28 rounded-full ring ring-offset-2">
-                            <img src={authUser.img} />
+                            <img src={`${authUser.img ? ((authUser.img) + '?format=webp&crop=circle') : 'https://static.vecteezy.com/system/resources/thumbnails/001/840/612/small_2x/picture-profile-icon-male-icon-human-or-people-sign-and-symbol-free-vector.jpg'}`} alt='profile pic' />
                         </div>
                     </div>
-                    <h5 className="text-2xl font-semibold ">{authUser.name}</h5>
+                    <h5 className="text-2xl font-semibold mt-3">{authUser.name}</h5>
                     <div className="text-zinc-400 underline lowercase">{authUser.email}</div>
                 </div>
 
-                <ul className="menu text-center p-0 mt-6 mx-auto">
-                    <li className=''>
-                        <Link to={'/admin'} >
+                <ul className="menu text-center p-0 mt-6 mx-auto text-lg gap-2">
+                    <li className={location.pathname === '/admin' ? 'active' : ''}>
+                        <Link className='w-full justify-center' to={'/admin'} >
                             Members
                         </Link>
                     </li>
-                    <li className='active'>
-                        <Link to={'/admin/vehicles'} >
+                    <li className={location.pathname === '/admin/contacts' ? 'active' : ''}>
+                        <Link className='w-full justify-center' to={'/admin/contacts'} >
+                            Contacts
+                        </Link>
+                    </li>
+                    <li className={location.pathname === '/admin/vehicles' ? 'active' : ''}>
+                        <Link className='w-full justify-center' to={'/admin/vehicles'} >
                             Vehicles
                         </Link>
                     </li>
-                    <li className=''>
-                        <Link to={'/admin/orders'} >
+                    <li className={location.pathname === '/admin/orders' ? 'active' : ''}>
+                        <Link className='w-full justify-center' to={'/admin/orders'} >
                             Orders
                         </Link>
                     </li>

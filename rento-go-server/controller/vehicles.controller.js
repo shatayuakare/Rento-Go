@@ -8,7 +8,7 @@ export const createCar = async (req, res) => {
 
 
         const createCar = new Vehicles({
-            UID, images, brand, model, fuel, owner, number,
+            images, UID, brand, model, fuel, owner, number,
             cartype, luggage, horsepower, engine, mileage, drive, stock, price, seats, gearbox
         })
         await createCar.save()
@@ -90,6 +90,19 @@ export const updateBike = async (req, res) => {
         if (!bike) return res.status(404).json({ message: "Vehicle not found" })
 
         res.status(200).json({ message: "Bike changes save", bike })
+    } catch (error) {
+        res.status(400).json({ message: error.message })
+    }
+}
+
+
+
+export const vehicleStatus = async (req, res) => {
+    try {
+        const vehicle = await Vehicles.findOneAndUpdate({ _id: req.params.id }, { status: req.body.status })
+        if (!vehicle) return res.status(404).json({ message: "Vehicle not found" })
+
+        res.status(200).json({ message: `Your vehicles is ${req.body.status}` })
     } catch (error) {
         res.status(400).json({ message: error.message })
     }

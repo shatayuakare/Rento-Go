@@ -14,37 +14,34 @@ import ContentLoader from '../../components/ContentLoader'
     "text-orange-500",
 ]
 
-
-
 const Dash = () => {
 
     const [authUser, setAuthUser] = useAuth()
     setAuthUser(authUser)
 
     const [orders, setOrders] = useState([])
-    const [recentOrder, setRecentOrders] = useState([])
-
-    const getUserDetail = async () => {
-        await axios.get(`https://rento-go.onrender.com/auth/${authUser._id}`).then(res => {
-            setRecentOrders(res.data.order)
-        }).catch(err => {
-            toast.error(err.response.data.message)
-        })
-    }
-
-    const getOrders = async () => {
-        await axios.get("https://rento-go.onrender.com/orders").then(res => {
-
-            let data = res.data
-            setOrders(data.filter(elem => elem.UID === authUser._id))
-            // setOrders(data)
-
-        }).catch(err => toast.error(err.response.data.message))
-    }
 
     useEffect(() => {
-        getUserDetail()
+
+        const getOrders = async () => {
+            await axios.get("https://rento-go.onrender.com/orders").then(res => {
+                console.log(res.data.filter(elem => elem.UID === authUser._id))
+                setOrders(res.data)
+
+            }).catch(error =>
+                console.error(error)
+            )
+
+        }
         getOrders()
+        // const getOrders = async () => {
+        //     await axios.get("https://rento-go.onrender.com/orders").then(res => {
+        //         const order = (res.data).filter(elem => elem.UID === authUser._id)
+        //         if (!order) return console.log("Empty");
+        //         setOrders(order)
+        //     }).catch(err => toast.error(err.essage))
+        // }
+        // getOrders()
     }, [])
 
     const history = [
@@ -56,13 +53,13 @@ const Dash = () => {
         },
         {
             title: "Coupons",
-            count: authUser.coupons || 0,
+            // count: authUser.coupons || 0,
             icon: "bx bxs-purchase-tag",
             color: "orange"
         },
         {
             title: "Cancel Order",
-            count: orders.filter(elem => elem.status === "cancel"),
+            // count: (orders.filter(elem => elem.status === "cancel")),
             icon: "bx bx-task-x",
             color: "red"
         },
@@ -111,31 +108,31 @@ const Dash = () => {
                         </tr>
                     </thead>
                     <tbody>
-                        <Suspense fallback={<ContentLoader />}>
-                            {
-                                orders.map((elem, index) => (
-                                    <tr className='text-zinc-700 text-sm' key={index}>
+                        {
+                            orders && orders.map((elem, index) => (
+                                <Suspense fallback={<ContentLoader />} key={index}>
+                                    <tr className='text-zinc-700 text-sm' >
                                         <td><span className='bg-zinc-200 p1 px-2 rounded-xl font-semibold'>#{elem._id.substr(elem._id.length - 3)}</span></td>
                                         <td>{elem.vehicleName}</td>
                                         <td>{elem.pickUpLocation}</td>
                                         <td>{formatDate(elem.pickDate)}</td>
                                         <td>{formatDate(elem.returnDate)}</td>
                                         <td className='font-bold'>₹{elem.payment}/-</td>
-                                        <td>
+                                        <td className='capitalize'>
                                             {
                                                 elem.status === 'book' ? <span className='bg-green-500 p-1 text-white font-semibold px-3 rounded-xl'>{elem.status}</span>
                                                     :
                                                     elem.status === 'cancel' ?
                                                         <span className='bg-red-500 p-1 text-white font-semibold px-3 rounded-xl'>{elem.status}</span>
                                                         :
-                                                        <span className='bg-orange-500 p-1 text-white font-semibold px-3 rounded-xl'>{elem.status}</span>
-
+                                                        <span className='bg-green-500 p-1 text-white font-semibold px-3 rounded-xl'>{elem.status}
+                                                        </span>
                                             }
                                         </td>
                                     </tr>
-                                ))
-                            }
-                        </Suspense>
+                                </Suspense>
+                            ))
+                        }
                     </tbody>
                 </table>
             </div>

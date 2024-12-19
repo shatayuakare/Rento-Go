@@ -18,11 +18,12 @@ const userSchama = new mongoose.Schema({
             ref: 'orders'
         }
     ],
-    // CID: [ // Coupone Id
-    //     {
-    //         type: String,
-    //     }
-    // ],
+    CID: [ // Contact message Id
+        {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "contacts"
+        }
+    ],
     VID: [ // Vehicle id 
         {
             type: mongoose.Schema.Types.ObjectId,

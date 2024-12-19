@@ -14,7 +14,7 @@ const CustomerReview = () => {
 
                     {
                         reviews.map((elem, index) => (
-                            <div className={`flex-1 shadow-xl bg-cover border rounded-2xl bg-center h-[60vh] content-end overflow-hidden`} key={index} style={{ backgroundImage: `url('${elem.img}')` }}>
+                            <div className={`flex-1 shadow-xl bg-cover border rounded-2xl bg-center h-[60vh] content-end overflow-hidden`} key={index} style={{ backgroundImage: `url('${elem.img}?format=webp&quality=auto')` }}>
                                 <div className="bg-black hidden overlay bg-opacity-35 w-full text-left  p-4 text-zinc-100">
                                     <h5 className='text-lg font-bold'>{elem.title}</h5>
                                     <p className="text-xs py-2">

@@ -139,22 +139,55 @@ export const deleteUser = async (req, res) => {
     }
 }
 
+// export const updateData = async (req, res) => {
+//     try {
+//         const id = req.params.id
+//         const { name, phone, CID, OID } = req.body;
+
+//         const user = await Users.findOneAndUpdate({ _id: id }, {
+//             name, phone, CID, OID: OID.push(OID)
+//         })
+
+//         if (!user) return res.status(404).json({ message: "user not found" });
+//         await user.save()
+//         res.status(200).json({ message: "Data changing accept" })
+//     } catch (error) {
+//         res.status(400).json({ message: error.message })
+//     }
+// }
+
+
 export const updateData = async (req, res) => {
     try {
-        const id = req.params.id
-        const { name, phone } = req.body;
+        const { name, phone, CID: newCID, OID: newOID, VID: newVID } = req.body;
 
-        const user = await Users.findOneAndUpdate({ _id: id }, {
-            name, phone
-        })
+        const user = await Users.findOne({ _id: req.params.id });
 
-        if (!user) return res.status(404).json({ message: "user not found" });
+        if (!user) return res.status(404).json({ message: "User not found" });
 
-        res.status(200).json({ message: "Data changing accept" })
+        user.name = name || user.name;
+        user.phone = phone || user.phone;
+        user.OID = OID || user.OID;
+        user.CID = CID || user.CID;
+        user.VID = VID || user.VID;
+
+        if (newOID && !user.OID.includes(newOID)) {
+            user.OID.push(newOID);
+        }
+        if (newCID && !user.CID.includes(newCID)) {
+            user.CID.push(newCID);
+        }
+        if (newVID && !user.VID.includes(newVID)) {
+            user.VID.push(newVID);
+        }
+
+        await user.save();
+        res.status(200).json({ message: "Data updated successfully" });
     } catch (error) {
-        res.status(400).json({ message: error.message })
+        res.status(400).json({ message: error.message });
     }
 }
+
 
 
 export const updateImage = async (req, res) => {
@@ -245,6 +278,28 @@ export const adminDeleteUser = async (req, res) => {
         if (!user) return res.status(404).json({ message: "User not Found" })
 
         res.status(200).json({ message: "User Deleted", user });
+    } catch (error) {
+        res.status(400).json({ message: error.message })
+    }
+}
+
+
+export const makeAdmin = async (req, res) => {
+    try {
+        const user = await Users.findOneAndUpdate({ _id: req.params.id }, { admin: true });
+        if (!user) return res.status(404).json({ message: "User not found" })
+        console.log(user)
+        res.status(200).json({ message: `${user.name} is new admin` })
+    } catch (error) {
+        res.status(400).json({ message: error.message })
+    }
+}
+export const removeAdmin = async (req, res) => {
+    try {
+        const user = await Users.findOneAndUpdate({ _id: req.params.id }, { admin: false });
+        if (!user) return res.status(404).json({ message: "User not found" })
+
+        res.status(200).json({ message: `${user.name} is remove from admin` })
     } catch (error) {
         res.status(400).json({ message: error.message })
     }

@@ -31,18 +31,27 @@ const NewVehicleForm = ({ data, vehicle }) => {
         setImage("")
     }
 
+    console.log(authUser)
+
     const addNewCarHandler = async (event) => {
         event.preventDefault()
         setLoader(true)
+
         const carDetail = {
-            uID: authUser._id, images, brand: data.brand, model: data.model, fuel: data.fuel, owner: data.owner, number: data.number,
+            UID: authUser._id, images, brand: data.brand, model: data.model, fuel: data.fuel, owner: data.owner, number: data.number,
             cartype, luggage, horsepower, engine, mileage, drive, stock, price, seats, gearbox
         }
-
-        await axios.post("http://localhost:8080/vehicles/newCar", carDetail).then((res) => {
+        await axios.post("http://localhost:8080/vehicles/newCar", carDetail).then(async (res) => {
+            // console.log(res.data)
+            await axios.put(`http://localhost:8080/auth/${authUser._id}`, {
+                VID: res.data.createCar._id
+            }
+            ).then(r => {
+                console.log(r.data)
+            }).catch(e => console.error(e.message))
             toast.success(res.data.message)
             setLoader(false)
-        }).catch(err => toast.error(err.response.data.message));
+        }).catch(err => console.error('car', err.message));
         setLoader(false)
     }
 
@@ -50,14 +59,14 @@ const NewVehicleForm = ({ data, vehicle }) => {
         event.preventDefault()
         setLoader(true)
         const bikeDetail = {
-            uID: authUser._id, images, brand: data.brand, model: data.model, fuel: data.fuel, owner: data.owner, number: data.number,
+            UID: authUser._id, images, brand: data.brand, model: data.model, fuel: data.fuel, owner: data.owner, number: data.number,
             engine, mileage, stock, price, gearbox
         }
 
         await axios.post("http://localhost:8080/vehicles/newBike", bikeDetail).then((res) => {
             setLoader(false)
             toast.success(res.data.message)
-        }).catch(err => toast.error(err.response.data.message));
+        }).catch(err => console.error(err.message));
         setLoader(false)
     }
 
@@ -71,7 +80,6 @@ const NewVehicleForm = ({ data, vehicle }) => {
         <dialog id="newVehicleDetailForm" className="modal backdrop-blur modal-bottom sm:modal-middle lowercase">
             <div className="modal-box min-w-[75%] w-2/5 bg-white bg-opacity-25">
                 <form method="dialog">
-                    {/* if there is a button in form, it will close the modal */}
                     <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">
                         <i className='bx bx-x text-2xl font-bold'></i>
                     </button>
@@ -97,8 +105,8 @@ const NewVehicleForm = ({ data, vehicle }) => {
                         <div className='p-1 flex gap-2 mt-2'>
                             {
                                 images && images.map((elem, index) =>
-                                    <div className="relative">
-                                        <img className='h-24' src={elem} key={index} />
+                                    <div className="relative" key={index}>
+                                        <img className='h-24' src={elem} />
                                         <button className="btn btn-sm btn-ghost p-0 absolute h-6 rounded-full w-6 bg-white hover:bg-zinc-100 font-bold top-0 right-0"
                                             onClick={() => removeImage(index)}>
                                             <i className='bx bx-x text-xl -p-2 leading-none'></i>
@@ -131,21 +139,21 @@ const NewVehicleForm = ({ data, vehicle }) => {
 
                                 <div>
                                     <label htmlFor="engine" className="label">Car Gearbox</label>
-                                    <input className='input input-sm w-full bg-zinc-100' type="number" name="engine" id="engine" placeholder='Enter vehicle Gearbox...' value={gearbox || 5}
+                                    <input className='input input-sm w-full bg-zinc-100' type="number" name="engine" id="engine" placeholder='Enter vehicle Gearbox...' value={gearbox}
                                         onChange={(event) => setGearbox(event.target.value)}
                                     />
                                 </div>
 
                                 <div>
                                     <label htmlFor="seats" className="label">Car Seats</label>
-                                    <input className='input input-sm w-full bg-zinc-100' type="number" name="seats" id="seats" placeholder='Enter seats in vahicle...' value={seats || 2}
+                                    <input className='input input-sm w-full bg-zinc-100' type="number" name="seats" id="seats" placeholder='Enter seats in vahicle...' value={seats}
                                         onChange={(event) => setSeats(event.target.value)}
                                     />
                                 </div>
                             </div>
                             <div>
                                 <label htmlFor="fuel" className="label">Car Type</label>
-                                <select className='select select-sm w-full bg-zinc-100 capitalize' name="fuel" id="fuel" defaultValue={cartype || "none"}
+                                <select className='select select-sm w-full bg-zinc-100 capitalize' name="fuel" id="fuel" defaultValue={cartype}
                                     onChange={(event) => setCarType(event.currentTarget.value)}>
                                     <option value={'none'}>--select--</option>
                                     <option value={'hatchback'}>Hatchback</option>
@@ -157,7 +165,7 @@ const NewVehicleForm = ({ data, vehicle }) => {
                             </div>
                             <div>
                                 <label htmlFor="mode" className="label">Car Drive Mode</label>
-                                <select className='select select-sm w-full bg-zinc-100 capitalize' name="model" id="mode" defaultValue={drive || "none"}
+                                <select className='select select-sm w-full bg-zinc-100 capitalize' name="model" id="mode" defaultValue={drive}
                                     onChange={(event) => setDrive(event.currentTarget.value)}>
                                     <option value={'none'}>--select--</option>
                                     <option value={'awd'} >All Will Drive</option>
@@ -169,21 +177,21 @@ const NewVehicleForm = ({ data, vehicle }) => {
                             <div className="grid grid-cols-2 gap-3">
                                 <div>
                                     <label htmlFor="luggage" className="label">Car Luggage Space</label>
-                                    <input className='input input-sm w-full bg-zinc-100' type="number" name="luggage" id="luggage" placeholder='Enter Luggage in vahicle...' value={luggage || 1200}
+                                    <input className='input input-sm w-full bg-zinc-100' type="number" name="luggage" id="luggage" placeholder='Enter Luggage in vahicle...' value={luggage}
                                         onChange={(event) => setLuggage(event.target.value)}
                                     />
                                 </div>
 
                                 <div>
                                     <label htmlFor="stock" className="label">Car Engine Stock</label>
-                                    <input className='input input-sm w-full bg-zinc-100' type="number" name="stock" id="stock" placeholder='Enter Stock in engine...' value={stock || 2}
+                                    <input className='input input-sm w-full bg-zinc-100' type="number" name="stock" id="stock" placeholder='Enter Stock in engine...' value={stock}
                                         onChange={(event) => setStock(event.target.value)}
                                     />
                                 </div>
                             </div>
                             <div>
                                 <label htmlFor="price" className="label">Car Price (per day)</label>
-                                <input className='input input-sm w-full bg-zinc-100' type="number" name="price" id="price" placeholder='Enter price...' value={price || 2499}
+                                <input className='input input-sm w-full bg-zinc-100' type="number" name="price" id="price" placeholder='Enter price...' value={price}
                                     onChange={(event) => setPrice(event.target.value)}
                                 />
                             </div>
@@ -220,7 +228,15 @@ const NewVehicleForm = ({ data, vehicle }) => {
                         </div>
                         <div className='p-1 flex gap-2 mt-2'>
                             {
-                                images && images.map((elem, index) => <img className='h-24' src={elem} key={index} />)
+                                images && images.map((elem, index) =>
+                                    <div className="relative" key={index}>
+                                        <img className='h-24' src={elem} />
+                                        <button className="btn btn-sm btn-ghost p-0 absolute h-6 rounded-full w-6 bg-white hover:bg-zinc-100 font-bold top-0 right-0"
+                                            onClick={() => removeImage(index)}>
+                                            <i className='bx bx-x text-xl -p-2 leading-none'></i>
+                                        </button>
+                                    </div>
+                                )
                             }
                         </div>
                         <div className="grid grid-cols-2 gap-4">
@@ -241,21 +257,21 @@ const NewVehicleForm = ({ data, vehicle }) => {
 
                                 <div>
                                     <label htmlFor="engine" className="label">Bike Gearbox</label>
-                                    <input className='input input-sm w-full bg-zinc-100' type="number" name="engine" id="engine" placeholder='Enter vehicle Gearbox...' value={gearbox || 5}
+                                    <input className='input input-sm w-full bg-zinc-100' type="number" name="engine" id="engine" placeholder='Enter vehicle Gearbox...' value={gearbox}
                                         onChange={(event) => setGearbox(event.target.value)}
                                     />
                                 </div>
 
                                 <div>
                                     <label htmlFor="stock" className="label">Bike Engine Stock</label>
-                                    <input className='input input-sm w-full bg-zinc-100' type="number" name="stock" id="stock" placeholder='Enter Stock in engine...' value={stock || 2}
+                                    <input className='input input-sm w-full bg-zinc-100' type="number" name="stock" id="stock" placeholder='Enter Stock in engine...' value={stock}
                                         onChange={(event) => setStock(event.target.value)}
                                     />
                                 </div>
                             </div>
                             <div>
                                 <label htmlFor="price" className="label">Bike Price (per day)</label>
-                                <input className='input input-sm w-full bg-zinc-100' type="number" name="price" id="price" placeholder='Enter price...' value={price || 2499}
+                                <input className='input input-sm w-full bg-zinc-100' type="number" name="price" id="price" placeholder='Enter price...' value={price}
                                     onChange={(event) => setPrice(event.target.value)}
                                 />
                             </div>

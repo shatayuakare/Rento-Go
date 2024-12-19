@@ -15,10 +15,23 @@ export const makeOrder = async (req, res) => {
     }
 }
 
-export const cancelOrder = async (req, res) => {
+export const orderStatus = async (req, res) => {
     try {
+        const order = await Orders.findOneAndUpdate({ _id: req.params.id }, { status: req.body.status })
+        if (!order) return res.status(404).json({ message: "Order not found" })
 
+        res.status(200).json({ message: `Your Order is ${req.body.status}` });
+    } catch (error) {
+        res.status(400).json({ message: error.message })
+    }
+}
 
+export const deleteOrder = async (req, res) => {
+    try {
+        const order = await Orders.findOneAndDelete({ _id: req.params.id });
+        if (!order) return res.status(404).json({ message: "Order not found" });
+
+        res.status(200).json({ message: "Order Deleted" });
     } catch (error) {
         res.status(400).json({ message: error.message })
     }

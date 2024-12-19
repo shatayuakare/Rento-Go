@@ -3,7 +3,6 @@ import { useAuth } from '../../context/AuthProvider'
 import axios from 'axios'
 
 const Orders = () => {
-
     const [authUser, setAuthUser] = useAuth()
     setAuthUser(authUser)
 
@@ -14,22 +13,18 @@ const Orders = () => {
     useEffect(() => {
         const getUserDetail = async () => {
             await axios.get(`https://rento-go.onrender.com/auth/${authUser._id}`).then(res => {
-                const order = res.data.order
-                const book = order.filter(elem => elem.status === 'booked')
-                const complete = order.filter(elem => elem.status === 'success')
-                const cancel = order.filter(elem => elem.status === 'cancel')
+                const book = (res.data.order).filter(elem => elem.status === 'booked')
+                const complete = (res.data.order).filter(elem => elem.status === 'success')
+                const cancel = (res.data.order).filter(elem => elem.status === 'cancel')
 
                 setBookOrder(book)
                 setCompleteOrder(complete)
                 setCancelOrder(cancel)
-
             }).catch(err => toast.error(err.response.data.message))
         }
 
         getUserDetail()
-    }, [])
-
-
+    }, [bookOrder, completeOrder, cancelOrder])
 
     return (
         <>

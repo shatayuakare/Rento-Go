@@ -4,16 +4,14 @@ import ShareForm from './forms/ShareForm'
 const EasyBoarding = ({ vehicle }) => {
 
     return (
-        <section className="py-[4rem] content-center bg-[url('https://st4.depositphotos.com/4337187/27124/i/450/depositphotos_271247768-stock-photo-white-background-of-old-paper.jpg')] bg-cover">
+        <section className="py-[4rem] content-center bg-[url('https://st4.depositphotos.com/4337187/27124/i/450/depositphotos_271247768-stock-photo-white-background-of-old-paper.jpg?format=webp&quality=auto')] bg-cover">
             <div className='grid grid-cols-2 w-4/5 mx-auto'>
                 <div className="p-4 bg-white rounded-lg border shadow-lg px-16 content-center">
                     <ShareForm vehicle={vehicle} />
                 </div>
 
-
                 <div className="px-16 content-center">
                     <h4 className='capitalize sm:text-3xl md:text-5xl font-bold pt-10 mb-2'>Easy Boarding</h4>
-
                     <div className="">
                         <div className='flex'>
                             <div className="w-[15%] text-center flex">
@@ -59,9 +57,7 @@ const EasyBoarding = ({ vehicle }) => {
                                 </p>
                             </div>
                         </div>
-
                     </div>
-
                     <div className='p-4 bg-white rounded-xl shadow-xl mt-6 border-2'>
                         <h6 className='text-lg   font-semibold'>
                             Start earning
@@ -70,7 +66,6 @@ const EasyBoarding = ({ vehicle }) => {
                             As soon as you enable bookings, guests can start taking trips in your car and you can start earning money
                         </p>
                     </div>
-
                 </div>
             </div>
         </section>

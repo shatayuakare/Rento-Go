@@ -6,7 +6,7 @@ import { toast } from 'react-toastify';
 
 const InnerCart = () => {
 
-    const [item, setItem] = useState([]);
+    const [item, setItem] = useState([] || data);
     const [imgs, setImgs] = useState([]);
     const [mainImg, setMainImg] = useState("");
     const [specialize, setSpecialize] = useState([]);
@@ -113,9 +113,7 @@ const InnerCart = () => {
 
                 <div className='md:w-1/2'>
                     <h6 className="text-2xl py-6 font-semibold">Specializations</h6>
-                    {/* {
-                        specialize
-                    } */}
+
                     <table className='table w-1/2 border-0 capitalize'>
                         <tbody>
                             {

@@ -4,14 +4,14 @@ import Contacts from "../model/contact.Schema.js";
 export const newContact = async (req, res) => {
     try {
         const { name, email, phone, message } = req.body;
-        const contactData = new Contacts({
+
+        const createContact = new Contacts({
             name, email, phone, message
         })
 
-        await contactData.save()
+        await createContact.save()
 
         res.status(201).json({ message: `Contact Submited`, contactData })
-
     } catch (error) {
         res.status(400).json({ message: error.message })
     }

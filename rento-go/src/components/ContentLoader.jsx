@@ -2,8 +2,8 @@ import React from 'react'
 
 const ContentLoader = () => {
     return (
-        <div className='flex h-48 justify-center items-center'>
-            <span className="loading loading-dots loading-md"></span>
+        <div className='flex h-auto bg-transparent bg-white w-auto justify-center items-center'>
+            <span className="loading loading-spinner loading-lg"></span>
         </div>
     )
 }

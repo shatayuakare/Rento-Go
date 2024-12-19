@@ -19,6 +19,7 @@ const Header = () => {
                 "/admin",
                 "/admin/",
                 "/admin/member",
+                "/admin/contacts",
                 "/admin/vehicles",
                 "/admin/orders",
             ];
@@ -55,7 +56,7 @@ const Header = () => {
         <header className={`navbar  sm:px-2 md:px-10 lg:px-20 xl:px-28 sm:py-1 md:py-2 lg:py-5 text-zinc-500 left-0 w-full z-[999] ${sticky ? "fixed bg-[#0B0808] lg:py-3 xl:py-3" : "absolute"}`}>
             <div className="navbar-start">
                 <div className="dropdown">
-                    <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden px-1 p-0">
+                    <button tabIndex={0} role="button" aria-label="menu" className="btn btn-ghost lg:hidden px-1 p-0">
                         <svg
                             xmlns="http://www.w3.org/2000/svg"
                             className="h-5 w-5"
@@ -68,18 +69,23 @@ const Header = () => {
                                 strokeWidth="2"
                                 d="M4 6h16M4 12h8m-8 6h16" />
                         </svg>
-                    </div>
+                    </button>
                     <ul
-                        tabIndex={0}
+                        tabIndex={0} role="menuitems"
                         className="menu menu-sm dropdown-content rounded-box z-[1] mt-3 w-52 p-0 shadow">
-                        <li>
+                        <li className={location.pathname === "/" ? 'active' : ''}>
                             <Link to={'/'}>Home</Link>
                         </li>
-                        <li>
+                        <li className={location.pathname === "/contact" ? 'active' : ''}>
                             <Link to={'/contact'}>Contact</Link>
                         </li>
-                        <li>
+                        <li className={location.pathname === "/about" ? 'active' : ''}>
                             <Link to={'/about'}>About</Link>
+                        </li>
+                        <li className={
+                            location.pathname === '/share/car' ? 'active' :
+                                location.pathname === '/share/bike' ? 'active' : ''}>
+                            <Link to={'/share/car'}>Share</Link>
                         </li>
                     </ul>
                 </div>
@@ -112,7 +118,7 @@ const Header = () => {
                             <div className='bg-white p-1 ps-2 pe-4 rounded-md text-black' tabIndex={0} role="button">
                                 <div className="avatar flex gap-2 items-center">
                                     <div className="mask mask-squircle w-8">
-                                        <img src={authUser.img ? authUser.img : "https://cdn.vectorstock.com/i/1000v/11/41/male-profile-picture-vector-2051141.jpg"} />
+                                        <img src={authUser.img ? authUser.img : "https://cdn.vectorstock.com/i/1000v/11/41/male-profile-picture-vector-2051141.jpg?crop=circle&quality=auto&size=small"} alt={authUser.name} />
                                     </div>
                                     {authUser.name.split(' ', [1])}
                                 </div>
@@ -144,11 +150,8 @@ const Header = () => {
                             </div>
                         </>
                 }
-
-
-
             </div>
-        </header >
+        </header>
 
     )
 }

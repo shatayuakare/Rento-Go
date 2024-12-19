@@ -1,21 +1,23 @@
-import React from 'react'
+import React, { lazy, Suspense } from 'react'
 import HomeIndex from './HomeIndex'
-import Rent from './Rent'
-import FAQ from './FAQ'
-import BrandMarquee from '../../components/BrandMarquee'
-import CustomerReview from './CustomerReview'
-import LocationCarousel from './LocationCarousel'
-
+import ContentLoader from '../../components/ContentLoader'
+const Rent = lazy(() => import('./Rent'))
+const FAQ = lazy(() => import('./FAQ'))
+const BrandMarquee = lazy(() => import('../../components/BrandMarquee'))
+const CustomerReview = lazy(() => import('./CustomerReview'))
+const LocationCarousel = lazy(() => import('./LocationCarousel'))
 
 const Home = () => {
     return (
         <>
             <HomeIndex />
-            <Rent />
-            <LocationCarousel />
-            <CustomerReview />
-            <FAQ />
-            <BrandMarquee />
+            <Suspense fallback={<ContentLoader />}>
+                <Rent />
+                <LocationCarousel />
+                <CustomerReview />
+                <FAQ />
+                <BrandMarquee />
+            </Suspense>
         </>
     )
 }

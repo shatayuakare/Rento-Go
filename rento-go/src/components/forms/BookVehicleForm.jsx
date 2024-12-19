@@ -79,10 +79,13 @@ const BookForm = ({ data }) => {
         }
         setOrder(order);
 
-        await axios.post("https://rento-go.onrender.com/orders/new", order).then(res => {
-            // console.log(res.data)
-            toast.success(res.data.message)
-        }).catch(err => toast.error(err.response.data.message));
+        await axios.post("https://rento-go.onrender.com/orders/new", order).then(async res => {
+            console.log(res)
+            await axios.put(`http://localhost:8080/auth/update/${authUser._id}`, { OID: res.data.createOrder._id }).then((r) => {
+                console.log(r)
+                toast.success(res.data.message)
+            }).catch(e => toast.error(e.message))
+        }).catch(err => toast.error(err.message));
 
         setLoader(false)
         document.getElementById('payment').showModal()

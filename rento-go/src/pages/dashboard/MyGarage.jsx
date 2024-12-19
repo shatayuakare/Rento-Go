@@ -4,9 +4,10 @@ import axios from 'axios';
 import { toast } from 'react-toastify';
 import { Link } from 'react-router-dom';
 import EditVehicleForm from '../../components/forms/EditVehicleForm';
+import ContentLoader from '../../components/ContentLoader';
 
 
-const MyVehicles = () => {
+const MyGarage = () => {
 
     const [authUser, setAuthUser] = useAuth();
     setAuthUser(authUser);
@@ -16,11 +17,7 @@ const MyVehicles = () => {
     useEffect(() => {
         const getVehicles = async () => {
             await axios.get("http://localhost:8080/vehicles").then((res) => {
-
                 setVehicles((res.data).filter(elem => elem.uID === authUser._id));
-                // const data = res.data
-                // setVehicles(data);
-
             }).catch(err => console.error(err))
         }
 
@@ -28,33 +25,35 @@ const MyVehicles = () => {
     }, [vehicles])
 
     const deleteVehicle = async (id) => {
-        await axios.delete(`http://localhost:8080/vehicles/delete/${id}`).then((res) => {
-            console.log(res.data.message)
-        }).catch(err => toast.error(err))
+        await axios.delete(`http://localhost:8080/vehicles/delete/${id}`).then((res) => toast.success(res.status.message)).catch(err => toast.error(err))
     }
-
 
     return (
         <div className='overflow-hidden pb-24'>
             <h5 className="text-2xl bg-white border-2 border-zinc-300 text-zinc-800 font-semibold p-5">My Vehicle</h5>
 
             <div className="grid grid-cols-2 gap-4 mt-4 bg-transparent h-full overflow-y-scroll">
-
-                <Suspense fallback={<div>Loading...</div>}>
-                    {
-                        vehicles.map(elem =>
-                            <div className="flex items-center p-2 border-2 relative h-36 bg-white shadow border-zinc-300" key={elem._id}>
+                {
+                    vehicles.map(elem =>
+                        <Suspense fallback={<ContentLoader />} key={elem._id}>
+                            <div className="flex items-center p-2 border-2 relative h-36 bg-white shadow border-zinc-300 gap-4" key={elem._id}>
                                 <div className="h-full w-50">
-                                    <img className='h-full w-full' src={elem.images[0]} alt="" />
+                                    <img className='h-full w-full' src={`${elem.images[0]}?format=webp&quality=auto&crop=square`} alt="" />
                                 </div>
 
-                                <div className="ps-4">
-                                    <ul className='text-[1rem]' type="none">
-                                        <li><b>Brand</b> : {elem.brand}</li>
-                                        <li><b>Model</b> : {elem.model}</li>
-                                        <li><b>Number</b> : {elem.number}</li>
-                                        <li><b>Price</b> : <span className='text-xl text-green-600 font-bold'>₹ {elem.price}/-</span></li>
-                                    </ul>
+                                <div className="grid gap-1">
+                                    <div className='flex gap-2'>
+                                        <b>Owner</b> : {elem.owner}
+                                    </div>
+                                    <div className='flex gap-2'>
+                                        <b>Name</b> : {elem.brand} {elem.model}
+                                    </div>
+                                    <div className='flex gap-2'>
+                                        <b>Number</b> : {elem.number}
+                                    </div>
+                                    <div className='flex gap-2'>
+                                        <b>Price</b> : <span className='text-xl text-green-600 font-bold'>₹ {elem.price}/-</span>
+                                    </div>
                                 </div>
 
                                 <div className="dropdown dropdown-bottom dropdown-end absolute top-1 right-1 bg-transparent p-0">
@@ -62,12 +61,12 @@ const MyVehicles = () => {
                                         <i className='bx bx-dots-vertical text-xl text-black'></i>
                                     </div>
 
-                                    <ul tabIndex={0} className="dropdown-content vehicle-menu menu p-1 z-[1] text-nowrap text-start">
+                                    <ul tabIndex={0} className="dropdown-content vehicle-menu menu p-1 z-[1] text-nowrap text-end">
                                         <li>
-                                            <Link to={elem.cartype ? `/cars/${elem._id}` : `/bikes/${elem._id}`} className='btn btn-xs btn-ghost p-0 text-blue-500' type='button'>View</Link>
+                                            <Link to={elem.cartype ? `/cars/${elem._id}` : `/bikes/${elem._id}`} className='btn text-blue-500  btn-xs btn-ghost ' type='button'>View</Link>
                                         </li>
                                         <li>
-                                            <button className='btn btn-xs btn-ghost p-0 text-green-500' type='button'
+                                            <button className='btn text-green-500  btn-xs btn-ghost ' type='button'
                                                 onClick={() => document.getElementById('editVehicleForm').showModal()}
                                             >Edit</button>
                                         </li>
@@ -76,16 +75,14 @@ const MyVehicles = () => {
                                         </li>
                                     </ul>
                                 </div>
-                                <EditVehicleForm data={elem} />
                             </div>
-                        )
-                    }
-                </Suspense>
-
+                            <EditVehicleForm data={elem} />
+                        </Suspense>
+                    )
+                }
             </div>
-
         </div >
     )
 }
 
-export default MyVehicles
+export default MyGarage

@@ -80,7 +80,7 @@ const BrandMarquee = () => {
                 <div className="flex gap-32">
                     {
                         brands.map((elem, index) => (
-                            <img className='h-28' src={elem.img} alt={elem.title} key={index} />
+                            <img className='h-28' src={`${elem.img}?format=webp&quality=auto`} alt={elem.title} key={index} />
                         ))
                     }
                 </div>

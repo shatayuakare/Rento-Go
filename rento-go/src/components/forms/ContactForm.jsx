@@ -1,8 +1,11 @@
 import axios from 'axios'
 import React, { useState } from 'react'
 import { toast } from 'react-toastify'
+import { useAuth } from '../../context/AuthProvider'
 
 const ContactForm = () => {
+    const [authUser, setAuthUser] = useAuth();
+    setAuthUser(authUser)
 
     const [name, setName] = useState("")
     const [email, setEmail] = useState("")
@@ -11,7 +14,6 @@ const ContactForm = () => {
 
     const [error, setError] = useState(null)
     const [loader, setLoader] = useState(false)
-
 
     const contactHandler = async (event) => {
         event.preventDefault()
@@ -25,13 +27,13 @@ const ContactForm = () => {
             name, email, phone, message: msg
         }
         setLoader(true)
-        await axios.post("https://rento-go.onrender.com/contacts/new", data).then(res => {
+        await axios.post("https://rento-go.onrender.com/contacts/new", data).then(async res => {
+            if (authUser) {
+                await axios.put(`http://localhost:8080/auth/update/${authUser._id}`, { CID: res.data.contactData._id }).then(r => console.log(r)).catch(e => console.error(e.message))
+
+            }
             toast.success(res.data.message)
-            setLoader(false)
-        }).catch(err => {
-            toast.error(err.response.data.message)
-            setLoader(false)
-        })
+        }).catch(err => toast.error(err.message))
 
         setLoader(false)
         setName("")
@@ -39,7 +41,6 @@ const ContactForm = () => {
         setPhone("")
         setMsg("")
     }
-
     return (
         <form className='grid gap-4' action="" onSubmit={contactHandler}>
             <div>
