@@ -1,5 +1,5 @@
 import React from 'react'
-import PageHeading from '../components/PageHeading'
+import PageHeading from '../components/heading/PageHeading'
 import Review from '../components/Review'
 
 const Location = () => {

@@ -8,7 +8,7 @@ const EditVehicleForm = ({ data }) => {
     const [authUser, setAuthUser] = useAuth()
     setAuthUser(authUser)
 
-    const vehicle = (data.cartype ? 'car' : 'bike')
+    const vehicle = data.cartype ? 'car' : 'bike';
 
     const [loader, setLoader] = useState(false)
 

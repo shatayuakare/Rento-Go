@@ -87,7 +87,7 @@ const Dashboard = () => {
                     </button>
                 </div>
 
-                <div className="sm:w-full lg:w-3/4 flex flex-col sm:gap-3 lg:gap-6">
+                <div className="sm:w-full lg:w-3/4 flex flex-col sm:gap-3 lg:gap-6 overflow-hidden">
                     <Outlet />
                 </div>
             </div>

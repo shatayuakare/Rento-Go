@@ -23,7 +23,9 @@
     scrollbar-color: red lightgrey ; /* Handle color and track color */
 }
 
-
+b{
+    display: flex !important;
+}
 ul.vehicle-menu li button.btn{
     border-radius: 0 ;
     justify-content: end;

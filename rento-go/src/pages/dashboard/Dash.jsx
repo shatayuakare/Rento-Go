@@ -1,7 +1,8 @@
-import React, { useEffect, useState } from 'react'
+import React, { Suspense, useEffect, useState } from 'react'
 import { useAuth } from '../../context/AuthProvider'
 import axios from 'axios'
 import { toast } from 'react-toastify'
+import ContentLoader from '../../components/ContentLoader'
 
 // this is mfor only rendering color before load the page 
 [
@@ -97,7 +98,7 @@ const Dash = () => {
             <div className='border-2 p-5 bg-white border-zinc-300 min-h-2/3 h-2/3'>
                 <h5 className="text-2xl text-zinc-800 font-semibold">My Recent Order</h5>
 
-                <table className="table text-sm overflow-y-scroll">
+                <table className="table text-sm max-h-full overflow-y-scroll">
                     <thead>
                         <tr className='text-zinc-600'>
                             <th>Booking No</th>
@@ -110,29 +111,31 @@ const Dash = () => {
                         </tr>
                     </thead>
                     <tbody>
-                        {
-                            orders.map((elem, index) => (
-                                <tr className='text-zinc-700 text-sm' key={index}>
-                                    <td><span className='bg-zinc-200 p1 px-2 rounded-xl font-semibold'>#{elem._id.substr(elem._id.length - 3)}</span></td>
-                                    <td>{elem.vehicleName}</td>
-                                    <td>{elem.pickUpLocation}</td>
-                                    <td>{formatDate(elem.pickDate)}</td>
-                                    <td>{formatDate(elem.returnDate)}</td>
-                                    <td className='font-bold'>₹{elem.payment}/-</td>
-                                    <td>
-                                        {
-                                            elem.status === 'book' ? <span className='bg-green-500 p-1 text-white font-semibold px-3 rounded-xl'>{elem.status}</span>
-                                                :
-                                                elem.status === 'cancel' ?
-                                                    <span className='bg-red-500 p-1 text-white font-semibold px-3 rounded-xl'>{elem.status}</span>
+                        <Suspense fallback={<ContentLoader />}>
+                            {
+                                orders.map((elem, index) => (
+                                    <tr className='text-zinc-700 text-sm' key={index}>
+                                        <td><span className='bg-zinc-200 p1 px-2 rounded-xl font-semibold'>#{elem._id.substr(elem._id.length - 3)}</span></td>
+                                        <td>{elem.vehicleName}</td>
+                                        <td>{elem.pickUpLocation}</td>
+                                        <td>{formatDate(elem.pickDate)}</td>
+                                        <td>{formatDate(elem.returnDate)}</td>
+                                        <td className='font-bold'>₹{elem.payment}/-</td>
+                                        <td>
+                                            {
+                                                elem.status === 'book' ? <span className='bg-green-500 p-1 text-white font-semibold px-3 rounded-xl'>{elem.status}</span>
                                                     :
-                                                    <span className='bg-orange-500 p-1 text-white font-semibold px-3 rounded-xl'>{elem.status}</span>
+                                                    elem.status === 'cancel' ?
+                                                        <span className='bg-red-500 p-1 text-white font-semibold px-3 rounded-xl'>{elem.status}</span>
+                                                        :
+                                                        <span className='bg-orange-500 p-1 text-white font-semibold px-3 rounded-xl'>{elem.status}</span>
 
-                                        }
-                                    </td>
-                                </tr>
-                            ))
-                        }
+                                            }
+                                        </td>
+                                    </tr>
+                                ))
+                            }
+                        </Suspense>
                     </tbody>
                 </table>
             </div>

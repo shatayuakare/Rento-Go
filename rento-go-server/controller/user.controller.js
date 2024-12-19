@@ -56,7 +56,7 @@ export const isLoggedIn = async (req, res, next) => {
         if (!token) return res.status(403).json({ message: "You have no permission, Please Login" });
 
         // console.log(token)
-        const decode = jwt.verify(token, "secret")
+        const decode = jwt.verify(token, key)
         console.log(token)
         const user = await Users.findOne({ email: decode.user.email }).select("-password")
 
@@ -217,3 +217,35 @@ export const forgotPassword = async (req, res) => {
     }
 }
 
+
+export const reLogin = async (req, res) => {
+    try {
+        const token = req.params.token;
+
+        const data = jwt.verify(token, key);
+        const id = data.userObject._id;
+
+        const user = await Users.findOne({ _id: id });
+        if (!user) return res.status(404).json({ message: "User not found" });
+
+        const userObject = user.toObject();
+        delete userObject.password;
+
+        req.session.token = jwt.sign({ userObject }, key)
+        res.status(200).json({ message: "Account Loged In", token: req.session.token })
+
+    } catch (error) {
+        res.status(400).json({ message: error.message })
+    }
+}
+
+export const adminDeleteUser = async (req, res) => {
+    try {
+        const user = await Users.findOneAndDelete({ _id: req.params.id })
+        if (!user) return res.status(404).json({ message: "User not Found" })
+
+        res.status(200).json({ message: "User Deleted", user });
+    } catch (error) {
+        res.status(400).json({ message: error.message })
+    }
+}
