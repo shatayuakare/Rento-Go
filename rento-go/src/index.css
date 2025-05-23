@@ -3,25 +3,7 @@
 @tailwind components;
 @tailwind utilities;
 
-::-webkit-scrollbar {
-    width: 2px !important;
-    height: 2px;
-}
 
-::-webkit-scrollbar-thumb {
-    background-color: red !important;
-    border-radius: 5px;
-}
-
-::-webkit-scrollbar-track {
-    background: lightgrey;
-    border-radius: 5px;
-}
-
-* {
-    scrollbar-width: thin !important;
-    scrollbar-color: red lightgrey;
-}
 
 b {
     display: flex !important;

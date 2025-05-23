@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { useAuth } from '../../context/AuthProvider'
 import axios from 'axios'
 import { toast } from 'react-toastify'
+import { server } from '../../utils/Constants'
 
 const EditVehicleForm = ({ data }) => {
 
@@ -26,8 +27,7 @@ const EditVehicleForm = ({ data }) => {
     const [seats, setSeats] = useState(data.seats)
     const [drive, setDrive] = useState(data.drive)
     const [luggage, setLuggage] = useState(data.luggage)
-    const [cartype, setCartype] = useState((data.cartype).toLowerCase())
-
+    const [cartype, setCartype] = useState(data.cartype)
     const [price, setPrice] = useState(data.price)
 
     const [images, setImages] = useState(data.images)
@@ -58,7 +58,7 @@ const EditVehicleForm = ({ data }) => {
             }
             console.log(data._id)
 
-            await axios.put(`http://localhost:8080/vehicles/updateCar/${data._id}`, carDetails).then(res => {
+            await axios.put(`${server}/vehicles/updateCar/${data._id}`, carDetails).then(res => {
                 setLoader(false)
                 document.getElementById('editVehicleForm').close()
                 toast.success(res.data.message)
@@ -68,7 +68,7 @@ const EditVehicleForm = ({ data }) => {
             const bikeDetails = {
                 images, brand, model, fuel, owner, number, engine, mileage, stock, price, gearbox
             }
-            await axios.put(`http://localhost:8080/vehicles/updateBike/${data._id}`, bikeDetails).then(res => {
+            await axios.put(`${server}/vehicles/updateBike/${data._id}`, bikeDetails).then(res => {
                 setLoader(false)
                 document.getElementById('editVehicleForm').close()
                 toast.success(res.data.message)
@@ -103,8 +103,8 @@ const EditVehicleForm = ({ data }) => {
                         <div className='p-1 flex gap-2 mt-1'>
                             {
                                 images && images.map((elem, index) =>
-                                    <div className="relative">
-                                        <img className='h-20' src={elem} key={index} />
+                                    <div className="relative" key={index}>
+                                        <img className='h-20' src={elem} />
                                         <button className="btn btn-sm btn-ghost p-0 absolute h-6 rounded-full w-6 bg-white hover:bg-zinc-100 font-bold top-0 right-0"
                                             onClick={() => removeImage(index)}>
                                             <i className='bx bx-x text-xl -p-2 leading-none'></i>
@@ -184,7 +184,7 @@ const EditVehicleForm = ({ data }) => {
 
                                         {
                                             cartypes.map((elem, i) =>
-                                                <option value={elem} key={elem}>{elem}</option>
+                                                <option value={elem} key={i}>{elem}</option>
                                             )
                                         }
                                     </select>
@@ -270,8 +270,8 @@ const EditVehicleForm = ({ data }) => {
                         <div className='p-1 flex gap-2 mt-1'>
                             {
                                 images && images.map((elem, index) =>
-                                    <div className="relative">
-                                        <img className='h-20' src={elem} key={index} />
+                                    <div className="relative" key={index}>
+                                        <img className='h-20' src={elem}  />
                                         <button className="btn btn-sm btn-ghost p-0 absolute h-6 rounded-full w-6 bg-white hover:bg-zinc-100 font-bold top-0 right-0"
                                             onClick={() => removeImage(index)}>
                                             <i className='bx bx-x text-xl -p-2 leading-none'></i>

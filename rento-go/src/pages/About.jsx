@@ -6,7 +6,7 @@ import PageHeading from '../components/heading/PageHeading'
 const About = () => {
     return (
         <>
-            <div className="pt-20">
+            <div className="">
                 <PageHeading>
                     <h4 className='text-[3rem] font-bold text-white'>About Us</h4>
                 </PageHeading>

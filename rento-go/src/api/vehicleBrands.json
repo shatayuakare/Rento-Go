@@ -1,38 +1,46 @@
-[
+ [
     {
         "type": "car",
-        "brand": "toyota"
+        "brand": "toyota",
+        "logo":"https://www.cdnlogo.com/logos/t/37/toyota.svg"
     },
     {
         "type": "car",
-        "brand": "suziku"
+        "brand": "suzuki",
+        "logo":"https://www.pngplay.com/wp-content/uploads/13/Suzuki-Logo-PNG-Photos.png"
     },
     {
         "type": "car",
-        "brand": "hyundai"
+        "brand": "hyundai",
+        "logo":"https://pngimg.com/d/car_logo_PNG1645.png"
     },
     {
         "type": "car",
-        "brand": "honda"
+        "brand": "honda",
+        "logo":"https://pngimg.com/d/car_logo_PNG1643.png"
     },
     {
         "type": "car",
-        "brand": "tata"
+        "brand": "tata",
+        "logo":"https://logos-world.net/wp-content/uploads/2021/10/Tata-Symbol.png"
     },
     {
         "type": "car",
+        "brand": "mahindra",
+        "logo":"https://1000logos.net/wp-content/uploads/2020/04/Mahindra-Logo.png"
+    },
+    {
+        "type": "bike",
+        "brand": "bajaj",
+        "logo":"https://static.vecteezy.com/system/resources/previews/019/766/200/non_2x/bajaj-logo-bajaj-icon-transparent-free-png.png"
+    },
+    {
+        "type": "bike",
         "brand": "mahindra"
     },
     {
         "type": "bike",
-        "brand": "bajaj"
-    },
-    {
-        "type": "bike",
-        "brand": "mahindra"
-    },
-    {
-        "type": "bike",
-        "brand": "hero"
+        "brand": "hero",
+        "logo":"https://upload.wikimedia.org/wikipedia/commons/thumb/e/e2/Hero_MotoCorp_Logo.svg/2560px-Hero_MotoCorp_Logo.svg.png"
     }
 ]

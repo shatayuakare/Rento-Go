@@ -6,13 +6,13 @@ import PageHeading from '../components/heading/PageHeading'
 
 const Contact = () => {
 
+  
     return (
         <>
-            <div className="pt-20">
                 <PageHeading>
                     <h4 className='text-[3rem] font-bold uppercase'>Contact Us</h4>
                 </PageHeading>
-            </div>
+
             <section className='content-center'>
                 <div className="grid sm:grid-cols-1 md:grid-cols-2  md:mx-10 lg:mx-20 xl:mx-28 min-h-[80vh] sm:pt-16 md:pt-0 shadow-lg">
 
@@ -44,7 +44,6 @@ const Contact = () => {
                         </div>
                     </div>
                     <div className="bg-white text-zinc-800 xl:px-20 lg:px-16 md:px-10 content-center sm:p-6">
-
                         <ContactForm />
                     </div>
                 </div>

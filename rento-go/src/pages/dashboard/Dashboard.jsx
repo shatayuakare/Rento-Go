@@ -4,6 +4,7 @@ import { useAuth } from "../../context/AuthProvider"
 import axios from 'axios';
 import { toast } from 'react-toastify';
 import { Cookies } from 'react-cookie';
+import { server } from '../../utils/Constants';
 
 const Dashboard = () => {
     const [authUser, setAuthUser] = useAuth();
@@ -14,7 +15,7 @@ const Dashboard = () => {
     const updateProfilePicture = async () => {
         const profilePicUrl = prompt("Enter profile pic url...");
         if (profilePicUrl && profilePicUrl.trim() !== "")
-            await axios.put(`http://localhost:8080/auth/profile/${authUser._id}`, { img: profilePicUrl }).then((res) => {
+            await axios.put(`${server}/auth/profile/${authUser._id}`, { img: profilePicUrl }).then((res) => {
                 toast.success(res.data.message)
             }).catch(err => toast.error(err.response.data.message))
     }

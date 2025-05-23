@@ -1,6 +1,7 @@
 import axios from 'axios';
 import React, { lazy, Suspense, useEffect, useState } from 'react'
 import { toast } from 'react-toastify';
+import { server } from '../../utils/Constants';
 const MemberView = lazy(() => import('./modal/MemberView'));
 const ContentLoader = lazy(() => import('../../components/ContentLoader'));
 
@@ -10,7 +11,7 @@ const Members = () => {
 
     useEffect(() => {
         const getUsers = async () => {
-            await axios.get("http://localhost:8080/auth/").then(res => {
+            await axios.get(`${server}/auth/`).then(res => {
                 const data = res.data;
                 setUsers(data);
             }).catch(err => toast.error(err))
@@ -20,18 +21,18 @@ const Members = () => {
     }, [users])
 
     const deleteUser = async (id) => {
-        await axios.delete(`http://localhost:8080/auth/adelete/${id}`).then(res => {
+        await axios.delete(`${server}/auth/adelete/${id}`).then(res => {
             toast.success(res.data.message)
         }).catch(err => console.log(err.message))
     }
 
     const makeAdmin = async (id) => {
-        await axios.put(`http://localhost:8080/auth/newadmin/${id}`).then(res => {
+        await axios.put(`${server}/auth/newadmin/${id}`).then(res => {
             toast.success(res.data.message)
         }).catch(err => console.error(err.message))
     }
     const removeAdmin = async (id) => {
-        await axios.put(`http://localhost:8080/auth/removeadmin/${id}`).then(res => {
+        await axios.put(`${server}/auth/removeadmin/${id}`).then(res => {
             toast.success(res.data.message)
         }).catch(err => console.error(err.message))
     }

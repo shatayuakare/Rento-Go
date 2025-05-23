@@ -1,4 +1,5 @@
 import React from 'react'
+import vehicleBrands from "../api/vehicleBrands.json"
 
 const BrandMarquee = () => {
 
@@ -74,13 +75,16 @@ const BrandMarquee = () => {
         },
     ]
 
+
     return (
+
+
         <div className="overflow-hideen px-12 py-10 bg-zinc-100">
             <marquee className={""} behavior="" direction="left" scrollamount={20}>
                 <div className="flex gap-32">
                     {
-                        brands.map((elem, index) => (
-                            <img className='h-28' src={`${elem.img}?format=webp&quality=auto`} alt={elem.title} key={index} />
+                        vehicleBrands.filter((elem => elem.logo != null)).map((elem, index) => (
+                            <img className='h-28' src={`${elem.logo}?format=webp&quality=auto`} alt={elem.brand} key={index} />
                         ))
                     }
                 </div>

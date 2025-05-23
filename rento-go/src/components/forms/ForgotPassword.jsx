@@ -1,26 +1,34 @@
 import axios from 'axios'
 import React, { useState } from 'react'
 import { toast } from 'react-toastify'
+import { server } from '../../utils/Constants'
 
 const ForgotPassword = ({ email }) => {
 
     const [name, setName] = useState('')
     const [error, setError] = useState(null)
+    const [loader, setLoader] = useState(false);
 
     const forgotPassword = async (event) => {
         event.preventDefault()
-
-        if (!name) return setError("Please enter name...")
-        if (!email) return setError("Please enter email address...")
+        setLoader(true)
+        if (!name) {
+            setError("Please enter name...")
+            setLoader(false)
+        }
+        if (!email) {
+            setError("Please enter email address...")
+            setLoader(false)
+        }
 
         const data = { email, name };
 
-        await axios.put("http://localhost:8080/auth/forgotpassword", data).then((res) => {
+        await axios.put(`${server}/auth/forgotpassword`, data).then((res) => {
             toast.success(res.data.message, {
                 autoClose: 5000
             })
             document.getElementById('forgotPassword').close()
-        }).catch(err => toast.error(err.response.data.message))
+        }).catch(err => setError(err.response.data.message))
 
         setName('')
     }
@@ -55,7 +63,12 @@ const ForgotPassword = ({ email }) => {
 
                     }
                     <button className='btn btn-ghost bg-blue-500 hover:bg-blue-600 rounded-md h-10 mx-auto min-h-10 text-white my-2'>
-                        Forgot Password
+                    {
+                                    loader ?
+                                        <span className="loading loading-bars loading-md"></span>
+                                        :
+                                        <span>Forgot Password</span>
+                                }
                     </button>
                 </form>
             </div>

@@ -20,7 +20,7 @@ const MemberView = ({ data }) => {
                             <b>Phone Number : </b>{data.phone}
                         </div>
                         <div className="flex gap-2">
-                            <b>Orders : </b>{data.order.length}
+                            <b>Orders : </b>{(data.order)}
                         </div>
                         <div className="flex gap-2">
                             <b>Vehicles : </b>{data.OID.length}

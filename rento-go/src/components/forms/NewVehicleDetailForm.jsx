@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { useAuth } from '../../context/AuthProvider'
 import axios from "axios"
 import { toast } from "react-toastify"
+import { server } from '../../utils/Constants'
 
 const NewVehicleForm = ({ data, vehicle }) => {
 
@@ -31,8 +32,6 @@ const NewVehicleForm = ({ data, vehicle }) => {
         setImage("")
     }
 
-    console.log(authUser)
-
     const addNewCarHandler = async (event) => {
         event.preventDefault()
         setLoader(true)
@@ -41,16 +40,14 @@ const NewVehicleForm = ({ data, vehicle }) => {
             UID: authUser._id, images, brand: data.brand, model: data.model, fuel: data.fuel, owner: data.owner, number: data.number,
             cartype, luggage, horsepower, engine, mileage, drive, stock, price, seats, gearbox
         }
-        await axios.post("http://localhost:8080/vehicles/newCar", carDetail).then(async (res) => {
-            // console.log(res.data)
-            await axios.put(`http://localhost:8080/auth/${authUser._id}`, {
-                VID: res.data.createCar._id
-            }
-            ).then(r => {
+        await axios.post(`${server}/vehicles/newCar"`, carDetail).then(async (res) => {
+            console.log(res)
+            await axios.put(`${server}/auth/${authUser._id}`, {VID: res.data.createCar._id}).then(r => {
                 console.log(r.data)
             }).catch(e => console.error(e.message))
             toast.success(res.data.message)
             setLoader(false)
+             document.getElementById('newVehicleDetailForm').close()
         }).catch(err => console.error('car', err.message));
         setLoader(false)
     }
@@ -63,9 +60,10 @@ const NewVehicleForm = ({ data, vehicle }) => {
             engine, mileage, stock, price, gearbox
         }
 
-        await axios.post("http://localhost:8080/vehicles/newBike", bikeDetail).then((res) => {
+        await axios.post(`${server}/vehicles/newBike`, bikeDetail).then((res) => {
             setLoader(false)
             toast.success(res.data.message)
+              document.getElementById('newVehicleDetailForm').close()
         }).catch(err => console.error(err.message));
         setLoader(false)
     }

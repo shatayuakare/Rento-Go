@@ -3,6 +3,7 @@ import { useAuth } from '../../context/AuthProvider'
 import axios from 'axios';
 import { Cookies } from 'react-cookie';
 import { toast } from 'react-toastify';
+import { server } from '../../utils/Constants';
 
 const Profile = () => {
     const [authUser, setAuthUser] = useAuth();
@@ -24,7 +25,7 @@ const Profile = () => {
         }
         setLoader(true)
 
-        await axios.put(`http://localhost:8080/auth/update/${authUser._id}`, data).then(async (res) => {
+        await axios.put(`${server}/auth/update/${authUser._id}`, data).then(async (res) => {
             toast.success(res.data.message)
             setLoader(false)
 
@@ -38,7 +39,7 @@ const Profile = () => {
             oldPassword, newPassword
         }
         setLoader1(true)
-        await axios.put(`http://localhost:8080/auth/newpassword/${authUser._id}`, passwords).then((res) => {
+        await axios.put(`${server}/auth/newpassword/${authUser._id}`, passwords).then((res) => {
             setLoader1(false)
             toast.success(res.data.message)
         }).catch(err =>

@@ -5,8 +5,6 @@ import { Link } from 'react-router-dom'
 const HomeIndex = () => {
     return (
         <section className="bg-[#0B0808]">
-
-            {/* https://purepng.com/public/uploads/large/purepng.com-jaguar-xkr-s-blue-carcarvehicletransportautocars-561521125346a9gaa.png */}
             <div className='sm:bg-[url("https://cdn.pixabay.com/photo/2015/10/01/19/05/car-967470_640.png")] sm:bg-[center_bottom_-3rem] sm:bg-no-repeat lg:bg-none absolute min-h-[100vh] lg:h-auto sm:h-[100vh] content-center overflow-hidden'>
 
                 <div className='sm:px-4 md:px-12 lg:mx-24 xl:mx-28 lg:pt-0 sm:py-8'>
@@ -30,9 +28,10 @@ const HomeIndex = () => {
                     </div>
 
                     <div className='hidden flex-shrink-0 lg:flex overflow-hidden'>
-                        <img className='absolute z-0 lg:-bottom-16 xl:bottom-16 lg:-right-10 lg:w-[58rem] xl:w-[59rem] drop-shadow-[-5px_2px_8px_red]'
-                            src="https://cdn.pixabay.com/photo/2015/10/01/19/05/car-967470_640.png?format=webp&quality=auto" alt="" loading='fast' />
-                    </div>
+                        {/* <img className='absolute z-0 swap-flip lg:-bottom-16 xl:bottom-16 lg:-right-10 lg:w-[58%] xl:w-[59%] drop-shadow-[-5px_2px_8px_red]' */}
+                        <img className='absolute z-0 lg:bottom-10 xl:bottom-0  xl:-right-10 lg:w-[58%] xl:w-[59%] drop-shadow-[5px_5px_15px_red]'
+                            src="./images/car.png" alt="" loading='fast' />
+                            </div>  
                 </div>
             </div>
             <div className="sm:hidden md:flex md:absolute shadow-xl left-0 right-0 sm:-bottom-40 md:-bottom-16 sm:w-4/5 lg:w-2/3 mx-auto bg-white rounded-md sm:p-4 lg:p-6">

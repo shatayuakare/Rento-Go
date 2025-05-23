@@ -3,6 +3,7 @@ import BookForm from './forms/BookVehicleForm'
 import { useParams } from 'react-router-dom'
 import axios from 'axios';
 import { toast } from 'react-toastify';
+import { server } from '../utils/Constants';
 
 const InnerCart = () => {
 
@@ -57,7 +58,7 @@ const InnerCart = () => {
 
     useEffect(() => {
         const getItem = async () => {
-            await axios.get(`https://rento-go.onrender.com/vehicles/${id}`).then(res => {
+            await axios.get(`${server}/vehicles/${id}`).then(res => {
                 setItem(res.data)
                 const { brand, horsepower, engine, mileage, stock, gearbox, drive, cartype, fuel, doors, luggage, seats } = res.data;
                 setSpecialize({ brand, horsepower, engine, mileage, stock, gearbox, drive, cartype, fuel, doors, luggage, seats })

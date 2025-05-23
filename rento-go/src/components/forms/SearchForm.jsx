@@ -1,5 +1,6 @@
 import React from 'react'
 import cities from "../../api/availableCities.json"
+import { Link } from 'react-router-dom'
 
 const SearchForm = () => {
 
@@ -30,9 +31,9 @@ const SearchForm = () => {
             </div>
 
             <div className='flex-1 flex flex-col justify-end'>
-                <button className='btn text-white  rounded-md p-4'>
+                <Link to={"/cars"} className='btn text-white  rounded-md p-4'>
                     Search Now
-                </button>
+                </Link>
             </div>
         </form >
     )

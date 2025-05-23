@@ -9,7 +9,7 @@ const EasyBoarding = lazy(() => import('../components/EasyBoarding'))
 const ShareVehicles = () => {
     const params = useParams()
     return (
-        <section className='pt-20' id='shareform'>
+        <section id='shareform'>
             <RentVehicleHeading vehicle={params.vehicle} />
             <section className='content-center w-4/5 mx-auto'>
                 <h4 className='text-[3rem] font-bold text-zinc-700'>

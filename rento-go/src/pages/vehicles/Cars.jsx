@@ -1,6 +1,7 @@
 import React, { Suspense, useEffect, useState, lazy } from 'react'
 import axios from 'axios';
 import { toast } from 'react-toastify';
+import { server } from '../../utils/Constants';
 const VehicleHeading = lazy(() => import('../../components/heading/VehicleHeading'));
 const Filter = lazy(() => import('../../components/Filter'));
 const ContentLoader = lazy(() => import('../../components/ContentLoader'));
@@ -13,7 +14,7 @@ const Cars = () => {
 
     useEffect(() => {
         const getVehicles = async () => {
-            await axios.get("https://rento-go.onrender.com/vehicles").then((res) => {
+            await axios.get(`${server}/vehicles`).then((res) => {
                 setCar((res.data).filter((elem) => 'cartype' in elem))
                 setBrands([...new Set(data.filter((elem) => ('cartype' in elem)).map((ele) => ele.brand))])
             }).catch((err) => toast.error(err.response.data.message))
@@ -22,7 +23,7 @@ const Cars = () => {
     }, [])
 
     return (
-        <section className='pt-20'>
+        <section>
             <VehicleHeading vehicle={'car'} />
 
             <div className="w-4/5 mx-auto mt-6">

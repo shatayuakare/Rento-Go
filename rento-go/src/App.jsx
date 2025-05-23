@@ -13,6 +13,7 @@ import Footer from './pages/Footer'
 
 // Authorization pages
 import { useAuth } from './context/AuthProvider'
+import { server } from './utils/Constants';
 const Login = lazy(() => import('./pages/auth/Login'))
 const Register = lazy(() => import('./pages/auth/Register'))
 
@@ -52,7 +53,7 @@ const App = () => {
       if (!authUser) return;
       const cookie = new Cookies()
       const token = cookie.get("token");
-      await axios.post(`http://localhost:8080/auth/relogin/${token}`).then(res => {
+      await axios.post(`${server}/auth/relogin/${token}`).then(res => {
         cookie.set("token", res.data.token);
       }).catch(err => console.log(err))
     })

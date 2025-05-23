@@ -4,6 +4,7 @@ import cities from "../../api/availableCities.json"
 import OrderPayment from './OrderPayment'
 import axios from 'axios'
 import { toast } from 'react-toastify'
+import { server } from '../../utils/Constants'
 
 const BookForm = ({ data }) => {
 
@@ -79,9 +80,9 @@ const BookForm = ({ data }) => {
         }
         setOrder(order);
 
-        await axios.post("https://rento-go.onrender.com/orders/new", order).then(async res => {
+        await axios.post(`${server}/orders/new`, order).then(async res => {
             console.log(res)
-            await axios.put(`http://localhost:8080/auth/update/${authUser._id}`, { OID: res.data.createOrder._id }).then((r) => {
+            await axios.put(`${server}/auth/update/${authUser._id}`, { OID: res.data.createOrder._id }).then((r) => {
                 console.log(r)
                 toast.success(res.data.message)
             }).catch(e => toast.error(e.message))

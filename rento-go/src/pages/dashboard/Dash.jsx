@@ -3,6 +3,7 @@ import { useAuth } from '../../context/AuthProvider'
 import axios from 'axios'
 import { toast } from 'react-toastify'
 import ContentLoader from '../../components/ContentLoader'
+import { server } from '../../utils/Constants'
 
 // this is mfor only rendering color before load the page 
 [
@@ -24,25 +25,17 @@ const Dash = () => {
     useEffect(() => {
 
         const getOrders = async () => {
-            await axios.get("https://rento-go.onrender.com/orders").then(res => {
-                console.log(res.data.filter(elem => elem.UID === authUser._id))
-                setOrders(res.data)
-
+            await axios.get(`${server}/orders`).then(res => {
+               const data = res.data.filter(elem => elem.UID === authUser._id)
+                setOrders(data)
             }).catch(error =>
-                console.error(error)
+                toast.error(error)
             )
 
         }
         getOrders()
-        // const getOrders = async () => {
-        //     await axios.get("https://rento-go.onrender.com/orders").then(res => {
-        //         const order = (res.data).filter(elem => elem.UID === authUser._id)
-        //         if (!order) return console.log("Empty");
-        //         setOrders(order)
-        //     }).catch(err => toast.error(err.essage))
-        // }
-        // getOrders()
-    }, [])
+
+    }, [orders])
 
     const history = [
         {
@@ -85,7 +78,10 @@ const Dash = () => {
                             <i className={`${elem.icon} text-${elem.color}-300 text-[5.5rem] absolute bottom-3 right-3`}></i>
 
                             <h5 className={`text-[3rem] font-extrabold pb-1 text-${elem.color}-500`}>
-                                {elem.count < 10 ? '0' + elem.count : elem.count}
+                                {(elem.count > 0) ?elem.count < 10 ? '0' + elem.count : elem.count
+                                :
+                                "00"
+                                 }
                             </h5>
                             <div className='text-xl text-zinc-500 font-semibold'>{elem.title}</div>
                         </div>

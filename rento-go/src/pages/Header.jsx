@@ -9,7 +9,6 @@ const Header = () => {
     setAuthUser(authUser)
 
     const [headerShow, setHerderShow] = useState(true);
-
     const [sticky, setSticky] = useState(false)
 
     useEffect(() => {
@@ -51,9 +50,8 @@ const Header = () => {
 
 
     return (
-
         !headerShow &&
-        <header className={`navbar  sm:px-2 md:px-10 lg:px-20 xl:px-28 sm:py-1 md:py-2 lg:py-5 text-zinc-500 left-0 w-full z-[999] ${sticky ? "fixed bg-[#0B0808] lg:py-3 xl:py-3" : "absolute"}`}>
+        <header className={`navbar  sm:px-2 md:px-10 lg:px-20 xl:px-28 sm:py-1 md:py-2 text-zinc-500 left-0 w-full z-[999] ${sticky ? "fixed bg-[#0B0808] lg:py-3 xl:py-3" : "absolute"}`}>
             <div className="navbar-start">
                 <div className="dropdown">
                     <button tabIndex={0} role="button" aria-label="menu" className="btn btn-ghost lg:hidden px-1 p-0">
@@ -94,7 +92,7 @@ const Header = () => {
                 </Link>
             </div>
             <div className="navbar-center hidden md:flex">
-                <ul className="menu menu-horizontal px-1 font-semibold">
+                <ul className="menu menu-horizontal text-white px-1 font-semibold">
                     <li className={location.pathname === "/" ? 'active' : ''}>
                         <Link to={'/'}>Home</Link>
                     </li>
@@ -123,7 +121,7 @@ const Header = () => {
                                     {authUser.name.split(' ', [1])}
                                 </div>
                             </div>
-                            <ul tabIndex={0} className="dropdown-content menu invert rounded-box z-[1] p-2 shadow">
+                            <ul tabIndex={0} className="dropdown-content menu font-semibold bg-zinc-100 rounded-box z-[1] p-2 shadow">
                                 <li>
                                     <Link to={'/dashboard'} className='text-nowrap'>Dashboard</Link>
                                 </li>

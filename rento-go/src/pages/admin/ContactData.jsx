@@ -1,6 +1,7 @@
 import axios from 'axios'
 import React, { lazy, Suspense, useEffect, useState } from 'react'
 import { toast } from 'react-toastify'
+import { server } from '../../utils/Constants'
 const ContentLoader = lazy(() => import('../../components/ContentLoader'))
 const ContactView = lazy(() => import('./modal/ContactView'))
 
@@ -10,7 +11,7 @@ const ContactData = () => {
 
     useEffect(() => {
         const getContacts = async () => {
-            await axios.get("http://localhost:8080/contacts").then(res => {
+            await axios.get(`${server}/contacts`).then(res => {
                 setContacts((res.data))
             }).catch(err => console.error(err))
         }
@@ -20,15 +21,15 @@ const ContactData = () => {
     }, [contacts])
 
     const deleteContact = async (id) => {
-        await axios.delete(`http://localhost:8080/contacts/delete/${id}`).then(res => {
+        await axios.delete(`${server}/contacts/delete/${id}`).then(res => {
             toast.success(res.data.message)
         }).catch(err => console.error(err.message))
     }
 
     return (
-        <div className="overflow-y-auto h-full flex flex-wrap gap-4 pt-2">
+        <div className="overflow-y-auto h-full flex flex-wrap gap-4">
             <table className='table text-center h-fit' >
-                <thead className='text-white sticky top-0 text-md bg-zinc-700 '>
+                <thead className='text-white sticky z-10 top-0 text-md bg-zinc-700 '>
                     <tr>
                         <th>{contacts.length}</th>
                         <th>Name</th>

@@ -1,5 +1,7 @@
 import React, { lazy, Suspense, useEffect, useState } from 'react'
 import axios from 'axios';
+import { server } from '../../utils/Constants';
+import { toast } from 'react-toastify';
 const VehicleHeading = lazy(() => import('../../components/heading/VehicleHeading'));
 const BikeCard = lazy(() => import('../../components/BikeCard'))
 const Filter = lazy(() => import('../../components/Filter'));
@@ -11,19 +13,19 @@ const Bike = () => {
 
     useEffect(() => {
         const getVehicles = async () => {
-            setTimeout(async () => {
-                await axios.get("https://rento-go.onrender.com/vehicles").then((res) => {
+                await axios.get(`${server}/vehicles`).then((res) => {
                     setBikes((res.data).filter((elem) => !('cartype' in elem)))
-                    setBrands([...new Set(data.filter((elem) => !('cartype' in elem)).map((ele) => ele.brand))])
-                }).catch((err) => toast.error(err.response.data.message))
-            }, 10000);
-
+                    setBrands([...new Set(res.data.filter((elem) => !('cartype' in elem)).map((ele) => ele.brand))])
+                }).catch((err) => {
+                    console.error(err);
+                    toast.error("Failed to fetch vehicles");
+                })
         }
         getVehicles()
     }, [])
 
     return (
-        <section className='py-20'>
+        <section className=''>
             <VehicleHeading vehicle={'bike'} />
 
             <div className="w-4/5 mx-auto mt-6">

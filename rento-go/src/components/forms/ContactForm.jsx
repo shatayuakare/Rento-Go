@@ -2,6 +2,7 @@ import axios from 'axios'
 import React, { useState } from 'react'
 import { toast } from 'react-toastify'
 import { useAuth } from '../../context/AuthProvider'
+import { server } from '../../utils/Constants'
 
 const ContactForm = () => {
     const [authUser, setAuthUser] = useAuth();
@@ -9,7 +10,7 @@ const ContactForm = () => {
 
     const [name, setName] = useState("")
     const [email, setEmail] = useState("")
-    const [phone, setPhone] = useState("")
+    const [subject, setSubject] = useState("")
     const [msg, setMsg] = useState("")
 
     const [error, setError] = useState(null)
@@ -20,17 +21,16 @@ const ContactForm = () => {
 
         if (!name) return setError("Name is required")
         if (!email) return setError("Email is required")
-        if (!phone) return setError("Phone is required")
+        if (!subject) return setError("Subject is required")
         if (!msg) return setError("Message is required")
 
         const data = {
-            name, email, phone, message: msg
+            name, email, subject, message: msg
         }
         setLoader(true)
-        await axios.post("https://rento-go.onrender.com/contacts/new", data).then(async res => {
+        await axios.post(`${server}/contacts/new`, data).then(async res => {
             if (authUser) {
-                await axios.put(`http://localhost:8080/auth/update/${authUser._id}`, { CID: res.data.contactData._id }).then(r => console.log(r)).catch(e => console.error(e.message))
-
+                await axios.put(`${server}/auth/update/${authUser._id}`, { CID: res.data.createContact._id }).then(r => console.log(r)).catch(e => console.error(e.message))
             }
             toast.success(res.data.message)
         }).catch(err => toast.error(err.message))
@@ -38,7 +38,7 @@ const ContactForm = () => {
         setLoader(false)
         setName("")
         setEmail("")
-        setPhone("")
+        setSubject("")
         setMsg("")
     }
     return (
@@ -56,10 +56,10 @@ const ContactForm = () => {
                     onChange={(e) => setEmail(e.target.value)} />
             </div>
             <div>
-                <label htmlFor="email" className="label">Phone Number</label>
-                <input className='input rounded-sm w-full bg-zinc-100 p-2' type="tel" name="phone" id="phone" placeholder='Enter phone number...'
-                    value={phone}
-                    onChange={(e) => setPhone(e.target.value)} />
+                <label htmlFor="subject" className="label">Subject</label>
+                <input className='input rounded-sm w-full bg-zinc-100 p-2' type="text" name="subject" id="subject" placeholder='Enter Subject...'
+                    value={subject}
+                    onChange={(e) => setSubject(e.target.value)} />
             </div>
             <div>
                 <label htmlFor="message" className="label">Message</label>

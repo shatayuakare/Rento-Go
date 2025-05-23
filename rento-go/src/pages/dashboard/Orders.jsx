@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useAuth } from '../../context/AuthProvider'
 import axios from 'axios'
+import { server } from '../../utils/Constants'
 
 const Orders = () => {
     const [authUser, setAuthUser] = useAuth()
@@ -11,24 +12,21 @@ const Orders = () => {
     const [cancelOrder, setCancelOrder] = useState([])
 
     useEffect(() => {
-        const getUserDetail = async () => {
-            await axios.get(`https://rento-go.onrender.com/auth/${authUser._id}`).then(res => {
-                const book = (res.data.order).filter(elem => elem.status === 'booked')
-                const complete = (res.data.order).filter(elem => elem.status === 'success')
-                const cancel = (res.data.order).filter(elem => elem.status === 'cancel')
+        const getOrders = async () =>{
+            await axios.get(`${server}/orders`).then(res=>{
+                const orders = res.data.filter(elem => authUser._id == elem.UID);
+                setBookOrder(orders.filter(elem=>elem.status == "pending"));
+                setCompleteOrder(orders.filter(elem=>elem.status == "complete"));
+                setCancelOrder(orders.filter(elem=>elem.status == "cancel"));
+            }).catch(err=>console.error(err.message));
+        } 
 
-                setBookOrder(book)
-                setCompleteOrder(complete)
-                setCancelOrder(cancel)
-            }).catch(err => toast.error(err.response.data.message))
-        }
-
-        getUserDetail()
+        getOrders();
     }, [bookOrder, completeOrder, cancelOrder])
-
+    
     return (
         <>
-            <div className="border-2 border-zinc-300 p-5 bg-white h-1/3 overflow-y-scroll">
+            <div className="border-2 border-zinc-300 p-5 bg-white h-auto min-h-1/3 overflow-y-scroll">
                 <h5 className="text-2xl text-zinc-800 font-semibold">Booking Order</h5>
                 <table className="table text-sm">
                     <thead>
@@ -47,13 +45,14 @@ const Orders = () => {
                         {
                             bookOrder.map((elem) => (
                                 <tr className='text-zinc-700 text-sm' key={elem._id}>
-                                    <td><span className='bg-zinc-200 p1 px-2 rounded-xl font-semibold'>#{elem._id.substr(elem_id.length - 5)}</span></td>
-                                    <td>{elem.vehicle}</td>
-                                    <td>{elem.location}</td>
-                                    <td>{elem.pickDate}</td>
-                                    <td>{elem.returnDate}</td>
+                                    <td><span className='bg-zinc-200 p1 px-2 capitalize rounded-xl font-semibold'>#{elem._id.substr(elem._id.length - 5)}</span></td>
+                                    <td>{elem.vehicleName}</td>
+                                    <td className=' capitalize'>{elem.pickUpLocation}</td>
+                                    <td>{new Date(elem.pickDate).toLocaleDateString()}</td>
+                                    <td>{new Date(elem.returnDate).toLocaleDateString()}</td>
                                     <td>${elem.price}/-</td>
                                     <td><span className='bg-orange-500 p-1 text-white font-semibold px-3 rounded-xl'>Booking</span></td>
+                                    <td></td>
                                 </tr>
                             ))
                         }
@@ -79,11 +78,11 @@ const Orders = () => {
                         {
                             completeOrder.map((elem) => (
                                 <tr className='text-zinc-700 text-sm' key={elem._id}>
-                                    <td><span className='bg-zinc-200 p1 px-2 rounded-xl font-semibold'>#{elem._id.substr(elem_id.length - 5)}</span></td>
-                                    <td>{elem.vehicle}</td>
-                                    <td>{elem.location}</td>
-                                    <td>{elem.pickDate}</td>
-                                    <td>{elem.returnDate}</td>
+                                    <td><span className='bg-zinc-200 p1 px-2 rounded-xl font-semibold'>#{elem._id.substr(elem._id.length - 5)}</span></td>
+                                        <td>{elem.vehicleName}</td>
+                                    <td className=' capitalize'>{elem.pickUpLocation}</td>
+                                    <td>{new Date(elem.pickDate).toLocaleDateString()}</td>
+                                    <td>{new Date(elem.returnDate).toLocaleDateString()}</td>
                                     <td>${elem.price}/-</td>
                                     <td><span className='bg-green-500 p-1 text-white font-semibold px-3 rounded-xl'>Complete</span></td>
                                 </tr>
@@ -110,21 +109,20 @@ const Orders = () => {
                     </thead>
                     <tbody>
 
-                        <tr className='text-zinc-700 text-sm'>
                             {
                                 cancelOrder.map((elem) => (
                                     <tr className='text-zinc-700 text-sm' key={elem._id}>
-                                        <td><span className='bg-zinc-200 p1 px-2 rounded-xl font-semibold'>#{elem._id.substr(elem_id.length - 5)}</span></td>
-                                        <td>{elem.vehicle}</td>
-                                        <td>{elem.location}</td>
-                                        <td>{elem.pickDate}</td>
-                                        <td>{elem.returnDate}</td>
+                                        <td><span className='bg-zinc-200 p1 px-2 rounded-xl font-semibold'>#{elem._id.substr(elem._id.length - 5)}</span></td>
+                                        <td>{elem.vehicleName}</td>
+                                        <td className=' capitalize'>{elem.pickUpLocation}</td>
+                                        <td>{new Date(elem.pickDate).toLocaleDateString()}</td>
+                                        <td>{new Date(elem.returnDate).toLocaleDateString()}</td>
                                         <td>${elem.price}/-</td>
                                         <td><span className='bg-red-500 p-1 text-white font-semibold px-3 rounded-xl'>Cancelled</span></td>
                                     </tr>
+                       
                                 ))
                             }
-                        </tr>
                     </tbody>
                 </table>
             </div>

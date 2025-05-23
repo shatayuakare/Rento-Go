@@ -3,6 +3,7 @@ import axios from "axios"
 import { Link } from 'react-router-dom'
 import { toast } from 'react-toastify'
 import { Cookies } from 'react-cookie'
+import { server } from '../../utils/Constants'
 
 const Register = () => {
 
@@ -25,7 +26,7 @@ const Register = () => {
         if (!terms) return toast.warning("Please accept Term and Condition")
 
         setLoader(true)
-        await axios.post("https://rento-go.onrender.com/auth/register", registerData).then((res) => {
+        await axios.post(`${server}/auth/register`, registerData).then((res) => {
             cookie.set("token", res.data.token, { expires: new Date(Date.now() + 31536000000) })
 
             toast.success(res.data.message)

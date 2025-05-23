@@ -2,17 +2,18 @@ import axios from 'axios'
 import React, { Suspense, useEffect, useState } from 'react'
 import { toast } from 'react-toastify';
 import ContentLoader from '../../components/ContentLoader';
+import { server } from '../../utils/Constants';
 
 const AllOrders = () => {
     const [orders, setOrders] = useState([])
-
     useEffect(() => {
         const getOrders = async () => {
-            await axios.get("http://localhost:8080/orders").then(res => {
+            await axios.get(`${server}/orders`).then(res => {
+
                 const orderPromises = res.data.map(async (elem) => {
-                    return await axios.put(`http://localhost:8080/vehicles/${elem.VID}`)
+                    return await axios.get(`${server}/vehicles/${elem.VID}`)
                         .then(r => {
-                            const img = r.data.images;
+                            const img = r.data.images[0];
                             return { ...elem, img };
                         })
                         .catch(err => {
@@ -30,18 +31,18 @@ const AllOrders = () => {
     }, [orders])
 
     const deleteOrder = async (id) => {
-        await axios.delete(`http://localhost:8080/orders/delete/${id}`).then(res => {
+        await axios.delete(`${server}/orders/delete/${id}`).then(res => {
             toast.success(res.data.message)
         }).catch(err => console.log(err))
     }
     const cancelOrder = async (id) => {
-        await axios.put(`http://localhost:8080/orders/status/${id}`, { status: 'cancel' }).then(res => {
+        await axios.put(`${server}/orders/status/${id}`, { status: 'cancel' }).then(res => {
             toast.warning(res.data.message)
         }).catch(err => console.error(err.message))
     }
 
     const conformOrder = async (id) => {
-        await axios.put(`http://localhost:8080/orders/status/${id}`, { status: 'conform' }).then(res => {
+        await axios.put(`${server}/orders/status/${id}`, { status: 'conform' }).then(res => {
             toast.success(res.data.message)
         }).catch(err => console.error(err.message))
     }
@@ -80,7 +81,7 @@ const AllOrders = () => {
                                 <tr >
                                     <td>{i + 1}</td>
                                     <td>
-                                        <img className='w-48 h-28' src={`${elem.img[0]}?format-webp&quality=auto`} alt={elem.vehicleName} />
+                                        <img className='w-48 h-28' src={`${elem.img}?format-webp&quality=auto`} alt={elem.vehicleName} />
                                     </td>
                                     <td>{elem.vehicleName}</td>
                                     <td>{elem.pickUpLocation}</td>

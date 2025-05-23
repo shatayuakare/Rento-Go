@@ -5,6 +5,7 @@ import { toast } from 'react-toastify';
 import { Link } from 'react-router-dom';
 import EditVehicleForm from '../../components/forms/EditVehicleForm';
 import ContentLoader from '../../components/ContentLoader';
+import { server } from '../../utils/Constants';
 
 
 const MyGarage = () => {
@@ -16,8 +17,8 @@ const MyGarage = () => {
 
     useEffect(() => {
         const getVehicles = async () => {
-            await axios.get("http://localhost:8080/vehicles").then((res) => {
-                setVehicles((res.data).filter(elem => elem.uID === authUser._id));
+            await axios.get(`${server}/vehicles`).then((res) => {
+                setVehicles((res.data).filter(elem => elem.UID === authUser._id));
             }).catch(err => console.error(err))
         }
 
@@ -25,7 +26,7 @@ const MyGarage = () => {
     }, [vehicles])
 
     const deleteVehicle = async (id) => {
-        await axios.delete(`http://localhost:8080/vehicles/delete/${id}`).then((res) => toast.success(res.status.message)).catch(err => toast.error(err))
+        await axios.delete(`${server}/vehicles/delete/${id}`).then((res) => toast.success(res.status.message)).catch(err => toast.error(err))
     }
 
     return (

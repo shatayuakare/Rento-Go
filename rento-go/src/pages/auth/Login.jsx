@@ -1,11 +1,14 @@
 import React, { useState } from 'react'
 import axios from 'axios'
 import { Cookies } from "react-cookie"
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
 import ForgotPassword from '../../components/forms/ForgotPassword'
+import { server } from '../../utils/Constants'
 
 const Login = () => {
+
+    const navigation = useNavigate();
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
     const [remember, setRemember] = useState(false)
@@ -22,8 +25,7 @@ const Login = () => {
         const data = { email, password }
         setLoader(true)
 
-        await axios.post("https://rento-go.onrender.com/auth/login", data).then((res) => {
-
+        await axios.post(`${server}/auth/login`, data).then((res) => {
             if (remember) {
                 cookie.set("token", res.data.token, {
                     expires: new Date(Date.now() + 30 * 24 * 60 * 1000),
@@ -41,8 +43,9 @@ const Login = () => {
 
             toast.success(res.data.message)
             setLoader(false)
+            navigation.useNavigate('/')
             window.location.reload()
-        }).catch((err) => toast.error(err.response.data.message),)
+        }).catch((err) => toast.error(err.response.data.message))
 
         setPassword("")
         setRemember(false)

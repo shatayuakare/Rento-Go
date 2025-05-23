@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 const RentVehicleHeading = ({ vehicle }) => {
 
     return (
-        <div className={`h-[60vh] ${vehicle === 'car' ? "bg-[url('https://e1.pxfuel.com/desktop-wallpaper/473/965/desktop-wallpaper-mclaren-p1-supercar-cars-backgrounds-supercars.jpg?format=webp&quality=auto')]" : "bg-[url('https://cdn.room58.com/2023/01/16/682834760b0e89a6557ff63f5d48a176_7b22f13114835ba6.png?format=webp&quality=auto')]"}  bg-center text-center text-white bg-cover`}>
+        <div className={`h-[60vh] ${vehicle === 'car' ? "bg-[url('/images/share%20car%20banner%20bg.jpg?format=webp&quality=auto')]" : "bg-[url('/images/share%20bike%20banner%20bg.png?format=webp&quality=auto')]"}  bg-center text-center text-white bg-cover`}>
             <div className="bg-black bg-opacity-35 h-full content-center">
                 <div className="w-1/2 mx-auto">
                     <h4 className='text-[3rem] font-bold'>

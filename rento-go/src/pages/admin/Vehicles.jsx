@@ -1,6 +1,7 @@
 import axios from 'axios'
 import React, { lazy, useEffect, useState } from 'react'
 import { toast } from 'react-toastify';
+import { server } from '../../utils/Constants';
 const VehicleView = lazy(() => import('./modal/VehicleView'));
 
 
@@ -12,20 +13,20 @@ const Vehicles = () => {
 
     useEffect(() => {
         const getVehicles = async () => {
-            await axios.get("http://localhost:8080/vehicles").then(res => {
+            await axios.get(`${server}/vehicles`).then(res => {
                 setVehicles((res.data))
-            }).catch(err => console.log(err.message))
+            }).catch(err => toast.error(err.message))
         }
 
         getVehicles()
     }, [vehicles])
 
     const deleteVehicle = async (id) => {
-        await axios.delete(`http://localhost:8080/vehicles/delete/${id}`).then((res) => toast.success(res.data.message)).catch(err => console.error(err))
+        await axios.delete(`${server}/vehicles/delete/${id}`).then((res) => toast.success(res.data.message)).catch(err => console.error(err))
     }
 
     const vehicleStatus = async (id, status) => {
-        await axios.put(`http://localhost:8080/vehicles/status/${id}`, { status: status }).then(res => toast.success(res.data.message)).catch(err => console.error(err.response.data.message))
+        await axios.put(`${server}/vehicles/status/${id}`, { status: status }).then(res => toast.success(res.data.message)).catch(err => console.error(err.response.data.message))
     }
 
 

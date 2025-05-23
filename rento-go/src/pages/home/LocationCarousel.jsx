@@ -14,9 +14,9 @@ const LocationCarousel = () => {
                     {
                         cities.map((elem, index) => (
                             <div className="flex-1 text-zinc-200" key={index}>
-                                <div className="rounded-full mx-auto border-4 border-white shadow-md w-44 h-44 overflow-hidden">
+                                <div className="rounded mx-auto border-2 border-white shadow-md w-44 h-44 overflow-hidden">
 
-                                    <img className='h-full'
+                                    <img className='h-full w-full'
                                         src={`${elem.famous}?format=webp&crop=circle`} alt="Nagpur" />
                                 </div>
                                 <div className="text-2xl mt-4 ">
